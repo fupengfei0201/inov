@@ -74,7 +74,7 @@ public class MsgServlet extends HttpServlet {
 		JDBCContent com = new JDBCContent();
 		JDBCMsg m = new JDBCMsg();
 		JDBCEmp e = new JDBCEmp();
-		boolean f =m.selectMnName(name);
+/*		boolean f =m.selectMnName(name);
 		boolean h=e.selectErrorName(name);
 		if(h==false){
 			List<MsgCheckContent> li = com.msgcontent();
@@ -97,7 +97,7 @@ public class MsgServlet extends HttpServlet {
 			request.getRequestDispatcher("d.jsp")
 					.forward(request, response);
 			return;
-		}
+		}*/
 		List<MsgCheckContent> list1 = com.msgcontent();
 		List<Integer> l = new ArrayList<Integer>();
 		int sum = 0;
@@ -119,6 +119,9 @@ public class MsgServlet extends HttpServlet {
 				System.out.println("优秀的人数为："+ss.size());
 				List<MsgCheckContent> li = com.msgcontent();
 				request.setAttribute("list", li);
+				request.setAttribute("pname",name);
+				request.setAttribute("dept",dept);
+				request.setAttribute("name",mag);
 				request.setAttribute("m",
 						"<script>alert(\"优秀人数过多，不予提交此分数，请重新打分！\");</script>");
 				System.out.println("优秀人数过的");
@@ -170,6 +173,9 @@ public class MsgServlet extends HttpServlet {
 				} else {
 					List<MsgCheckContent> li = com.msgcontent();
 					request.setAttribute("list", li);
+					request.setAttribute("pname",name);
+					request.setAttribute("dept",dept);
+					request.setAttribute("name",mag);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
 					request.getRequestDispatcher("d.jsp").forward(request,
@@ -183,6 +189,9 @@ public class MsgServlet extends HttpServlet {
 				System.out.println("tt的数量："+tt.size());
 				List<MsgCheckContent> li = com.msgcontent();
 				request.setAttribute("list", li);
+				request.setAttribute("pname",name);
+				request.setAttribute("dept",dept);
+				request.setAttribute("name",mag);
 				request.setAttribute("m",
 						"<script>alert(\"良好人数过多，不予提交此成绩！ \");</script>");
 				System.out.println("良好人数过多，不予提交此成绩！");
@@ -287,6 +296,9 @@ public class MsgServlet extends HttpServlet {
 			} else {
 				List<MsgCheckContent> li = com.msgcontent();
 				request.setAttribute("list", li);
+				request.setAttribute("pname",name);
+				request.setAttribute("dept",dept);
+				request.setAttribute("name",mag);
 				request.setAttribute("msg",
 						"<script>alert(\"提交失败 \");</script>");
 				request.getRequestDispatcher("d.jsp")

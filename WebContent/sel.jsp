@@ -1,3 +1,4 @@
+<%@page import="oracle.net.aso.l"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List,inov.fpf.model.vo.Login"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,30 +11,34 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <div>
 <div style="float: left;margin-left: 10%;margin-top: 30px;">
 【<%=request.getAttribute("mk") %>】对以下员工的第【<%=request.getAttribute("q") %>】次打分
 </div>
 <div id="select">
-<form action="GradeServlet" method="post">
+
 <table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" align="center" style="text-align: center;margin-top: 15px">
 <tr style="height: 30px">
 	<th width="200px">员工姓名</th>
 	<th width="200px">所属部门</th>
 	<th width="200px">打分</th>
+	</tr>
 	<%
 	if(session.getAttribute("title").equals("manag")){
 	%>
 	<%
-	List<Login>list=(List)request.getAttribute("ll"); 
+	ArrayList<Login>list=(ArrayList)request.getAttribute("ll"); 
 	for(int i=0;i<list.size();i++){%>
+	<form action="GradeServlet" method="post">
 	<tr>
-	<td><a><%=list.get(i).getName() %></a></td>
-	<td><%=list.get(i).getDept() %></td>
+	<td><input type="text" name="name" value="<%=list.get(i).getName()%>"/></td>
+	<td><input type="text" name="dept" value="<%=list.get(i).getDept() %>"/></td>
 	<td>
 	<input type="submit" value="打分">
 	</td>
 	</tr>
+	</form>
 	<%}
 	}
 	%>
@@ -41,38 +46,65 @@
 	if(session.getAttribute("title").equals("tea")){
 	%>
 	<%
-	List<Login>list=(List)request.getAttribute("ll"); 
+	ArrayList<Login>list=(ArrayList)request.getAttribute("ll"); 
 	for(int i=0;i<list.size();i++){%>
+	<form action="GradeServlet" method="post">
 	<tr>
-	<td><a href="d.jsp"><%=list.get(i).getName() %></a></td>
-	<td><%=list.get(i).getDept() %></td>
+	<td><input type="text" name="name" value="<%=list.get(i).getName() %>"/></td>
+	<td><input type="text" name="dept" value="<%=list.get(i).getDept() %>"/></td>
 	<td>
 	<input type="submit" value="打分">
 	</td>
 	</tr>
-	<%}
+	<%}%>
+	</form>
+	<%
 	}
 	%>
+	
 		<%
 	if(session.getAttribute("title").equals("emp")){
 	%>
 	<%
-	List<Login>list=(List)request.getAttribute("ll"); 
+ 
+	if(!request.getAttribute("ll").equals("1")){
+		ArrayList<Login>list=(ArrayList)request.getAttribute("ll");
 	for(int i=0;i<list.size();i++){%>
+	<form action="GradeServlet" method="post">
 	<tr>
-	<td><a href="d.jsp"><%=list.get(i).getName() %></a></td>
-	<td><%=list.get(i).getDept() %></td>
+	<td><td><input type="text" name="name" value="<%=list.get(i).getName()%>"/></td></td>
+	<td><input type="text" name="dept" value="<%=list.get(i).getDept() %>"/></td>
 	<td>
 	<input type="submit" value="打分">
 	</td>
 	</tr>
+	</form>
 	<%
+	}}%>
+	<%
+
+	if(!request.getAttribute("lw").equals("1")){
+		ArrayList<Login>l=(ArrayList)request.getAttribute("lw");
+	for(int j=0;j<l.size();j++){%>
+	<form action="GradeTwoServlet" method="post">
+	<tr>
+	<td><td><input type="text" name="name" value="<%=l.get(j).getName()%>"/></td></td>
+	<td><input type="text" name="dept" value="<%=l.get(j).getDept() %>"/></td>
+	<td>
+	<input type="submit" value="打分">
+	</td>
+	</tr>
+	</form>
+
+<%}
 	}
 	}
 	%>
 </table>
-</form>
+
 </div>
+
 </div>
+
 </body>
 </html>

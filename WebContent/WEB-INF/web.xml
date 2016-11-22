@@ -134,4 +134,44 @@
     <servlet-name>GradeServlet</servlet-name>
     <url-pattern>/GradeServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmpGradeTwoServlet</display-name>
+    <servlet-name>EmpGradeTwoServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.EmpGradeTwoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmpGradeTwoServlet</servlet-name>
+    <url-pattern>/EmpGradeTwoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GradeTwoServlet</display-name>
+    <servlet-name>GradeTwoServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.GradeTwoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GradeTwoServlet</servlet-name>
+    <url-pattern>/GradeTwoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GradeTServlet</display-name>
+    <servlet-name>GradeTServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.EmpGradeTwoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GradeTServlet</servlet-name>
+    <url-pattern>/GradeTServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EmpgradeServletTwo</display-name>
+    <servlet-name>EmpgradeServletTwo</servlet-name>
+    <servlet-class>inov.fpf.servlet.EmpgradeServletTwo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EmpgradeServletTwo</servlet-name>
+    <url-pattern>/EmpgradeServletTwo</url-pattern>
+  </servlet-mapping>
 </web-app>

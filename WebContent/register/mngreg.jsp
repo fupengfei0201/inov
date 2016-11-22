@@ -9,6 +9,7 @@
 <script type="text/javascript" src="javascript/script.js"></script>
 </head>
 <body>
+${requestScope.m}
 <div id="reg">
 <form action="MnRsgServlet" method="post" name = "myform" onsubmit="return check()">
 <div style="width: 80%;height:100%;margin: auto;">

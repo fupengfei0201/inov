@@ -73,11 +73,9 @@ function checkname(name){
 			document.myform.dept.focus();
 			return;
 		}
-		else if(document.getElementById("aa").value==""){
+		else if(document.myform.edu.value==""){
 			alert("请输入学历!");
-			document.myform.aa.focus();
+			document.myform.edu.focus();
 			return;
-		}
-		
-		
+		}	
 	}

@@ -57,14 +57,11 @@ function check(){
 					cellspacing="0" align="center" style="text-align: center;">
 					<tr style="width: 80px; height: 30px">
 						<td width=80px>被考评人</td>
-						<td width=80px><input type="text" value="" name="name" id="dept"
-							class="txt" style="width: 100%;height: 100%"></td>
+						<td width=80px><input type="text" name="name" value="<%=request.getAttribute("pname") %>"/></td>
 						<td width=80px>岗位</td>
-						<td width=80px><input type="text" value="" name="dept" id="dept"
-							class="txt"></td>
+						<td width=80px><input type="text" name="dept" value="<%=request.getAttribute("dept") %>"/></td>
 						<td width=80px>部门经理</td>
-						<td width=80px><input type="text" value="" name="mag" id="dept"
-							class="txt"></td>
+						<td width=80px><input type="text" name="mag" value="<%=session.getAttribute("name") %>"/></td>
 						<td width=80px>考核期限</td>
 						<td width=80px><input type="text" value="" name="date" id="date"
 							class="txt"></td>
@@ -97,7 +94,7 @@ function check(){
 						<td colspan="2" width="160px"><%=list.get(i).getDefinition()%></td>
 						<td colspan="2" width="160px"><%=list.get(i).getPoints()%></td>
 						<td width="80px"><%=list.get(i).getMarks()%></td>
-						<td><input type="text" value="" name="grade<%=i%>" style="width: 80px;height: 100%"></td>
+						<td><input type="text" value="" name="grade<%=i %>" style="width: 80px;height: 100%"></td>
 					</tr>
 					<%
 						}

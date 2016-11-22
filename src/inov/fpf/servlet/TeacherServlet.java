@@ -66,14 +66,14 @@ public class TeacherServlet extends HttpServlet {
 		System.out.println("运行Servlet");
 		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter("name");
-		String teachername = request.getParameter("dept");
+		String teachername = request.getParameter("detp");
 		String comm = request.getParameter("comm");
 		JDBCContent j = new JDBCContent();
 		List<TCheckPoints> list1 = j.tCheckPoints();
 		List<Integer> l = new ArrayList<Integer>();
 		JDBCTeacher t = new JDBCTeacher();
 		JDBCEmp emp = new JDBCEmp();
-		boolean f=t.selectName(name);
+		/*boolean f=t.selectName(name);
 		boolean h=emp.selectErrorName(name);
 		if(h==false){
 			List<TCheckPoints> li = j.tCheckPoints();
@@ -96,7 +96,7 @@ public class TeacherServlet extends HttpServlet {
 			request.getRequestDispatcher("d.jsp")
 					.forward(request, response);	
 			return;
-		}
+		}*/
 		int sum = 0;
 		for (int i = 0; i < list1.size(); i++) {
 			String grade = request.getParameter("grade" + i);
@@ -105,8 +105,6 @@ public class TeacherServlet extends HttpServlet {
 			sum = sum + x;
 
 		}
-
-	
 		double a = emp.empcount();
 		System.out.println("a的值为："+a);
 		int q = emp.selectcount();
@@ -118,6 +116,9 @@ public class TeacherServlet extends HttpServlet {
 				System.out.println("判断优秀数量超出");
 				List<TCheckPoints> li = j.tCheckPoints();
 				request.setAttribute("ls", li);
+				request.setAttribute("pname",name);
+				request.setAttribute("detp",teachername);
+			
 				request.setAttribute("m",
 						"<script>alert(\"优秀人数超出不予提交，请重新打分 \");</script>");
 				System.out.println("优秀人数过多");
@@ -172,6 +173,8 @@ public class TeacherServlet extends HttpServlet {
 				else {
 					List<TCheckPoints> li = j.tCheckPoints();
 					request.setAttribute("ls", li);
+					request.setAttribute("pname",name);
+					request.setAttribute("detp",teachername);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
 					request.getRequestDispatcher("d.jsp").forward(request,
@@ -188,6 +191,8 @@ public class TeacherServlet extends HttpServlet {
 				System.out.println("判断等级");
 				List<TCheckPoints> li = j.tCheckPoints();
 				request.setAttribute("ls", li);
+				request.setAttribute("pname",name);
+				request.setAttribute("detp",teachername);
 				request.setAttribute("l",
 						"<script>alert(\"良好人数超出，不予提交，请重新打分！ \");</script>");
 				System.out.println("良好人数过多,不予提交此成绩，请重新打分");
@@ -240,6 +245,8 @@ public class TeacherServlet extends HttpServlet {
 				else {
 					List<TCheckPoints> li = j.tCheckPoints();
 					request.setAttribute("ls", li);
+					request.setAttribute("pname",name);
+					request.setAttribute("detp",teachername);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
 					request.getRequestDispatcher("d.jsp").forward(request,
@@ -292,6 +299,8 @@ public class TeacherServlet extends HttpServlet {
 			else {
 				List<TCheckPoints> li = j.tCheckPoints();
 				request.setAttribute("ls", li);
+				request.setAttribute("pname",name);
+				request.setAttribute("detp",teachername);
 				request.setAttribute("msg",
 						"<script>alert(\"提交失败 \");</script>");
 				request.getRequestDispatcher("d.jsp")

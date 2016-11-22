@@ -46,6 +46,7 @@ public class EmpRegServlet extends HttpServlet {
 		int i=reg.regEmp(name, passw,time,edu,dept);
 		if(i==1){
 			request.setAttribute("注册成功","msg");
+			request.setAttribute("m", "<script>alert(\"注册成功！\");</script>");
 			System.out.println("注册成功");
 			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
 		}

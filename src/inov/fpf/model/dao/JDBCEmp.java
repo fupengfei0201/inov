@@ -160,7 +160,7 @@ public class JDBCEmp {
 		return i;
 	}
 	//员工的标记
-	public int empeecount(){
+/*	public int empeecount(){
 		int i=0;
 		
 		try {
@@ -177,7 +177,7 @@ public class JDBCEmp {
 			e.printStackTrace();
 		}
 		return i;
-	}
+	}*/
 	//每打完所有员工的分数一次，数据库中标志师傅打分的数据库就插入一条信息
 	public int insertcount(int x){
 		int i=0;
@@ -234,16 +234,17 @@ public class JDBCEmp {
 		return list;
 		
 	}
-	//对于老员工表二需要查询除自己以外还要去除自己在表一中打过分数的人，也就是说老员工表一中字段为ASSESSNAME=自己的都不可以显示
-	public List<Login>empNameAndDeptTwo(String name,String ename){
+	//对于老员工表一需要查询除自己以外还要去除自己在表二中打过分数的人，也就是说老员工表二中字段为ASSESSNAME=自己的都不可以显示
+	public List<Login>empNameAndDeptOne(String name,String ename,String tname){
 		List<Login>list=new ArrayList<Login>();
 
 		try {
 			con=JDBCUtil.getConnection();
-			String sql="select emp.emploginname,emp.department from emplogin emp,empgrade e where emp.emploginname!=? and e.assessname!=? and emp.emploginname=(select empname from empgrade where empcod=(select max(empcod)from empgrade))";
+			String sql="select emploginname,department from emplogin  where  emploginname!=? and emploginname not in(select empname from empgradetwo where assessname=? and empcod=(select count(empid)from empnumtwo)) and emploginname not in(select empname from empgrade where assessname=? and empcod=(select count(empid)from empnum)) and emploginname not in(select empname from empgrade where empcod=(select count(empid)from empnum)) ";
 			psd=con.prepareStatement(sql);
 			psd.setString(1,name);
 			psd.setString(2,ename);
+			psd.setString(3,tname);
 			rs=psd.executeQuery();
 			while(rs.next()){
 				Login login=new Login();
@@ -258,6 +259,56 @@ public class JDBCEmp {
 		return list;
 		
 	}
+	//对于老员工表一需要查询除自己以外还要去除自己在表二中打过分数的人，也就是说老员工表二中字段为ASSESSNAME=自己的都不可以显示
+		public List<Login>empNameAndDeptThree(String name,String ename,String tname){
+			List<Login>list=new ArrayList<Login>();
+
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select emploginname,department from emplogin  where  emploginname!=? and emploginname not in(select empname from empgradetwo where assessname=? and empcod=(select count(empid)from empnumtwo)) and emploginname not in(select empname from empgrade where assessname=? and empcod=(select count(empid)from empnum)) and emploginname not in(select empname from empgradetwo where empcod=(select count(empid)from empnumtwo)) ";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				psd.setString(2,ename);
+				psd.setString(3,tname);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					Login login=new Login();
+					login.setName(rs.getString("emploginname"));
+					login.setDept(rs.getString("department"));
+					list.add(login);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return list;
+			
+		}
+/*	//对于老员工表二需要查询除自己以外还要去除自己在表一中打过分数的人，也就是说老员工表一中字段为ASSESSNAME=自己的都不可以显示
+		public List<Login>empNameAndDeptTwo(String name,String ename,String tname){
+			List<Login>list=new ArrayList<Login>();
+
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select emploginname,department from emplogin  where emploginname!=? and emploginname not in(select empname from empgrade where assessname=? and empcod=(select count(empcod)from empgrade))and emploginname not in(select empname from empgradetwo where assessname=? and empcod=(select count(empcod)from empgradetwo))";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				psd.setString(2,ename);
+				psd.setString(3,tname);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					Login login=new Login();
+					login.setName(rs.getString("emploginname"));
+					login.setDept(rs.getString("department"));
+					list.add(login);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return list;
+			
+		}*/
 	//对于老员工表一员工查询除自己以外的员工的姓名和部门
 	public List<Login>empNameAndDept(String name){
 		List<Login>list=new ArrayList<Login>();
@@ -281,6 +332,62 @@ public class JDBCEmp {
 		return list;
 		
 	}
+	//当老员工表一和老员工表二都打完一次分后，显示老员工表一的内容
+	
+	public List<Login>empNameAndDeptTwo(String name,String ename,String tname){
+		List<Login>list=new ArrayList<Login>();
+
+		try {
+			con=JDBCUtil.getConnection();
+			String sql="select emploginname,department from emplogin  where  emploginname!=? and emploginname not in(select empname from empgradetwo where assessname=? and empcod=(select max(empcod)from empgradetwo)) and emploginname not in(select empname from empgrade where assessname=? and empcod=(select max(empcod)from empgrade)) and emploginname not in(select empname from empgradetwo where empcod=(select count(empid)from empnumtwo))";
+			psd=con.prepareStatement(sql);
+			psd.setString(1,name);
+			psd.setString(2,ename);
+			psd.setString(3,tname);
+			rs=psd.executeQuery();
+			while(rs.next()){
+				Login login=new Login();
+				login.setName(rs.getString("emploginname"));
+				login.setDept(rs.getString("department"));
+				list.add(login);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
+	
+	public List<Login>empNameAndDeptF(String name,String ename,String tname){
+		List<Login>list=new ArrayList<Login>();
+
+		try {
+			con=JDBCUtil.getConnection();
+			String sql="select emploginname,department from emplogin  where  emploginname!=? and emploginname not in(select empname from empgradetwo where assessname=? and empcod=(select max(empcod)from empgradetwo)) and emploginname not in(select empname from empgrade where assessname=? and empcod=(select max(empcod)from empgrade)) and emploginname not in(select empname from empgrade where empcod=(select count(empid)from empnum))";
+			psd=con.prepareStatement(sql);
+			psd.setString(1,name);
+			psd.setString(2,ename);
+			psd.setString(3,tname);
+			rs=psd.executeQuery();
+			while(rs.next()){
+				Login login=new Login();
+				login.setName(rs.getString("emploginname"));
+				login.setDept(rs.getString("department"));
+				list.add(login);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
+	
+	
+	
+	
+	
 	//老员工一表查询打分后员工在打分表的数量
 	public int selectEmpOnecount(){
 		int i=0;
@@ -359,14 +466,15 @@ public class JDBCEmp {
 		
 	}
 	//显示老员工二表中未打分人员
-		public List<Login>empNameTwo(String name){
+		public List<Login>empNameTwo(String name,String ename){
 			List<Login>list=new ArrayList<Login>();
 
 			try {
 				con=JDBCUtil.getConnection();
-				String sql=" select distinct e.emploginname,e.department from emplogin e,empgradetwo emp where e.emploginname not in(select empname from empgradetwo where empcod=(select max(empcod)from empgradetwo)) and e.emploginname!=?";
+				String sql=" select distinct e.emploginname,e.department from emplogin e,empgradetwo emp where e.emploginname not in(select empname from empgradetwo where empcod=(select max(empcod)from empgradetwo))and e.emploginname not in(select empname from empgrade where assessname=?) and e.emploginname!=?";
 				psd=con.prepareStatement(sql);
 				psd.setString(1,name);
+				psd.setString(2,ename);
 				rs=psd.executeQuery();
 				while(rs.next()){
 					Login login=new Login();
@@ -594,10 +702,9 @@ public class JDBCEmp {
 
 			try {
 				con = JDBCUtil.getConnection();
-				String sql = "select empname from empgrade where empname=? and empcod=(select count(numid)from empnum)";
+				String sql = "select empname from empgrade where empname=? and empcod=(select max(empcod)from empgrade)";
 				psd = con.prepareStatement(sql);
 				psd.setString(1, name);
-			
 				rs = psd.executeQuery();
 				t = rs.next();
 			} catch (SQLException e) {
@@ -612,7 +719,7 @@ public class JDBCEmp {
 
 			try {
 				con = JDBCUtil.getConnection();
-				String sql = "select empname from empgradetwo where empname=? and empcod=(select count(numid)from empnumtwo)";
+				String sql = "select empname from empgradetwo where empname=? and empcod=(select count(empid)from empnumtwo)";
 				psd = con.prepareStatement(sql);
 				psd.setString(1, name);
 			
@@ -630,7 +737,7 @@ public class JDBCEmp {
 
 			try {
 				con = JDBCUtil.getConnection();
-				String sql = "select empname from newemp where empname=? and empcod=(select count(numid)from empnumnew)";
+				String sql = "select empname from newemp where empname=? and empcod=(select count(empid)from empnumnew)";
 				psd = con.prepareStatement(sql);
 				psd.setString(1, name);
 			
@@ -648,7 +755,7 @@ public class JDBCEmp {
 
 			try {
 				con = JDBCUtil.getConnection();
-				String sql = "select empname from emplogin where empname=?";
+				String sql = "select emploginname from emplogin where emploginname=?";
 				psd = con.prepareStatement(sql);
 				psd.setString(1, name);
 			

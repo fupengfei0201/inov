@@ -10,6 +10,7 @@ import inov.fpf.model.vo.MsgCheckContent;
 import inov.fpf.model.vo.TCheckPoints;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -85,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 		}
 			if(t==false){
 				request.setAttribute("msg","<script>alert(\"密码错误 \");</script>");
-				request.getRequestDispatcher("login.jsp").forward(request, response);
+				request.getRequestDispatcher("main.jsp").forward(request, response);
 			}
 		}
 		if(levle.equals("tea")){
@@ -115,12 +116,12 @@ public class LoginServlet extends HttpServlet {
 				}
 			if(t==false){
 				request.setAttribute("msg","<script>alert(\"密码错误 \");</script>");
-				request.getRequestDispatcher("login.jsp").forward(request, response);
+				request.getRequestDispatcher("main.jsp").forward(request, response);
 			}
 		}
 		if(levle.equals("emp")){
-			JDBCEmp emp=new JDBCEmp();
-			t=emp.login(name, password);
+			
+			t=p.login(name, password);
 			if(t==true){
 				session.setAttribute("name",name);
 				session.setAttribute("title",levle);
@@ -129,8 +130,47 @@ public class LoginServlet extends HttpServlet {
 				
 				//老员工评分
 				if(p.empentry(name)){
+					session.setAttribute("r","oldone");
+					if(p.selectOnecount()==p.selectTwocount()){
+						//显示除自己以外的表二中自己未打分的的所有人全部显示
+						List<Login>ll=p.empNameAndDeptOne(name, name,name);
+						//显示所有老员工，对表二进行打分
+						List<Login>lw=p.empNameAndDeptThree(name,name,name);
+						int q=p.selectOnecount();
+						request.setAttribute("ll",ll);
+						request.setAttribute("lw",lw);
+						request.setAttribute("mk","老员工");
+						request.setAttribute("q",q);
+						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
+						
+					}
+					else if(p.selectOnecount()>p.selectTwocount()){
+						//显示所有老员工，对表二进行打分
+						List<Login>lw=p.empNameAndDeptTwo(name,name,name);
 					
-					//如果老员工评分一表中打分数量是总员工的倍数，说明两种情况：1.从未打过份，2，给所有员工打过成倍的分
+						int q=p.selectTwocount();
+						request.setAttribute("q",q);
+						request.setAttribute("lw",lw);
+						request.setAttribute("mk","老员工");
+						request.setAttribute("ll","1");
+						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
+						
+					}
+					else{
+						//显示除自己以外的表二中自己未打分的的所有人全部显示
+						List<Login>ll=p.empNameAndDeptF(name,name,name);
+						int q=p.selectOnecount();
+						request.setAttribute("ll",ll);
+						request.setAttribute("mk","老员工");
+						request.setAttribute("q",q);
+						request.setAttribute("lw","1");
+						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
+						
+					}
+					/*//如果老员工评分一表中打分数量是总员工的倍数，说明两种情况：1.从未打过份，2，给所有员工打过成倍的分
 					if(p.selectEmpOnecount()%r==0){
 						//再查询老员工打分表二，如果老员工评分表二是总员工的倍数，说明两种情况：1.从未打过份，2，给所有员工打过成倍的分
 						if(p.selectEmpTwocount()%r==0&&p.selectEmpOnecount()==p.selectEmpTwocount()){
@@ -156,9 +196,10 @@ public class LoginServlet extends HttpServlet {
 							request.setAttribute("q",q);
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 						}
+				
 						//否则对剩余未打分的老员工二表进行打分
 						else{
-							List<Login>ll=p.empNameTwo(name);
+							List<Login>ll=p.empNameTwo(name,name);
 							int q=p.selectTwocount();
 							request.setAttribute("ll",ll);
 							//request.setAttribute("r","oldtwo");
@@ -168,8 +209,9 @@ public class LoginServlet extends HttpServlet {
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 						}
 					}
+	
 					//否则对老员工表一未打分人员进行打分
-					else{
+				else{
 						List<Login>ll=p.empName(name);
 						int q=p.selectOnecount();
 						request.setAttribute("ll",ll);
@@ -178,9 +220,9 @@ public class LoginServlet extends HttpServlet {
 						request.setAttribute("mk","老员工一");
 						request.setAttribute("q",q);
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
-					}
-					
-				}
+					}*/
+				
+			}
 				//新员工评分，写入新员工评分表
 				else{
 					if((p.selectEmpNewCount()%r)==0){
@@ -191,6 +233,7 @@ public class LoginServlet extends HttpServlet {
 						session.setAttribute("r","new");
 						request.setAttribute("mk","新员工");
 						request.setAttribute("q",q);
+						request.setAttribute("lw","1");
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
 					}
 					else{
@@ -201,6 +244,7 @@ public class LoginServlet extends HttpServlet {
 						session.setAttribute("r","new");
 						request.setAttribute("mk","新员工");
 						request.setAttribute("q",q);
+						request.setAttribute("lw","1");
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
 					}
 				}

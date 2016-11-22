@@ -16,6 +16,8 @@
 </div>
 <div id="center">
 <div id="left">
+${requestScope.l }
+${requestScope.msg }
 	<%@ include file="welcome.jsp"%>
 	<%
 	if(session.getAttribute("title").equals("hrm")){

@@ -40,14 +40,14 @@ function check(){
 <%@ include file="time.jsp"%>
 </div>
 ${requestScope.l}
-<form action="" method="post" name = "myform" onsubmit="return check()">
+<form action="TeacherServlet" method="post" name = "myform" onsubmit="return check()">
 <div id="select">
 <table width="100%" height="30px" border="1" cellpadding="0" cellspacing="0" align="center" style="text-align: center;">
 <tr>
 <td width="100px">被考评人</td>
-<td width="100px"><input type="text" value="" name="name" style="width: 100%;height: 100%"></td>
+<td width="100px"><input type="text" name="name" value="<%=request.getAttribute("pname") %>"/></td>
 <td width="100px">指导老师</td>
-<td width="100px"><input type="text" value="" name="dept" id="dept" class="txt"></td>
+<td width="100px"><input type="text" name="detp" value="<%=session.getAttribute("name") %>"/></td>
 <td width="100px">考核期限</td>
 <td width="100px"><input type="text" value="" name="date" id="date" class="txt"></td>
 </tr>

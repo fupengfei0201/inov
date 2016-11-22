@@ -9,6 +9,7 @@
 <script type="text/javascript" src="javascript/regscript.js"></script>
 </head>
 <body>
+${requestScope.m}
 <div id="reg">
 <form action="EmpRegServlet" method="post" name = "myform" onsubmit="return check()">
 <div style="width: 80%;height:80%;margin: auto;">

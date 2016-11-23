@@ -174,4 +174,14 @@
     <servlet-name>EmpgradeServletTwo</servlet-name>
     <url-pattern>/EmpgradeServletTwo</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>SelServlet</display-name>
+    <servlet-name>SelServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.SelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SelServlet</servlet-name>
+    <url-pattern>/SelServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

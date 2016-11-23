@@ -6,12 +6,58 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <title>Insert title here</title>
-<script type="text/javascript" src="javascript/script.js"></script>
+<script type="text/javascript" src="javascript/regscript.js"></script>
+<script type="text/javascript">
+function check(){
+	if(document.all.name.value==""){
+		alert("请输入真实姓名!");
+		a.action="teareg.jsp";
+		document.myform.name.focus();
+		return;
+	}
+	else if(!checkname(document.all.name.value)){
+		alert("您输入的姓名不合法，请重新输入！");
+		a.action="teareg.jsp";
+		document.myform.name.focus();
+		return;
+	}
+	else if(document.all.pwd.value==""){
+		alert("请输入密码!");
+		a.action="teareg.jsp";
+		document.myform.pwd.focus();
+		return;
+	}
+	else if(!checkpwd(document.all.pwd.value)){
+		alert("您输入的密码不合法，请重新输入！");
+		a.action="teareg.jsp";
+		document.myform.pwd.focus();
+		return;
+	}
+	else if(document.all.pwd1.value==""){
+		alert("请输入确认密码!");
+		a.action="teareg.jsp";
+		document.myform.pwd1.focus();
+		return;
+	}
+	else if(document.all.pwd1.value!=document.all.pwd.value){
+		alert("您两次输入的密码不一致，请重新输入!");
+		a.action="teareg.jsp";
+		document.myform.pwd.focus();
+		return;
+	}
+	else{
+		alert("注册成功！");
+		var a=document.myform;
+		a.action="TeacherRegServlet";
+		a.submit();
+	}
+}
+</script>
 </head>
 <body>
 ${requestScope.m}
 <div id="reg">
-<form action="TeacherRegServlet" method="post" name = "myform" onsubmit="return check()">
+<form action="" method="post" name = "myform" onsubmit="return check()">
 <div style="width: 80%;height:100%;margin: auto;">
 <h3 align="center">指导老师注册</h3>
 真实姓名：<input type="text" name="name" class="register" value=""><br><br>

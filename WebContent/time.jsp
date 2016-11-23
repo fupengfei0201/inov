@@ -14,7 +14,7 @@
 <table width="300px" height="30px" border="0" align="right" style="text-align: center;">
 <tr>
 <td width="100px">填表日期:</td>
-<td width="200px"><%=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) %></td>
+<td width="200px"><%=new SimpleDateFormat("yyyy-MM-dd").format(new Date()) %></td>
 </tr>
 </table>
 </body>

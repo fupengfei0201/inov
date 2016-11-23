@@ -12,33 +12,40 @@ function check(){
 	
 	if(document.all.name.value==""){
 		alert("请输入员工姓名!");
-		document.myform.name.focus();
+		a.action="mngrade.jsp";
+		document.all.name.focus();
 	}
-	else if(document.all.dept.value==""){
+	else if(document.getElementById("de").value==""){
 		alert("请输入岗位!");
-		document.myform.dept.focus();
+		a.action="mngrade.jsp";
+		document.all.dept.focus();
 	}
 	else if(document.all.mag.value==""){
 		alert("请输入部门经理!");
-		document.myform.mag.focus();
+		a.action="mngrade.jsp";
+		document.all.mag.focus();
 	}
-	else if(document.all.date.value==""){
-		alert("请输入考核期限!");
-		document.myform.date.focus();
-	}
-	else if(document.all.station.value==""){
+	else if(document.getElementById("con").value==""){
 		alert("请输入员工岗位职责描述!");
-		document.myform.station.focus();
+		a.action="mngrade.jsp";
+		document.all.station.focus();
 	}
-	else if(document.all.grade.value==""){
+	else if(document.getElementById("score").value==""){
 		alert("请输入分数!");
-		document.myform.grade.focus();
+		a.action="mngrade.jsp";
+		document.all.grade.focus();
 	}
-	else if(document.all.comm.value==""){
+	else if(document.getElementById("eval").value==""){
 		alert("请输入综合评语！!");
-		document.myform.comm.focus();
+		a.action="mngrade.jsp";
+		document.all.comm.focus();
 	}
-	
+	else {
+		alert("提交成功！");
+		var a=document.myform;
+		a.action="MsgServlet";
+		a.submit();
+	}
 }
 </script>
 </head>

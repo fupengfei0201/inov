@@ -12,7 +12,7 @@
 <body>
 <div id="welc">
 		<div id="wel">
-      <form action="LoginServlet" method="post">
+      <form action="SelServlet" method="post">
 用户名：<input type="text" name="uname" id="uname" class="log"><br><br>
 密&nbsp;&nbsp;码：<input type="text" name="upassw" id="upassw" class="log"><br><br>
 <label></label><input type="radio" checked="checked" name="title" value="emp"/>员工&nbsp;&nbsp;

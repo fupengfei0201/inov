@@ -34,15 +34,15 @@ background: lightgrey;
 <body>
 	<div id="registergide">
 		<form action="" method="post">
-			<input type="button" value="经理注册" class="pg" onClick="window.location.href='register/mngregister.jsp'">
+			<input type="button" value="经&nbsp;&nbsp;理&nbsp;&nbsp;注&nbsp;&nbsp;册" class="pg" onClick="window.location.href='register/mngregister.jsp'">
 			<div id="bt"></div>
 			<input type="button" value="指导老师注册" class="pg" onClick="window.location.href='register/tearegister.jsp'">
 			<div id="bt"></div>
-			<input type="button" value="员工注册" class="pg" onClick="window.location.href='register/empregister.jsp'">
+			<input type="button" value="员&nbsp;&nbsp;工&nbsp;&nbsp;注&nbsp;&nbsp;册" class="pg" onClick="window.location.href='register/empregister.jsp'">
 			<div id="bt"></div>
 			<input type="button" value="人力资源注册" class="pg" onClick="window.location.href='register/hrmregister.jsp'">
 			<div id="bt"></div>
-			<input type="button" value="退出" class="pg" onClick="window.location.href='main.jsp'">
+			<input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;出" class="pg" onClick="window.location.href='main.jsp'">
 			<div id="bt"></div>
 			</form>
 		</div>

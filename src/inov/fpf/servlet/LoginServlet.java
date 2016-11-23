@@ -46,25 +46,19 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		String name=request.getParameter("uname");
+		HttpSession session=request.getSession();
+		String name=(String)session.getAttribute("name");
 		String password=request.getParameter("upassw");
-		String levle=request.getParameter("title");
+		String levle=(String)session.getAttribute("title");
 		System.out.println(name);
 		System.out.println(levle);
 		boolean t;
-		HttpSession session=request.getSession();
 		JDBCEmp p=new JDBCEmp();
 		int r=p.empcount();
 		//Login l=new Login();
 		if(levle.equals("manag")){
 			JDBCMsg msg=new JDBCMsg();
-			 t=msg.login(name, password);
-			if(t==true){
-				//l.setName(name);
-				//l.setTitle(levle);
-				session.setAttribute("name",name);
-				session.setAttribute("title",levle);
-				int q=msg.selectcount();
+			int q=msg.selectcount();
 				//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 				if(p.selectEmpMnCount()%r==0){
 					List<Login>ll=p.empNameAndDept(name);
@@ -82,25 +76,15 @@ public class LoginServlet extends HttpServlet {
 					request.setAttribute("q",q);
 					request.getRequestDispatcher("empsel.jsp").forward(request, response);
 				}
-				
-		}
-			if(t==false){
-				request.setAttribute("msg","<script>alert(\"密码错误 \");</script>");
-				request.getRequestDispatcher("main.jsp").forward(request, response);
-			}
 		}
 		if(levle.equals("tea")){
 			JDBCTeacher teacher=new JDBCTeacher();
-			t=teacher.login(name, password);
 			int q=p.selectcount();
-			if(t==true){
-				session.setAttribute("name",name);
-				session.setAttribute("title",levle);
 				//判断师傅的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 				if(p.selectEmpTeaCount()%r==0){
 					List<Login>ll=p.empNameAndDept(name);
 					request.setAttribute("ll",ll);
-					request.setAttribute("msg",levle);
+					//request.setAttribute("msg",levle);
 					request.setAttribute("mk","师傅");
 					request.setAttribute("q",q);
 					request.getRequestDispatcher("empsel.jsp").forward(request, response);
@@ -108,26 +92,13 @@ public class LoginServlet extends HttpServlet {
 				else{
 					List<Login>ll=p.empTeaName();
 					request.setAttribute("ll",ll);
-					request.setAttribute("msg",levle);
+					//request.setAttribute("msg",levle);
 					request.setAttribute("mk","师傅");
 					request.setAttribute("q",q);
 					request.getRequestDispatcher("empsel.jsp").forward(request, response);
 				}
-				}
-			if(t==false){
-				request.setAttribute("msg","<script>alert(\"密码错误 \");</script>");
-				request.getRequestDispatcher("main.jsp").forward(request, response);
-			}
 		}
-		if(levle.equals("emp")){
-			
-			t=p.login(name, password);
-			if(t==true){
-				session.setAttribute("name",name);
-				session.setAttribute("title",levle);
-				//List<Empcontent>list=j.empcontents();
-				//request.setAttribute("list",list);
-				
+		if(levle.equals("emp")){	
 				//老员工评分
 				if(p.empentry(name)){
 					session.setAttribute("r","oldone");
@@ -248,12 +219,6 @@ public class LoginServlet extends HttpServlet {
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
 					}
 				}
-				}
-			if(t==false){
-				request.setAttribute("msg","<script>alert(\"密码错误 \");</script>");
-				request.getRequestDispatcher("main.jsp").forward(request, response);
-				System.out.println("------------------------------");
-			}
 		}
 	}
 	

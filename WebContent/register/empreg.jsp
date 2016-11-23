@@ -7,18 +7,76 @@
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <title>Insert title here</title>
 <script type="text/javascript" src="javascript/regscript.js"></script>
+<script type="text/javascript">
+function check(){
+	if(document.all.name.value==""){
+		alert("请输入真实姓名!");
+		a.action="emperg.jsp";
+		document.myform.name.focus();
+		return;
+	}
+	else if(!checkname(document.all.name.value)){
+		alert("您输入的姓名不合法，请重新输入！");
+		a.action="emperg.jsp";
+		document.myform.name.focus();
+		return;
+	}
+	else if(document.all.pwd.value==""){
+		alert("请输入密码!");
+		a.action="emperg.jsp";
+		document.myform.pwd.focus();
+		return;
+	}
+	else if(!checkpwd(document.all.pwd.value)){
+		alert("您输入的密码不合法，请重新输入！");
+		a.action="emperg.jsp";
+		document.myform.pwd.focus();
+		return;
+	}
+	else if(document.all.pwd1.value==""){
+		alert("请输入确认密码!");
+		a.action="emperg.jsp";
+		document.myform.pwd1.focus();
+		return;
+	}
+	else if(document.all.pwd1.value!=document.all.pwd.value){
+		alert("您两次输入的密码不一致，请重新输入!");
+		a.action="emperg.jsp";
+		document.myform.pwd.focus();
+		return;
+	}
+	else if(document.all.dept.value==""){
+		alert("请输入部门!");
+		a.action="emperg.jsp";
+		document.myform.dept.focus();
+		return;
+	}
+	else if(document.myform.edu.value==""){
+		alert("请输入学历!");
+		a.action="emperg.jsp";
+		document.myform.edu.focus();
+		return;
+	}
+	else{
+		alert("注册成功！");
+		var a=document.myform;
+		a.action="EmpRegServlet";
+		a.submit();
+	}
+}
+</script>
 </head>
 <body>
 ${requestScope.m}
 <div id="reg">
-<form action="EmpRegServlet" method="post" name = "myform" onsubmit="return check()">
+<form action="" method="post" name = "myform" onsubmit="return check()">
 <div style="width: 80%;height:80%;margin: auto;">
 <h3 align="center">员工注册</h3>
 真实姓名：<input type="text" name="name" value="" class="register" ><br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;密码：<input type="password" name="pwd" value="" class="register" ><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px">密码由5~20个字母、数字、“_”或“.”组成（以字母开头）</span><br><br>
 确认密码：<input type="password" name="pwd1" value="" class="register"><br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;部门：<input type="text" name="dept" value="" class="register"><br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;学历：<select id="a" name="edu">
+&nbsp;&nbsp;&nbsp;&nbsp;学历：<select id="a" name="edu" class="register">
 <option value="">请选择</option>
 <option value="博士">博士</option>
 <option value="硕士">硕士</option>

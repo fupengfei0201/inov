@@ -7,30 +7,53 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" >
-function check(){
+var grade;
+	function check(){
+		alert("aaa");
+		if(document.all.name.value==""){
+			alert("请输入员工姓名!");
+			a.action="teachergrade.jsp";
+			document.form.name.focus();
+		}
+		else if(document.all.dept.value==""){
+			alert("请输入指导老师!");
+			a.action="teachergrade.jsp";
+			document.form.dept.focus();
+		}
+		else if(check2()==true){
+			alert("请输入分数!");
+			a.action="teachergrade.jsp";
+		 }
+		else if(document.all.comm.value==""){
+			alert("请输入综合评语!");
+			a.action="teachergrade.jsp";
+			document.form.comm.focus();
+		}
+		else {
+			alert("提交成功！");
+			var a=document.myform;
+			a.action="TeacherServlet";
+			a.submit();
+		}
+	}
 	
-	if(document.all.name.value==""){
-		alert("请输入员工姓名!");
-		document.myform.name.focus();
+	function check2(){
+		alert("check2");
+		 grade=document.getElementsByName("grade");
+		alert(grade.length);
+		for(var i=0;i<grade.length;i++){
+			alert("i<"+grade.length+document.getElementById("score"+i).value);
+			alert(document.getElementById("score"+i).value);
+			if(document.getElementById("score"+i).value!=""){
+				return false;
+			}
+			else{
+				return true;
+				alert("xx");
+			}
+		}
+		
 	}
-	else if(document.all.dept.value==""){
-		alert("请输入指导老师!");
-		document.myform.dept.focus();
-	}
-	else if(document.all.grade.value==""){
-		alert("请输入分数!");
-		document.myform.grade.focus();
-	}
-	else if(document.all.comm.value==""){
-		alert("请输入综合评语!");
-		document.myform.comm.focus();
-	}
-	else {
-		var a=document.myform;
-		a.action="TeacherServlet";
-		a.submit();
-	}
-}
 </script>
 </head>
 <body>
@@ -71,7 +94,7 @@ for(int i=0;i<list.size();i++){
 <td><%=list.get(i).getElements() %></td>
 <td colspan="2"><%=list.get(i).getPoints() %></td>
 <td><%=list.get(i).getMarks() %></td>
-<td><input type="text" value="" name="grade<%=i%>" style="width: 100%;height: 100%"></td>
+<td><input type="text" value="" id="score<%=i %>" name="grade" style="width: 100%;height: 100%;text-align: center"></td>
 </tr>
 <%} %>
 <tr rowspan="3" height="50px">

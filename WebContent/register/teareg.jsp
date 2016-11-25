@@ -64,7 +64,7 @@ ${requestScope.m}
 &nbsp;&nbsp;&nbsp;&nbsp;密码：<input type="password" name="pwd" class="register" value="" >
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px">密码由5~20个字母、数字、“_”或“.”组成（以字母开头）</span><br><br>
 确认密码：<input type="password" name="pwd1" class="register" value=""><br><br>
-<input type="submit" value="注册" class="regbtn" >
+<input type="submit" value="注册" class="regbtn">
 <input type="reset" value="重置" class="regbtn" >
 </div></form>
 </div>

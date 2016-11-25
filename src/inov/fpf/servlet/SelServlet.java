@@ -1,6 +1,7 @@
 package inov.fpf.servlet;
 
 import inov.fpf.model.dao.JDBCEmp;
+import inov.fpf.model.dao.JDBCHR;
 import inov.fpf.model.dao.JDBCMsg;
 import inov.fpf.model.dao.JDBCTeacher;
 import inov.fpf.model.vo.Login;
@@ -82,6 +83,20 @@ public class SelServlet extends HttpServlet {
 				request.getRequestDispatcher("introduce.jsp").forward(request, response);
 				return;		
 				}
+			else{
+				request.setAttribute("msg","<script>alert(\"用户名或密码错误 \");</script>");
+				request.getRequestDispatcher("main.jsp").forward(request, response);
+			}
+		}
+		if(levle.equals("hrm")){
+			JDBCHR jr=new JDBCHR();
+			t=jr.login(name, password);
+			if(t==true){
+				session.setAttribute("name",name);
+				session.setAttribute("title",levle);
+				request.getRequestDispatcher("introduce.jsp").forward(request, response);
+				return;	
+			}
 			else{
 				request.setAttribute("msg","<script>alert(\"用户名或密码错误 \");</script>");
 				request.getRequestDispatcher("main.jsp").forward(request, response);

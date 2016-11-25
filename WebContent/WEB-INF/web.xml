@@ -174,7 +174,7 @@
     <servlet-name>EmpgradeServletTwo</servlet-name>
     <url-pattern>/EmpgradeServletTwo</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>SelServlet</display-name>
     <servlet-name>SelServlet</servlet-name>
@@ -183,5 +183,25 @@
   <servlet-mapping>
     <servlet-name>SelServlet</servlet-name>
     <url-pattern>/SelServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HRMServlet</display-name>
+    <servlet-name>HRMServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.HRMServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HRMServlet</servlet-name>
+    <url-pattern>/HRMServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HRMRigServlet</display-name>
+    <servlet-name>HRMRigServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.HRMRigServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HRMRigServlet</servlet-name>
+    <url-pattern>/HRMRigServlet</url-pattern>
   </servlet-mapping>
 </web-app>

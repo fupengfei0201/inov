@@ -52,10 +52,14 @@ public class LoginServlet extends HttpServlet {
 		String levle=(String)session.getAttribute("title");
 		System.out.println(name);
 		System.out.println(levle);
-		boolean t;
+		//boolean t;
 		JDBCEmp p=new JDBCEmp();
 		int r=p.empcount();
 		//Login l=new Login();
+		if(levle.equals("hrm")){
+			request.setAttribute("list","0");
+			request.getRequestDispatcher("d.jsp").forward(request, response);		
+		}
 		if(levle.equals("manag")){
 			JDBCMsg msg=new JDBCMsg();
 			int q=msg.selectcount();

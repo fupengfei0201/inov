@@ -48,7 +48,7 @@ function check(){
 	else{
 		alert("注册成功！");
 		var a=document.myform;
-		a.action="";
+		a.action="HRMRigServlet";
 		a.submit();
 	}
 }
@@ -57,7 +57,7 @@ function check(){
 <body>
 ${requestScope.m}
 <div id="reg">
-<form action="" method="post" name = "myform" onsubmit="return check()">
+<form action="HRMRigServlet" method="post" name = "myform" onsubmit="return check()">
 <div style="width: 80%;height:100%;margin: auto;">
 <h3 align="center">人力资源注册</h3>
 真实姓名：<input type="text" name="name" class="register" value=""><br><br>

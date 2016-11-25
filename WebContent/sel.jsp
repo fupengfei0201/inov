@@ -17,7 +17,7 @@
 
 <div id="select">
 <div  style="width:30px;margin-top: 20px;text-align: center;margin-left: 80%">
-<input type="text" name="time" value="<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date()) %>" style="border: none;font-size: 18px" readonly/>
+<input type="text" name="time" value="<%=new SimpleDateFormat("yyyy-MM").format(new Date()) %>" style="border: none;font-size: 18px" readonly/>
 </div>
 <div style="float: left;margin-top: 5px;">
 【<%=request.getAttribute("mk") %>】对以下员工的第【<%=request.getAttribute("q") %>】次打分

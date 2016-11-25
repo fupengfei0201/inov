@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.jndi.url.corbaname.corbanameURLContextFactory;
+
 public class JDBCHR {
 	private Connection con = null;
 	private PreparedStatement psd = null;
@@ -32,10 +34,39 @@ public class JDBCHR {
 		JDBCUtil.closeupdate(con, psd, rs);
 		return t;
 	}
-	public List<HRGrade> allemp(){
+	
+	public List<HRGrade> allemp(String time){
 		List list =new ArrayList<HRGrade>();
-		con = JDBCUtil.getConnection();
-		String sql="select m.msgname,m.msum,t.tname,t.tsum,emp.assessname,emp.empsum,emp.(select avg(empsum)from empgrade group by empcod)from teacher t,msggrade m,empgrade emp where emp.cod=m.emp and m.emp=t.empid";
+		
+		try {
+			con = JDBCUtil.getConnection();
+			String sql="select rownum, m.empname,m.msgname,m.msum,t.tname,t.tsum,a.empsum,b.empsum,c.empsum,round((a.empsum+b.empsum+c.empsum)/3,2),round((m.msum+t.tsum+((a.empsum+b.empsum+c.empsum)/3))/3,2),m.comments from msggrade m,teacher t,empgrade a,empgradetwo b,newemp c where m.emp=T.EMPID and t.empid=A.EMPCOD and a.empcod=b.empcod and b.empcod=c.empcod and m.empname=t.empname and t.empname=a.empname and a.empname=b.empname and b.empname=c.empname and m.gradetime=to_date(?,'YYYY-MM')";
+			psd=con.prepareStatement(sql);
+			psd.setString(1, time);
+			rs=psd.executeQuery();
+			while(rs.next()){
+				HRGrade hr=new HRGrade();
+			hr.setCod(rs.getInt(1));
+			hr.setName(rs.getString(2));
+			hr.setDeptname(rs.getString(3));
+			hr.setDeptgrade(rs.getDouble(4));
+			hr.setTeachername(rs.getString(5));
+			hr.setTeachergrade(rs.getDouble(6));
+			hr.setOnegrade(rs.getDouble(7));
+			hr.setTwograde(rs.getDouble(8));
+			hr.setThreegrade(rs.getDouble(9));
+			hr.setEmpavg(rs.getDouble(10));
+			hr.setSum(rs.getDouble(11));
+			hr.setComment(rs.getString(12));
+			list.add(hr);	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JDBCUtil.closeupdate(con, psd, rs);
 		return list;
 	}
+
+	
 }

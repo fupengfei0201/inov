@@ -68,6 +68,8 @@ public class TeacherServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String teachername = request.getParameter("detp");
 		String comm = request.getParameter("comm");
+		System.out.println(name);
+		System.out.println(teachername);
 		JDBCContent j = new JDBCContent();
 		List<TCheckPoints> list1 = j.tCheckPoints();
 		List<Integer> l = new ArrayList<Integer>();
@@ -99,12 +101,15 @@ public class TeacherServlet extends HttpServlet {
 		}*/
 		int sum = 0;
 		for (int i = 0; i < list1.size(); i++) {
+			
 			String grade = request.getParameter("grade" + i);
-			int x = Integer.parseInt(grade);
+			System.out.println(grade);
+			int x = Integer.parseInt(grade.trim());
 			l.add(x);
 			sum = sum + x;
 
 		}
+		System.out.println("aa");
 		double a = emp.empcount();
 		System.out.println("a的值为："+a);
 		int q = emp.selectcount();
@@ -154,7 +159,7 @@ public class TeacherServlet extends HttpServlet {
 						if ((emp.selectEmpTeaCount() % a) == 0) {
 							List<Login> ll = emp.empNameAndDept();
 							request.setAttribute("ll", ll);
-							request.setAttribute("msg", "tea");
+							//request.setAttribute("msg", "tea");
 							request.setAttribute("mk","师傅");
 							request.setAttribute("q",emp.selectcount());
 							request.getRequestDispatcher("empsel.jsp").forward(
@@ -162,7 +167,7 @@ public class TeacherServlet extends HttpServlet {
 						} else {
 							List<Login> ll = emp.empTeaName();
 							request.setAttribute("ll", ll);
-							request.setAttribute("msg", "tea");
+							//request.setAttribute("msg", "tea");
 							request.setAttribute("mk","师傅");
 							request.setAttribute("q",emp.selectcount());
 							request.getRequestDispatcher("empsel.jsp").forward(
@@ -226,7 +231,7 @@ public class TeacherServlet extends HttpServlet {
 					if ((emp.selectEmpTeaCount() % a) == 0) {
 						List<Login> ll = emp.empNameAndDept();
 						request.setAttribute("ll", ll);
-						request.setAttribute("msg", "tea");
+						//request.setAttribute("msg", "tea");
 						request.setAttribute("mk","师傅");
 						request.setAttribute("q",emp.selectcount());
 						request.getRequestDispatcher("empsel.jsp").forward(
@@ -234,7 +239,7 @@ public class TeacherServlet extends HttpServlet {
 					} else {
 						List<Login> ll = emp.empTeaName();
 						request.setAttribute("ll", ll);
-						request.setAttribute("msg", "tea");
+						//request.setAttribute("msg", "tea");
 						request.setAttribute("mk","师傅");
 						request.setAttribute("q",emp.selectcount());
 						request.getRequestDispatcher("empsel.jsp").forward(
@@ -280,7 +285,7 @@ public class TeacherServlet extends HttpServlet {
 				if ((emp.selectEmpTeaCount() %a) == 0) {
 					List<Login> ll = emp.empNameAndDept();
 					request.setAttribute("ll", ll);
-					request.setAttribute("msg", "tea");
+					//request.setAttribute("msg", "tea");
 					request.setAttribute("mk","师傅");
 					request.setAttribute("q",emp.selectcount());
 					request.getRequestDispatcher("empsel.jsp").forward(request,
@@ -288,7 +293,7 @@ public class TeacherServlet extends HttpServlet {
 				} else {
 					List<Login> ll = emp.empTeaName();
 					request.setAttribute("ll", ll);
-					request.setAttribute("msg", "tea");
+					//request.setAttribute("msg", "tea");
 					request.setAttribute("mk","师傅");
 					request.setAttribute("q",emp.selectcount());
 					request.getRequestDispatcher("empsel.jsp").forward(request,

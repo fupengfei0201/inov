@@ -12,7 +12,42 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>Insert title here</title>
-<script type="text/javascript" src="javascript/gradescript.js">
+<script type="text/javascript">
+
+function check(){
+	if(check2()){
+		alert("请输入分数!");
+		document.all.gra.focus();
+	 }
+	else{
+		var a=document.myform;
+		a.action="EmpGradeServlet";
+		a.submit();
+			
+		}
+	}
+
+function ch(){
+	if(check2()){
+		alert("请输入分数!");
+		document.all.gra.focus();
+	 }
+	else{
+		var b=document.myform2;
+		b.action="EmpgradeServletTwo";
+		b.submit();
+	}
+}
+
+function check2(){
+	var lh=document.getElementsByName("gra");
+	for(var i=0;i<lh.length;i++){
+	if(document.getElementById("score"+i).value==""){
+		return true;
+		break;
+	}
+}
+}
 </script>
 </head>
 <body>
@@ -24,18 +59,18 @@
 <% 
 if(session.getAttribute("x").equals("0")){
 %>
-<form action="EmpGradeServlet" method="post" name = "myform" onsubmit="return check()">
+<form action="" method="post" name = "myform" >
 <div id="select">
 
 <table width="100%" height="30px" border="1" cellpadding="0" cellspacing="0" align="center" style="text-align: center;">
 <tr>
 <td width="100px">员工姓名</td>
 <td width="100px">
-<input type="text" name="name" value="<%=request.getAttribute("pname") %>">
+<input type="text" name="name" value="<%=request.getAttribute("pname") %>" style="border:none;text-align: center" readonly>
 
 </td>
 <td width="100px">所属部门</td>
-<td width="100px"><input type="text" name="dept" value="<%=request.getAttribute("dept") %>"></td>
+<td width="100px"><input type="text" name="dept" value="<%=request.getAttribute("dept") %>" style="border:none;text-align: center" readonly></td>
 <td width="100px">考核期限</td>
 <td width="100px"><input type="text" value="" name="date" id="date" class="txt"></td>
 </tr>
@@ -57,7 +92,7 @@ ${requestScope.l}
 <td><%=list.get(i).getAssessment() %></td>
 <td colspan="3"><%=list.get(i).getEmpcontent() %></td>
 <td><%=list.get(i).getMarks()%></td>
-<td><input type="text" value="" name="grade<%=i%>" style="width: 100%;height: 100%"/></td>
+<td><input type="text" value="" id="score<%=i %>" name="grade<%=i%>" style="width: 100%;height: 100%;text-align: center"/><input type="hidden" name="gra" /></td>
 </tr>
 <%}%>
 <tr>
@@ -66,7 +101,7 @@ ${requestScope.l}
 <%--
 String x=(String)request.getAttribute("msg");
 --%>
-<input type="submit" value="提交">
+<input type="button" value="提交" onclick="return check()">
 </center>
 </td>
 </tr>
@@ -76,18 +111,18 @@ String x=(String)request.getAttribute("msg");
 <%}
 if(session.getAttribute("x").equals("1")){
 %>
-<form action="EmpgradeServletTwo" method="post" name = "myform" onsubmit="return check()">
+<form action="" method="post" name = "myform2">
 <div id="select">
 
 <table width="100%" height="30px" border="1" cellpadding="0" cellspacing="0" align="center" style="text-align: center;">
 <tr>
 <td width="100px">员工姓名</td>
 <td width="100px">
-<input type="text" name="name" value="<%=request.getAttribute("pname") %>">
+<input type="text" name="name" value="<%=request.getAttribute("pname") %>" style="border:none;text-align: center" readonly/>
 
 </td>
 <td width="100px">所属部门</td>
-<td width="100px"><input type="text" name="dept" value="<%=request.getAttribute("dept") %>"></td>
+<td width="100px"><input type="text" name="dept" value="<%=request.getAttribute("dept") %>" style="border:none;text-align: center" readonly/></td>
 <td width="100px">考核期限</td>
 <td width="100px"><input type="text" value="" name="date" id="date" class="txt"></td>
 </tr>
@@ -109,7 +144,7 @@ ${requestScope.l}
 <td><%=list.get(i).getAssessment() %></td>
 <td colspan="3"><%=list.get(i).getEmpcontent() %></td>
 <td><%=list.get(i).getMarks()%></td>
-<td><input type="text" value="" name="grade<%=i%>" style="width: 100%;height: 100%"/></td>
+<td><input type="text" value="" id="score<%=i %>"  name="grade<%=i%>" style="width: 100%;height: 100%"/><input type="hidden" name="Tgrade" /></td>
 </tr>
 <%}%>
 <tr>
@@ -118,7 +153,7 @@ ${requestScope.l}
 <%--
 String x=(String)request.getAttribute("msg");
 --%>
-<input type="submit" value="提交">
+<input type="button" value="提交" onclick="return ch()">
 </center>
 </td>
 </tr>

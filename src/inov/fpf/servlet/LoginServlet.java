@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
 				//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 				if(p.selectEmpMnCount()%r==0){
 					List<Login>ll=p.empNameAndDept(name);
-					request.setAttribute("msg",name);
+					//request.setAttribute("msg",name);
 					request.setAttribute("ll",ll);
 					request.setAttribute("mk","经理");
 					request.setAttribute("q",q);
@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
 				else{
 					List<Login>ll=p.empMnName();
 					request.setAttribute("ll",ll);
-					request.setAttribute("msg",name);
+					//request.setAttribute("msg",name);
 					request.setAttribute("mk","经理");
 					request.setAttribute("q",q);
 					request.getRequestDispatcher("empsel.jsp").forward(request, response);

@@ -14,7 +14,7 @@
 		<div id="wel">
       <form action="SelServlet" method="post">
 用户名：<input type="text" name="uname" id="uname" class="log"><br><br>
-密&nbsp;&nbsp;码：<input type="text" name="upassw" id="upassw" class="log"><br><br>
+密&nbsp;&nbsp;码：<input type="password" name="upassw" id="upassw" class="log"><br><br>
 <label></label><input type="radio" checked="checked" name="title" value="emp"/>员工&nbsp;&nbsp;
 <label></label><input type="radio" name="title" value="tea"/>师傅<br>
 <label></label><input type="radio" name="title" value="manag"/>经理&nbsp;&nbsp;

@@ -46,7 +46,7 @@ public class GradeServlet extends HttpServlet {
 		String tilte=(String)session.getAttribute("title");
 		String name=request.getParameter("name");
 		String dept=request.getParameter("dept");
-		//System.out.println(name+"\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+		System.out.println(name+"\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
 		JDBCContent j=new JDBCContent();
 		//跳转到经理打分页面
 		if(tilte.equals("manag")){

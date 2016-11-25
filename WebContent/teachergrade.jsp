@@ -7,53 +7,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" >
-var grade;
+
 	function check(){
-		alert("aaa");
-		if(document.all.name.value==""){
-			alert("请输入员工姓名!");
-			a.action="teachergrade.jsp";
-			document.form.name.focus();
-		}
-		else if(document.all.dept.value==""){
-			alert("请输入指导老师!");
-			a.action="teachergrade.jsp";
-			document.form.dept.focus();
-		}
-		else if(check2()==true){
+		if(check2()){
 			alert("请输入分数!");
-			a.action="teachergrade.jsp";
+			document.all.Tgrade.focus();
 		 }
 		else if(document.all.comm.value==""){
 			alert("请输入综合评语!");
-			a.action="teachergrade.jsp";
-			document.form.comm.focus();
+			document.all.comm.focus();
 		}
 		else {
-			alert("提交成功！");
-			var a=document.myform;
+			a=document.myform;
 			a.action="TeacherServlet";
 			a.submit();
 		}
 	}
-	
 	function check2(){
-		alert("check2");
-		 grade=document.getElementsByName("grade");
-		alert(grade.length);
-		for(var i=0;i<grade.length;i++){
-			alert("i<"+grade.length+document.getElementById("score"+i).value);
-			alert(document.getElementById("score"+i).value);
-			if(document.getElementById("score"+i).value!=""){
-				return false;
-			}
-			else{
-				return true;
-				alert("xx");
-			}
+		var lh=document.getElementsByName("Tgrade");
+		for(var i=0;i<lh.length;i++){
+		if(document.getElementById("score"+i).value==""){
+			return true;
+			break;
 		}
-		
 	}
+		
+}
 </script>
 </head>
 <body>
@@ -63,14 +42,14 @@ var grade;
 <%@ include file="time.jsp"%>
 </div>
 ${requestScope.l}
-<form action="TeacherServlet" method="post" name = "myform" onsubmit="return check()">
+<form action="" method="post" name = "myform" >
 <div id="select">
 <table width="100%" height="30px" border="1" cellpadding="0" cellspacing="0" align="center" style="text-align: center;">
 <tr>
 <td width="100px">被考评人</td>
-<td width="100px"><input type="text" name="name" value="<%=request.getAttribute("pname") %>"/></td>
+<td width="100px"><input type="text" name="name" value="<%=request.getAttribute("pname") %>" style="border:none;text-align: center" readonly/></td>
 <td width="100px">指导老师</td>
-<td width="100px"><input type="text" name="detp" value="<%=session.getAttribute("name") %>"/></td>
+<td width="100px"><input type="text" name="detp" value="<%=session.getAttribute("name") %>" style="border:none;text-align: center" readonly/></td>
 <td width="100px">考核期限</td>
 <td width="100px"><input type="text" value="" name="date" id="date" class="txt"></td>
 </tr>
@@ -94,7 +73,8 @@ for(int i=0;i<list.size();i++){
 <td><%=list.get(i).getElements() %></td>
 <td colspan="2"><%=list.get(i).getPoints() %></td>
 <td><%=list.get(i).getMarks() %></td>
-<td><input type="text" value="" id="score<%=i %>" name="grade" style="width: 100%;height: 100%;text-align: center"></td>
+<td><input type="text" value="" id="score<%=i %>" name="grade<%=i %>" style="width: 100%;height: 100%;text-align: center"><input type="hidden" name="Tgrade" /></td>
+
 </tr>
 <%} %>
 <tr rowspan="3" height="50px">
@@ -104,7 +84,7 @@ for(int i=0;i<list.size();i++){
 <tr height="50px">
 <td colspan="6"  >
 
-<input type="submit" value="提交"/></form></td>
+<input type="button" value="提交" onclick="return check()"/></form></td>
 </tr>
 </table>
 

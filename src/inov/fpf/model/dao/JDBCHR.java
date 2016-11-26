@@ -40,9 +40,13 @@ public class JDBCHR {
 		
 		try {
 			con = JDBCUtil.getConnection();
-			String sql="select rownum, m.empname,m.msgname,m.msum,t.tname,t.tsum,a.empsum,b.empsum,c.empsum,round((a.empsum+b.empsum+c.empsum)/3,2),round((m.msum+t.tsum+((a.empsum+b.empsum+c.empsum)/3))/3,2),m.comments from msggrade m,teacher t,empgrade a,empgradetwo b,newemp c where m.emp=T.EMPID and t.empid=A.EMPCOD and a.empcod=b.empcod and b.empcod=c.empcod and m.empname=t.empname and t.empname=a.empname and a.empname=b.empname and b.empname=c.empname and m.gradetime=to_date(?,'YYYY-MM')";
+			String sql="select rownum, m.empname,m.msgname,m.msum,t.tname,t.tsum,a.empsum,b.empsum,c.empsum,round((a.empsum+b.empsum+c.empsum)/3,2),round((m.msum+t.tsum+((a.empsum+b.empsum+c.empsum)/3))/3,2),m.comments from msggrade m,teacher t,empgrade a,empgradetwo b,newemp c where m.emp=T.EMPID and t.empid=A.EMPCOD and a.empcod=b.empcod and b.empcod=c.empcod and m.empname=t.empname and t.empname=a.empname and a.empname=b.empname and b.empname=c.empname and to_char(m.gradetime,'yyyy-mm')=?and to_char(t.scoredate,'yyyy-mm')=? and to_char(a.scoretime,'yyyy-mm')=? and to_char(b.scoretime,'yyyy-mm')=? and to_char(c.scoretime,'yyyy-mm')=?";
 			psd=con.prepareStatement(sql);
 			psd.setString(1, time);
+			psd.setString(2, time);
+			psd.setString(3,time);
+			psd.setString(4, time);
+			psd.setString(5,time);
 			rs=psd.executeQuery();
 			while(rs.next()){
 				HRGrade hr=new HRGrade();

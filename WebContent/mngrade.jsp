@@ -24,7 +24,6 @@ function check(){
 	else {
 		var a=document.myform;
 		a.action="MsgServlet";
-		alert("提交成功！");
 		a.submit();
 	}
 }

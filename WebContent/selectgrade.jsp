@@ -54,6 +54,8 @@ ${requestScope.x}
 <td colspan="2"><input type="button" value="查询" onclick="return check()"></td>
 </tr>
 </table>
+</form>
+<form action="ExcelServel" method="post">
 <table style="width:100%;height:100%;text-align: center;margin-top: 20px" border="1" cellpadding="0" cellspacing="0">
 <tr style="height: 30px">
 <td height="20px" width="40px">序号</td>
@@ -69,7 +71,6 @@ ${requestScope.x}
 <td width="40px">总分</td>
 <td>部门负责人评语</td>
 </tr>
-
 <%
 if(!request.getAttribute("list").equals("0")){
 List<HRGrade>list=(ArrayList)request.getAttribute("list");
@@ -89,11 +90,17 @@ for(int i=0;i<list.size();i++){%>
 	<td><%=list.get(i).getComment()%></td>
 	
 	</tr>
-<% }}
+<% }
+
 %>
+<input type="hidden" name="exe" value="<%=request.getAttribute("time") %>"/>
+<tr>
+<td colspan="12"><center><input type="submit" value="生成excel表格"/></center></td>
+</tr>
+<%} %>
 </table>
-</div>
 </form>
+</div>
 </div>
 </body>
 </html>

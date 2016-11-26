@@ -204,4 +204,14 @@
     <servlet-name>HRMRigServlet</servlet-name>
     <url-pattern>/HRMRigServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ExcelServel</display-name>
+    <servlet-name>ExcelServel</servlet-name>
+    <servlet-class>inov.fpf.servlet.ExcelServel</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExcelServel</servlet-name>
+    <url-pattern>/ExcelServel</url-pattern>
+  </servlet-mapping>
 </web-app>

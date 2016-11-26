@@ -29,13 +29,13 @@
 	 		2.由于人数较多，工作量较大，请各新员工实习部门提前进行打分工作.
 	 		</p><br><br>
 	 		<p  style="width: 100%;height: 30px;font-size: 18px;font-family: 楷体 ;margin: auto;color: " >
-   				<b id="second" >8</b>秒后自动跳转。。 <a href="javascript:goBack();">确定</a> 
+   				<b id="second" >2</b>秒后自动跳转。。 <a href="javascript:goBack();">确定</a> 
  			</p>
 	</div>	
 	
 	<script type="text/javascript"> 
   		var sec = document.getElementById("second");
-  		var i = 8;
+  		var i = 2;
   		var timer = setInterval(function(){
    		i--;
     	sec.innerHTML = i;

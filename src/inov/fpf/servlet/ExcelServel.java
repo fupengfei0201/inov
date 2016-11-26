@@ -54,7 +54,7 @@ public class ExcelServel extends HttpServlet {
 		request.setAttribute("detp",levle);
 		session.setAttribute("name",name);
 		session.setAttribute("title",levle);
-		System.out.println(list.get(1).getName()+"证明list有值");
+		//System.out.println(list.get(1).getName()+"证明list有值");
 		try {  
 		         
 		  
@@ -85,31 +85,31 @@ public class ExcelServel extends HttpServlet {
 		        //第三列第一行  
 		        Label label3 = new Label(2, 0, "部门负责人");  
 		        sheet1.addCell(label3);  
-		        //第三列第一行  
+		        //第四列第一行  
 		        Label label4 = new Label(3, 0, "得分");  
 		        sheet1.addCell(label4); 
-		        //第三列第一行  
+		        //第五列第一行  
 		        Label label5 = new Label(4, 0, "指导老师（师傅）");  
 		        sheet1.addCell(label5); 
-		        //第三列第一行  
+		        //第六列第一行  
 		        Label label6 = new Label(5, 0, "得分");  
 		        sheet1.addCell(label6); 
-		        //第三列第一行  
+		        //第七列第一行  
 		        Label label7 = new Label(6, 0, "员工互评得分1");  
 		        sheet1.addCell(label7); 
-		        //第三列第一行  
+		        //第八列第一行  
 		        Label label8 = new Label(7, 0, "员工互评得分2");  
 		        sheet1.addCell(label8); 
-		        //第三列第一行  
+		        //第九列第一行  
 		        Label label9 = new Label(8, 0, "员工互评得分3");  
 		        sheet1.addCell(label9); 
-		        //第三列第一行  
+		        //第十列第一行  
 		        Label label10 = new Label(9, 0, "员工互评平均得分");  
 		        sheet1.addCell(label10); 
-		        //第三列第一行  
+		        //第十一列第一行  
 		        Label label11 = new Label(10, 0, "总分");  
 		        sheet1.addCell(label11); 
-		        //第三列第一行  
+		        //第十二列第一行  
 		        Label label12 = new Label(11, 0, "部门负责人评语");  
 		        sheet1.addCell(label12); 
 		        /***********end第一行（各个列的标题）************/  

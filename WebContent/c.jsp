@@ -9,22 +9,51 @@
 </head>
 <body>
 <div>
-<%@ include file="head.jsp"%>
-<div id="title">
-<form action="LogoutServlet" method="post">
-	<input type="submit" value="退出系统" class="exit">
-	</form></div>
+<%@ include file="/head.jsp"%>
+<div id="title"></div>
 </div>
-<div id="center">
-<div id="left">
-	<%@ include file="welcome.jsp"%>
-	<%@  include file="agide.jsp"%>
+<div id="center" >
+	<div id="bg" style="margin-top:2%; height: 6%;">
+	<div id="line" style="background: gray"></div>
+	<div>
+	<div style="padding-left: 3%;font-size: 20px;padding-top: 12px;float: left;">用户注册</div>
 	</div>
-	<div id="right">c
+	</div>
+	<div id="left">
+	<%@  include file="register/registergide.jsp"%>
+	</div>
+	<div id="right" style="height: 85%">
+		<br><br>
+		<p  style="width: 80%;height: 30px;margin:auto;margin-top:5%;font-size: 18px;font-family: 楷体 ; " >
+				<b> 注册成功！</b><br><br><br>
+   				<b id="second" >5</b>秒后自动返回主页面...&nbsp;&nbsp;&nbsp;&nbsp;
+   				<a href="javascript:goBack();">确定</a> &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:goNow();">取消</a> 
+ 			</div>
+   		</p>
+   			
+ 		
+ 	<script type="text/javascript"> 
+  		var sec = document.getElementById("second");
+  		var i = 5;
+  		var timer = setInterval(function(){
+   		i--;
+    	sec.innerHTML = i;
+    	if(i==1){
+      		window.location.href = "main.jsp";
+   	 		}
+  		},1000);
+    
+ 		function goBack(){ 
+ 		 	window.location.href = "main.jsp";
+		 } 
+ 		function goNow(){ 
+ 		 	window.location.href = "register/mngregister.jsp";
+		 } 
+ 	</script> 
 	</div>
 	</div>
 <div id="bottom">
-	<%@  include file="bottom.jsp"%>
+	<%@  include file="../bottom.jsp"%>
 </div>	
 </body>
 </html>

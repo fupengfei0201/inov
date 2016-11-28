@@ -11,54 +11,50 @@
 function check(){
 	if(document.all.name.value==""){
 		alert("请输入真实姓名!");
-		a.action="emperg.jsp";
 		document.myform.name.focus();
 		return;
 	}
 	else if(!checkname(document.all.name.value)){
 		alert("您输入的姓名不合法，请重新输入！");
-		a.action="emperg.jsp";
 		document.myform.name.focus();
 		return;
 	}
 	else if(document.all.pwd.value==""){
 		alert("请输入密码!");
-		a.action="emperg.jsp";
 		document.myform.pwd.focus();
 		return;
 	}
 	else if(!checkpwd(document.all.pwd.value)){
 		alert("您输入的密码不合法，请重新输入！");
-		a.action="emperg.jsp";
 		document.myform.pwd.focus();
 		return;
 	}
 	else if(document.all.pwd1.value==""){
 		alert("请输入确认密码!");
-		a.action="emperg.jsp";
 		document.myform.pwd1.focus();
 		return;
 	}
 	else if(document.all.pwd1.value!=document.all.pwd.value){
 		alert("您两次输入的密码不一致，请重新输入!");
-		a.action="emperg.jsp";
 		document.myform.pwd.focus();
 		return;
 	}
 	else if(document.all.dept.value==""){
 		alert("请输入部门!");
-		a.action="emperg.jsp";
 		document.myform.dept.focus();
 		return;
 	}
 	else if(document.myform.edu.value==""){
 		alert("请输入学历!");
-		a.action="emperg.jsp";
 		document.myform.edu.focus();
 		return;
 	}
+	else if(document.myform.time.value==""){
+		alert("请输入入职时间!");
+		document.myform.time.focus();
+		return;
+	}
 	else{
-		alert("注册成功！");
 		var a=document.myform;
 		a.action="EmpRegServlet";
 		a.submit();
@@ -69,7 +65,7 @@ function check(){
 <body>
 ${requestScope.m}
 <div id="reg">
-<form action="" method="post" name = "myform" onsubmit="return check()">
+<form action="" method="post" name = "myform" >
 <div style="width: 80%;height:80%;margin: auto;">
 <h3 align="center">员工注册</h3>
 真实姓名：<input type="text" name="name" value="" class="register" ><br><br>
@@ -85,9 +81,8 @@ ${requestScope.m}
 <option value="专科以下">专科以下</option>
 </select>
 <br><br>
-
 入职时间：<input type="date" name="time"  value="" class="register"><br><br>
-<input type="submit" value="注册" class="regbtn">
+<input type="button" value="注册" class="regbtn" onclick="return check()">
 <input type="reset" value="重置" class="regbtn">
 </div></form>
 </div>

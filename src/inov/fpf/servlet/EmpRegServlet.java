@@ -46,13 +46,13 @@ public class EmpRegServlet extends HttpServlet {
 		int i=reg.regEmp(name, passw,time,edu,dept);
 		if(i==1){
 			request.setAttribute("注册成功","msg");
-			request.setAttribute("m", "<script>alert(\"注册成功！\");</script>");
+			//request.setAttribute("m", "<script>alert(\"注册成功！\");</script>");
 			System.out.println("注册成功");
-			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
+			request.getRequestDispatcher("c.jsp").forward(request, response);
 		}
 		else{
 			request.setAttribute("注册失败,请重新注册","msg");
-			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
+			request.getRequestDispatcher("c.jsp").forward(request, response);
 		}
 	}
 

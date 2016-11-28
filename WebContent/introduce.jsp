@@ -16,10 +16,11 @@
 	</form></div>
 </div>
 <div id="center" style="background :#F5F5F5;">
-	<div style="width: 60%;height:auto;margin: auto;font-family: 楷体 ;font-weight:bold;padding-top: 3%">
+	<div style="width: 80%;height:auto;margin: auto;font-family: 楷体 ;font-weight:bold;padding-top: 3%">
 	 		<h2 align="center">员工评分系统说明</h2>
-	 		<div style="width: 100%;height: 3px;background:lightgrey;"></div>
-	 		<p style="line-height:1.5;">考评标准说明：<br>
+	 		<div style="width: 100%;height: 3px;background:lightgrey;float: left"></div>
+	 		<div style="width:100%;float: left;border-left:2px dashed lightgrey;border-right:2px dashed lightgrey;border-bottom:2px dashed lightgrey">
+	 		<p style="width:90%;margin:auto;line-height:1.5;"><br>考评标准说明：<br>
 	 		1.优秀最低分数线：90，优秀的人数不得高于总人数的30%。<br>
 	 		1.良好最低分数线：80，良好的人数不得高于总人数的30%。<br>
 	 		3.一般分数线:80分以下。占比为剩余的约40%。<br>
@@ -28,14 +29,18 @@
 	 		1.员工互评中，除师傅和部门经理以外的3名员工对其进行打分，要求评分人为2名老员工，1名新入司学员，评分标准同以上说明。最后3名员工的平均值为该新学员中员工互评的得分。<br>
 	 		2.由于人数较多，工作量较大，请各新员工实习部门提前进行打分工作.
 	 		</p><br><br>
-	 		<p  style="width: 100%;height: 30px;font-size: 18px;font-family: 楷体 ;margin: auto;color: " >
-   				<b id="second" >2</b>秒后自动跳转。。 <a href="javascript:goBack();">确定</a> 
+	 		</div>
+	 		<div style="width:100%;float: left;margin: auto;text-align: center">
+	 		<br><br>
+	 		<p  style="width: 40%;height: 30px;font-size: 18px;font-family: 楷体 ;margin: auto;color:#1B539D;text-align: center " >
+   				<b id="second" >8</b>秒后自动跳转。。 <a href="javascript:goNext();">确定</a> 
  			</p>
+ 			</div>
 	</div>	
 	
 	<script type="text/javascript"> 
   		var sec = document.getElementById("second");
-  		var i = 2;
+  		var i = 8;
   		var timer = setInterval(function(){
    		i--;
     	sec.innerHTML = i;
@@ -44,8 +49,8 @@
    	 		}
   		},1000);
     
- 		function goBack(){ 
- 		 	window.history.go(1);
+ 		function goNext(){ 
+ 		 	window.location.href = "LoginServlet";
 		 } 
  	</script> 
 </div>

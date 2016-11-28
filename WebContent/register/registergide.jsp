@@ -42,7 +42,7 @@ background: lightgrey;
 			<div id="bt"></div>
 			<input type="button" value="人力资源注册" class="pg" onClick="window.location.href='register/hrmregister.jsp'">
 			<div id="bt"></div>
-			<input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;出" class="pg" onClick="window.location.href='main.jsp'">
+			<input type="button" value="退&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;出" class="pg" onClick="window.location.href='main.jsp'">
 			<div id="bt"></div>
 			</form>
 		</div>

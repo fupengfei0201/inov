@@ -42,11 +42,11 @@ public class TeacherRegServlet extends HttpServlet {
 		if(i==1){
 			request.setAttribute("×¢²á³É¹¦","msg");
 			System.out.println("×¢²á³É¹¦");
-			request.getRequestDispatcher("register/tearegister.jsp").forward(request, response);
+			request.getRequestDispatcher("c.jsp").forward(request, response);
 		}
 		else{
 			request.setAttribute("×¢²áÊ§°Ü,ÇëÖØÐÂ×¢²á","msg");
-			request.getRequestDispatcher("register/tearegister.jsp").forward(request, response);
+			request.getRequestDispatcher("c.jsp").forward(request, response);
 		}
 		
 	}

@@ -7,11 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" >
-
 	function check(){
 		if(check2()){
-			alert("请输入分数!");
-			document.all.Tgrade.focus();
+			alert("请输入合理的分数!");
+			//document.all.Tgrade.focus();
 		 }
 		else if(document.all.comm.value==""){
 			alert("请输入综合评语!");
@@ -26,7 +25,15 @@
 	function check2(){
 		var lh=document.getElementsByName("Tgrade");
 		for(var i=0;i<lh.length;i++){
-		if(document.getElementById("score"+i).value==""){
+			var score=document.getElementById("score"+i).value;
+			var ful=document.getElementById("ful"+i).innerHTML;
+		if(score=="" ){
+			document.getElementById("score"+i).focus();
+			return true;
+			break;
+		}
+		else if(score!="" && (parseInt(score)>parseInt(ful) || parseInt(score)<0)){
+			document.getElementById("score"+i).focus();
 			return true;
 			break;
 		}
@@ -72,7 +79,7 @@ for(int i=0;i<list.size();i++){
 <td><%=list.get(i).getItem() %></td>
 <td><%=list.get(i).getElements() %></td>
 <td colspan="2"><%=list.get(i).getPoints() %></td>
-<td><%=list.get(i).getMarks() %></td>
+<td id="ful<%=i %>"><%=list.get(i).getMarks() %></td>
 <td><input type="text" value="" id="score<%=i %>" name="grade<%=i %>" style="width: 100%;height: 100%;text-align: center"><input type="hidden" name="Tgrade" /></td>
 
 </tr>

@@ -13,24 +13,22 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>Insert title here</title>
 <script type="text/javascript">
-
 function check(){
 	if(check2()){
-		alert("请输入分数!");
-		document.all.gra.focus();
+		alert("请输入合理的分数!");
+		//document.all.gra.focus();
 	 }
 	else{
 		var a=document.myform;
 		a.action="EmpGradeServlet";
-		a.submit();
-			
+		a.submit();		
 		}
 	}
 
 function ch(){
 	if(check2()){
-		alert("请输入分数!");
-		document.all.gra.focus();
+		alert("请输入合理的分数!");
+		//document.all.gra.focus();
 	 }
 	else{
 		var b=document.myform2;
@@ -42,9 +40,21 @@ function ch(){
 function check2(){
 	var lh=document.getElementsByName("gra");
 	for(var i=0;i<lh.length;i++){
-	if(document.getElementById("score"+i).value==""){
+		var score=document.getElementById("score"+i).value;
+		var ful=document.getElementById("ful"+i).innerHTML;
+	if(score=="" ){
+		document.getElementById("score"+i).focus();
 		return true;
 		break;
+		
+		
+	}
+	else if(score!="" && (parseInt(score)>parseInt(ful) || parseInt(score)<0)){
+		document.getElementById("score"+i).focus();
+		return true;
+		break;
+		
+		
 	}
 }
 }
@@ -91,7 +101,7 @@ ${requestScope.l}
 <tr style="height: 60px">
 <td><%=list.get(i).getAssessment() %></td>
 <td colspan="3"><%=list.get(i).getEmpcontent() %></td>
-<td><%=list.get(i).getMarks()%></td>
+<td id="ful<%=i %>"><%=list.get(i).getMarks()%></td>
 <td><input type="text" value="" id="score<%=i %>" name="grade<%=i%>" style="width: 100%;height: 100%;text-align: center"/><input type="hidden" name="gra" /></td>
 </tr>
 <%}%>
@@ -143,8 +153,8 @@ ${requestScope.l}
 <tr style="height: 60px">
 <td><%=list.get(i).getAssessment() %></td>
 <td colspan="3"><%=list.get(i).getEmpcontent() %></td>
-<td><%=list.get(i).getMarks()%></td>
-<td><input type="text" value="" id="score<%=i %>"  name="grade<%=i%>" style="width: 100%;height: 100%"/><input type="hidden" name="Tgrade" /></td>
+<td id="ful<%=i %>"><%=list.get(i).getMarks()%></td>
+<td><input type="text" value="" id="score<%=i %>"  name="grade<%=i%>" style="width: 100%;height: 100%;text-align: center"/><input type="hidden" name="Tgrade" /></td>
 </tr>
 <%}%>
 <tr>

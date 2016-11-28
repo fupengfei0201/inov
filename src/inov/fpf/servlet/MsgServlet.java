@@ -156,7 +156,7 @@ public class MsgServlet extends HttpServlet {
 					//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 					if(e.selectEmpMnCount()%t==0){
 						List<Login>ll=e.empNameAndDept();
-						request.setAttribute("msg",tilte);
+						//request.setAttribute("msg",tilte);
 						request.setAttribute("ll",ll);
 						request.setAttribute("mk","经理");
 						request.setAttribute("q",m.selectcount());
@@ -165,7 +165,7 @@ public class MsgServlet extends HttpServlet {
 					else{
 						List<Login>ll=e.empMnName();
 						request.setAttribute("ll",ll);
-						request.setAttribute("msg",tilte);
+						//request.setAttribute("msg",tilte);
 						request.setAttribute("mk","经理");
 						request.setAttribute("q",m.selectcount());
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
@@ -227,7 +227,7 @@ public class MsgServlet extends HttpServlet {
 					//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 					if(e.selectEmpMnCount()%t==0){
 						List<Login>ll=e.empNameAndDept();
-						request.setAttribute("msg",tilte);
+						//request.setAttribute("msg",tilte);
 						request.setAttribute("ll",ll);
 						request.setAttribute("mk","经理");
 						request.setAttribute("q",m.selectcount());
@@ -236,7 +236,7 @@ public class MsgServlet extends HttpServlet {
 					else{
 						List<Login>ll=e.empMnName();
 						request.setAttribute("ll",ll);
-						request.setAttribute("msg",tilte);
+						//request.setAttribute("msg",tilte);
 						request.setAttribute("mk","经理");
 						request.setAttribute("q",m.selectcount());
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);

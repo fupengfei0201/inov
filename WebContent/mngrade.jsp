@@ -14,12 +14,12 @@ function check(){
 		document.all.station.focus();
 	}
 	else if(check2()){
-		alert("请输入分数!");
-		document.all.gra.focus();
+		alert("请输入合理的分数!");
+		//document.all.gra.focus();
 	 }
 	else if(document.all.comm.value==""){
 		alert("请输入综合评语！!");
-		document.all.comm.focus();
+		document.myform.comm.focus();
 	}
 	else {
 		var a=document.myform;
@@ -30,11 +30,19 @@ function check(){
 function check2(){
 	var lh=document.getElementsByName("aa");
 	for(var i=0;i<lh.length;i++){
-	if(document.getElementById("score"+i).value==""){
+		var score=document.getElementById("score"+i).value;
+		var ful=document.getElementById("ful"+i).innerHTML;
+	if(score=="" ){
+		document.getElementById("score"+i).focus();
 		return true;
 		break;
 	}
+	else if(score!="" && (parseInt(score)>parseInt(ful) || parseInt(score)<0)){
+		document.getElementById("score"+i).focus();
+		return true;
+		break;
 	}
+}
 }
 </script>
 </head>
@@ -88,7 +96,7 @@ function check2(){
 						<td width="80px"><%=list.get(i).getElements()%></td>
 						<td colspan="2" width="160px"><%=list.get(i).getDefinition()%></td>
 						<td colspan="2" width="160px"><%=list.get(i).getPoints()%></td>
-						<td width="80px"><%=list.get(i).getMarks()%></td>
+						<td  id="ful<%=i %>" width="80px"><%=list.get(i).getMarks()%></td>
 						<td><input type="text" value="" id="score<%=i %>"  name="grade<%=i %>" style="width: 80px;height: 100%;text-align: center"><input type="hidden" name="aa" /></td>
 					</tr>
 					<%
@@ -96,7 +104,7 @@ function check2(){
 					%>
 					<tr>
 						<td>综合评语</td>
-						<td colspan="7" height="50px"><input type="text" value="" name="comm" size="100"
+						<td colspan="7" height="50px"><input type="text" value="" name="comm" id="ping" size="100"
 							value="(不要超过一百字)" style="width: 100%;height: 100%;overflow: auto;"></td>
 					</tr>
 					<tr>

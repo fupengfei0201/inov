@@ -9,11 +9,10 @@
 </head>
 <body>
 	<div id="gide">
-		
-			<input type="submit" value="评分查询" class="page" name="sel" onClick="window.location.href='c.jsp'">
+			<input type="submit" value="评分查询" class="page" name="sel" style="color: white" onClick="window.location.href='LoginServlet'">
 			<div style="width: 100%; height: 1px; background: grey"></div>
 			<form action="LogoutServlet" method="post">
-			<input type="submit" value="退出系统" class="page" name="sel"></form>
+			<input type="submit" value="退出系统" class="page" name="sel" style="color: white"></form>
 			<div style="width: 100%; height: 1px; background: grey"></div>
 		</div>
 

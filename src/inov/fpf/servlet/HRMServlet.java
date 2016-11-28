@@ -40,6 +40,8 @@ public class HRMServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String years=request.getParameter("years");
 		String months=request.getParameter("months");
+//		request.setAttribute("yy",years);
+//		request.setAttribute("mm",months);
 				String time=years+"-"+months;
 				System.out.println(time+"Ê±¼ä");
 		JDBCHR jr=new JDBCHR();

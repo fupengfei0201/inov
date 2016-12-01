@@ -12,11 +12,14 @@
 <%@ include file="head.jsp"%>
 <div id="title">
 <form action="LogoutServlet" method="post">
-	<input type="submit" value="退出系统" class="exit">
+	<input type="submit" value="退出系统" class="exit" style="color: white;">
 	</form></div>
 </div>
 <div id="center" style="background :#F5F5F5;">
 	<div style="width: 80%;height:auto;margin: auto;font-family: 楷体 ;font-weight:bold;padding-top: 3%">
+	<p  style="width: 20%;height: 30px;margin-left:80%;font-size: 18px;font-family: 楷体 ;color:#1B539D;text-align: center " >
+   				<b id="second" >8</b>秒后自动跳转。。 
+ 			</p><br>
 	 		<h2 align="center">员工评分系统说明</h2>
 	 		<div style="width: 100%;height: 3px;background:lightgrey;float: left"></div>
 	 		<div style="width:100%;float: left;border-left:2px dashed lightgrey;border-right:2px dashed lightgrey;border-bottom:2px dashed lightgrey">
@@ -32,9 +35,9 @@
 	 		</div>
 	 		<div style="width:100%;float: left;margin: auto;text-align: center">
 	 		<br><br>
-	 		<p  style="width: 40%;height: 30px;font-size: 18px;font-family: 楷体 ;margin: auto;color:#1B539D;text-align: center " >
-   				<b id="second" >8</b>秒后自动跳转。。 <a href="javascript:goNext();">确定</a> 
- 			</p>
+	 		<p>
+	 		<a href="javascript:goNext();"><input type="button" value="NEXT" style="width:10%;height:30px;background:  #1B539D;border: none;color: white; border-radius:4px;"></a> 
+	 		</p>
  			</div>
 	</div>	
 	

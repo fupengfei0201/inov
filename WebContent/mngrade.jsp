@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>Insert title here</title>
 <script type="text/javascript">
+var sum=0;
 function check(){
     if(document.all.station.value==""){
 		alert("请输入员工岗位职责描述!");
@@ -22,15 +23,14 @@ function check(){
 		document.myform.comm.focus();
 	}
 	else {
-		var a=document.myform;
-		a.action="MsgServlet";
-		a.submit();
+		fn();
 	}
 }
 function check2(){
 	var lh=document.getElementsByName("aa");
 	for(var i=0;i<lh.length;i++){
 		var score=document.getElementById("score"+i).value;
+		sum=sum+parseInt(score);
 		var ful=document.getElementById("ful"+i).innerHTML;
 	if(score=="" ){
 		document.getElementById("score"+i).focus();
@@ -43,6 +43,20 @@ function check2(){
 		break;
 	}
 }
+}
+
+function fn(){
+	alert("进入啦！");
+	alert(sum);
+      if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
+    	  var a=document.myform;
+    	  a.action="MsgServlet";
+		  a.submit();	          
+      }else{
+    	  sum=0;
+    	  a.action="mngrade.jsp";
+    	
+      }
 }
 </script>
 </head>

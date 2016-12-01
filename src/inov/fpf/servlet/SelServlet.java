@@ -94,7 +94,7 @@ public class SelServlet extends HttpServlet {
 			if(t==true){
 				session.setAttribute("name",name);
 				session.setAttribute("title",levle);
-				request.getRequestDispatcher("introduce.jsp").forward(request, response);
+				request.getRequestDispatcher("LoginServlet").forward(request, response);
 				return;	
 			}
 			else{

@@ -83,14 +83,14 @@ public class LoginServlet extends HttpServlet {
 		}
 		if(levle.equals("tea")){
 			JDBCTeacher teacher=new JDBCTeacher();
-			int q=p.selectcount();
+			//int q=p.selectcount();
 				//判断师傅的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 				if(p.selectEmpTeaCount()%r==0){
 					List<Login>ll=p.empNameAndDept(name);
 					request.setAttribute("ll",ll);
 					//request.setAttribute("msg",levle);
 					request.setAttribute("mk","师傅");
-					request.setAttribute("q",q);
+					request.setAttribute("q",p.selectcount());
 					request.getRequestDispatcher("empsel.jsp").forward(request, response);
 				}
 				else{
@@ -98,7 +98,7 @@ public class LoginServlet extends HttpServlet {
 					request.setAttribute("ll",ll);
 					//request.setAttribute("msg",levle);
 					request.setAttribute("mk","师傅");
-					request.setAttribute("q",q);
+					request.setAttribute("q",p.selectcount());
 					request.getRequestDispatcher("empsel.jsp").forward(request, response);
 				}
 		}

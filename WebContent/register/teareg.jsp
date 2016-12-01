@@ -39,6 +39,11 @@ function check(){
 		document.myform.pwd.focus();
 		return;
 	}
+	else if(document.myform.dname.value==""){
+		alert("请输入工段!");
+		document.myform.dname.focus();
+		return;
+	}
 	else{
 		var a=document.myform;
 		a.action="TeacherRegServlet";
@@ -57,6 +62,7 @@ ${requestScope.m}
 &nbsp;&nbsp;&nbsp;&nbsp;密码：<input type="password" name="pwd" class="register" value="" >
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px">密码由5~20个字母、数字、“_”或“.”组成（以字母开头）</span><br><br>
 确认密码：<input type="password" name="pwd1" class="register" value=""><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;工段：<input type="text" name="dname" value="" class="register" ><br><br>
 <input type="button" value="注册" class="regbtn" onclick="return check()">
 <input type="reset" value="重置" class="regbtn" >
 </div></form>

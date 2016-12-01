@@ -54,6 +54,7 @@ ${requestScope.x}
 </div>
 </form>
 <form action="ExcelServel" method="post">
+<div style="width: 100%;height:90%;overflow: auto" onload="document.body.scrollTop=document.body.scrollHeight">
 <div style="width: 90%;height:90%;margin: auto;margin-top: 20px">
 <table style="width:100%;height:100%;text-align: center;margin-top: 20px" border="1" cellpadding="0" cellspacing="0">
 <tr style="height: 30px">
@@ -96,6 +97,7 @@ for(int i=0;i<list.size();i++){%>
 </tr>
 <%} %>
 </table>
+</div>
 </div>
 </form>
 </body>

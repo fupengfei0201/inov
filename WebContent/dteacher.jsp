@@ -10,7 +10,7 @@
 <div>
 <%@ include file="head.jsp"%>
 <div id="title"><form action="LogoutServlet" method="post">
-	<input type="submit" value="退出系统" class="exit">
+	<input type="submit" value="退出系统" class="exit" style="color: white;">
 	</form></div>
 </div>
 <div id="center">

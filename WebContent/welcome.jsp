@@ -12,8 +12,8 @@
 </head>
 <body>
 		<div id="welc">
-		<div id="wel">${sessionScope.name}<br><br>
-		 欢迎进入打分系统！
+		<div id="wel"><span style="font-weight:bold;font-size: 16px">${sessionScope.name}</span><br><br>
+		<span style="font-weight:bold;font-size: 16px"> 欢迎进入员工评分系统！</span>
 		</div><br><br> 
 		</div>
 </body>

@@ -7,6 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" >
+var sum=0;
 	function check(){
 		if(check2()){
 			alert("请输入合理的分数!");
@@ -17,15 +18,16 @@
 			document.all.comm.focus();
 		}
 		else {
-			a=document.myform;
-			a.action="TeacherServlet";
-			a.submit();
+			fn();
 		}
 	}
+	
+	
 	function check2(){
 		var lh=document.getElementsByName("Tgrade");
 		for(var i=0;i<lh.length;i++){
 			var score=document.getElementById("score"+i).value;
+			sum=sum+parseInt(score);
 			var ful=document.getElementById("ful"+i).innerHTML;
 		if(score=="" ){
 			document.getElementById("score"+i).focus();
@@ -40,6 +42,21 @@
 	}
 		
 }
+	
+
+	function fn(){
+		alert("进入啦！");
+		alert(sum);
+	      if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
+	    	  var a=document.myform;
+	    	  a.action="TeacherServlet";
+			  a.submit();	          
+	      }else{
+	    	  sum=0;
+	    	  a.action="teachergrade.jsp";
+	    	
+	      }
+	}
 </script>
 </head>
 <body>
@@ -91,7 +108,7 @@ for(int i=0;i<list.size();i++){
 <tr height="50px">
 <td colspan="6"  >
 
-<input type="button" value="提交" onclick="return check()"/></form></td>
+<input type="button" value="提交" onclick="return check()"/></td>
 </tr>
 </table>
 

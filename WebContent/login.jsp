@@ -13,14 +13,14 @@
 <div id="welc">
 		<div id="wel">
       <form action="SelServlet" method="post">
-用户名：<input type="text" name="uname" id="uname" class="log"><br><br>
-密&nbsp;&nbsp;码：<input type="password" name="upassw" id="upassw" class="log"><br><br>
+<span style="font-weight:bold">用户名：</span><input type="text" name="uname" id="uname" class="log" style="border-color:lightblue;"><br><br>
+<span style="font-weight:bold">密&nbsp;&nbsp;码：</span><input type="password" name="upassw" id="upassw" class="log" style="border-color:lightblue;"><br><br>
 <label></label><input type="radio" checked="checked" name="title" value="emp"/>员工&nbsp;&nbsp;
 <label></label><input type="radio" name="title" value="tea"/>师傅<br>
 <label></label><input type="radio" name="title" value="manag"/>经理&nbsp;&nbsp;
 <input type="radio" name="title" value="hrm"/><label>人力资源</label><br><br>
-<input type="submit" value="登录" class="butt">&nbsp;&nbsp;&nbsp;&nbsp; 
-<input type="button" value="注册" class="butt" onClick="window.location.href='register/mngregister.jsp'">
+&nbsp;&nbsp;<input type="submit" value="登录" class="butt" style="background:  #1B539D;border: none;color: white; border-radius:4px;">&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value="注册" class="butt" style="background:  #1B539D;border: none;color: white; border-radius:4px;" onClick="window.location.href='register/mngregister.jsp'">
 </form>
 </div><br><br> 
 </div>

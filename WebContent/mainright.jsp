@@ -13,7 +13,7 @@
    obj2 = document.getElementsByTagName("li"); 
    obj2[0].style.backgroundColor = "#666666";
    //默认被选中颜色 
-   time = setInterval("turn();", 5000); 
+   time = setInterval("turn();", 6000); 
    obj1.onmouseover = function () { 
     clearInterval(time); 
    } 
@@ -32,9 +32,9 @@
    } 
    //延迟加载图片，演示的时候，使用本地图片
    //上线后请改为二级域名提供的图片地址 
-   document.getElementById("second").src = "pic/a2.png";
+   document.getElementById("second").src = "pic/c2.jpg";
    //使用图片宽800，高300
-   document.getElementById("third").src = "pic/a4.png"; 
+   document.getElementById("third").src = "pic/c2.png"; 
    document.getElementById("four").src = "pic/a5.png"; 
   } 
   function turn(value) { 
@@ -66,7 +66,7 @@
 <div id="carousel">
 <div id="wrap"> 
   <div id="slider"> 
-   <a target="_blank" href="#"><img src="pic/a1.jpg" /></a> 
+   <a target="_blank" href="#"><img src="pic/c1.png" /></a> 
    <a target="_blank" href="#"><img id="second" /></a> 
    <a target="_blank" href="#"><img id="third" /></a> 
    <a target="_blank" href="#"><img id="four" /></a> 

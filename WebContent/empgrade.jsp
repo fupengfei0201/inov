@@ -13,16 +13,14 @@
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>Insert title here</title>
 <script type="text/javascript">
+var sum=0;
 function check(){
 	if(check2()){
 		alert("请输入合理的分数!");
 		//document.all.gra.focus();
 	 }
 	else{
-		var a=document.myform;
-		a.action="EmpGradeServlet";
-		a.submit();		
-		}
+		fn();
 	}
 
 function ch(){
@@ -31,9 +29,8 @@ function ch(){
 		//document.all.gra.focus();
 	 }
 	else{
-		var b=document.myform2;
-		b.action="EmpgradeServletTwo";
-		b.submit();
+		fn2();
+		
 	}
 }
 
@@ -41,22 +38,47 @@ function check2(){
 	var lh=document.getElementsByName("gra");
 	for(var i=0;i<lh.length;i++){
 		var score=document.getElementById("score"+i).value;
+		sum=sum+parseInt(score);
 		var ful=document.getElementById("ful"+i).innerHTML;
 	if(score=="" ){
 		document.getElementById("score"+i).focus();
 		return true;
 		break;
-		
-		
 	}
 	else if(score!="" && (parseInt(score)>parseInt(ful) || parseInt(score)<0)){
 		document.getElementById("score"+i).focus();
 		return true;
 		break;
-		
-		
 	}
 }
+}
+
+function fn(){
+	alert("进入啦！");
+	alert(sum);
+      if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
+    	  var a=document.myform;
+    	  a.action="EmpgradeServlet";
+		  a.submit();	          
+      }else{
+    	  sum=0;
+    	  a.action="empgrade.jsp";
+    	
+      }
+}
+
+function fn2(){
+	alert("进入啦！");
+	alert(sum);
+      if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
+    	  var a=document.myform2;
+    	  a.action="EmpgradeServletTwo";
+		  a.submit();	          
+      }else{
+    	  sum=0;
+    	  a.action="empgrade.jsp";
+    	
+      }
 }
 </script>
 </head>

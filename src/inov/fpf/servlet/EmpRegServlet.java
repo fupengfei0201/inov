@@ -1,6 +1,8 @@
 package inov.fpf.servlet;
 
 import inov.fpf.model.dao.JDBCReg;
+import inov.fpf.model.dao.JDBCTeacher;
+import inov.fpf.model.vo.Teacher;
 
 import java.io.IOException;
 
@@ -39,20 +41,53 @@ public class EmpRegServlet extends HttpServlet {
 		String name=request.getParameter("name");
 		String passw=request.getParameter("pwd");
 		String time=request.getParameter("time");
+		String teachername=request.getParameter("tea");
+		String section=request.getParameter("dname");
+		JDBCTeacher teacher=new JDBCTeacher();
+		if(teachername.equals("")||(teacher.selectTeacher(teachername))==false){
+			request.setAttribute("msg", "<script>alert(\"师傅姓名有误！\");</script>");
+			System.out.println("师傅姓名有误");
+			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
+			return;
+		}
+		if(time.equals("")){
+			request.setAttribute("msg", "<script>alert(\"请输入入职时间！\");</script>");
+			System.out.println("入职时间为空");
+			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
+			return;
+		}
 		String edu=request.getParameter("edu");
 		String dept=request.getParameter("dept");
-		//SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+		String passw1=request.getParameter("pwd1");
+		if(!passw.equals(passw1)){
+		
+			System.out.println("注册失败，两次密码不一致");
+			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
+			return;
+		}
+		if(name==null||passw==null||edu==null||dept==null||section==null){
+			System.out.println("有未填项");
+			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
+			return;
+		}
 		JDBCReg reg=new JDBCReg();
-		int i=reg.regEmp(name, passw,time,edu,dept);
+		boolean t=reg.emplogin(name);
+		if(t==false){
+		int i=reg.regEmp(name, passw,time,edu,dept,teachername,section);
 		if(i==1){
-			request.setAttribute("注册成功","msg");
-			//request.setAttribute("m", "<script>alert(\"注册成功！\");</script>");
+			
+			request.setAttribute("msg", "<script>alert(\"注册成功！\");</script>");
 			System.out.println("注册成功");
-			request.getRequestDispatcher("c.jsp").forward(request, response);
+			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
 		}
 		else{
-			request.setAttribute("注册失败,请重新注册","msg");
-			request.getRequestDispatcher("c.jsp").forward(request, response);
+			 request.setAttribute("msg","<script>alert(\"注册失败,请重新注册\");</script>");
+			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
+		}
+		}
+		else{
+			request.setAttribute("msg","<script>alert(\"此用户名正在使用中，请勿注册\");</script>");
+			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
 		}
 	}
 

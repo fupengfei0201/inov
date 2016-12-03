@@ -96,6 +96,7 @@ public class JDBCMsg {
 		}
 		return i;
 	}
+
 	//经理在同一次中不能给同一个人打两次分数
 		public boolean selectMnName(String name) {
 			boolean t = false;

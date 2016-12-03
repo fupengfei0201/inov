@@ -2,6 +2,7 @@ package inov.fpf.servlet;
 
 import inov.fpf.model.dao.JDBCContent;
 import inov.fpf.model.dao.JDBCEmp;
+import inov.fpf.model.dao.JDBCNum;
 import inov.fpf.model.vo.Empcontent;
 import inov.fpf.model.vo.Empgrade;
 import inov.fpf.model.vo.Login;
@@ -78,6 +79,7 @@ public class EmpGradeServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		// List<Empcontent>list=(ArrayList<Empcontent>)request.getAttribute("list");
 		JDBCContent j = new JDBCContent();
+		System.out.println("============================================");
 		List<Empcontent> list1 = j.empcontents();
 		List<Integer> l = new ArrayList<Integer>();
 		HttpSession session = request.getSession();
@@ -96,16 +98,28 @@ public class EmpGradeServlet extends HttpServlet {
 			sum = sum + i;
 		}
 		
+		if(sum>100||sum<0){
+			List<Empcontent> list = j.empcontents();
+			request.setAttribute("list", list);
+			request.setAttribute("pname",name);
+			request.setAttribute("dept",dept);
+			request.setAttribute("msg", "<script>alert(\"分数提交有误，不予提交！\");</script>");
+			System.out.println("分数提交");
+			request.getRequestDispatcher("d.jsp").forward(request,
+					response);
+			return;	
+		}
 		JDBCEmp e = new JDBCEmp();
 		double t = e.empcount();
 		int sx=e.selectOnecount();
 		int two=e.selectTwocount();
 		int news=e.selectNewcount();
+		JDBCNum n=new JDBCNum();
 		System.out.println(t);
 		System.out.println(lg.size());
 		if(session.getAttribute("r").equals("oldone")){
-		/*	//boolean f=e.selectEmpOneName(name);
-			//boolean h=e.selectErrorName(name);
+			boolean f=e.selectEmpOneName(name);
+			/*//boolean h=e.selectErrorName(name);
 			if(h==false){
 				List<Empcontent> list = j.empcontents();
 				request.setAttribute("list", list);
@@ -114,17 +128,109 @@ public class EmpGradeServlet extends HttpServlet {
 				request.getRequestDispatcher("d.jsp").forward(request,
 						response);
 				return;
-			}
+			}*/
 			if(f==true){
-				List<Empcontent> list = j.empcontents();
-				request.setAttribute("list", list);
-				request.setAttribute("msg", "<script>alert(\"在本次评分中此员工已打过分，请给其他员工打分！\");</script>");
+				request.setAttribute("m", "<script>alert(\"在本次评分中此员工已打过分，请给其他员工打分！\");</script>");
 				System.out.println("重复提交了员工得分");
-				request.getRequestDispatcher("d.jsp").forward(request,
-						response);
-				return;
+				if(e.selectOnecount()==e.selectTwocount()){
+					//显示除自己以外的表二中自己未打分的的所有人全部显示
+					
+					List<Login>ll=e.empNameAndDeptOne(ename, ename,ename);
+					//显示所有老员工，对表二进行打分
+					List<Login>lw=e.empNameAndDeptThree(ename,ename,ename);
+					if(n.selectOneEmpA()==n.selectOneEmpB()){
+						request.setAttribute("p",n.selectOneEmpA());
+					}
+					else if(n.selectOneEmpA()<n.selectOneEmpB()){
+						request.setAttribute("p",n.selectOneEmpA());
+					}
+					else{
+						request.setAttribute("p",n.selectOneEmpB());
+					}
+					int q=e.selectOnecount();
+					if((e.selectOneA(ename)+e.selectTwoB(ename))<3){
+					request.setAttribute("ll",ll);
+					request.setAttribute("lw",lw);
+					
+					}
+					else{
+						request.setAttribute("ll","1");
+						request.setAttribute("lw","1");	
+						request.setAttribute("m",
+								"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+					}
+					request.setAttribute("mk","老员工");
+					request.setAttribute("q",q);
+					request.getRequestDispatcher("empsel.jsp").forward(request, response);
+					return;
+					
+				}
+				else if(e.selectOnecount()>e.selectTwocount()){
+					
+					//显示所有老员工，对表二进行打分
+					List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename);
+				
+					int q=e.selectTwocount();
+					if(n.selectOneEmpA()==n.selectOneEmpB()){
+						request.setAttribute("p",n.selectOneEmpA());
+					}
+					else if(n.selectOneEmpA()<n.selectOneEmpB()){
+						request.setAttribute("p",n.selectOneEmpA());
+					}
+					else{
+						request.setAttribute("p",n.selectOneEmpB());
+					}
+					if((e.selectOne(ename)+e.selectTwoB(ename))<3){
+					
+					request.setAttribute("lw",lw);
+					
+					request.setAttribute("ll","1");
+					}
+					else{
+						request.setAttribute("ll","1");
+						request.setAttribute("lw","1");
+						request.setAttribute("m",
+								"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+					}
+					request.setAttribute("q",q);
+					request.setAttribute("mk","老员工");
+					request.getRequestDispatcher("empsel.jsp").forward(request, response);
+					return;
+					
+				}
+				else{
+				
+					//显示除自己以外的表二中自己未打分的的所有人全部显示
+					List<Login>ll=e.empNameAndDeptF(ename,ename,ename);
+					int q=e.selectOnecount();
+					if(n.selectOneEmpA()==n.selectOneEmpB()){
+						request.setAttribute("p",n.selectOneEmpA());
+					}
+					else if(n.selectOneEmpA()<n.selectOneEmpB()){
+						request.setAttribute("p",n.selectOneEmpA());
+					}
+					else{
+						request.setAttribute("p",n.selectOneEmpB());
+					}
+					if((e.selectOneA(ename)+e.selectTwo(ename))<3){
+					request.setAttribute("ll",ll);
+				
+					request.setAttribute("lw","1");
+					}
+					else{
+						request.setAttribute("ll","1");
+						request.setAttribute("lw","1");
+						request.setAttribute("m",
+								"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+					}
+					request.setAttribute("mk","老员工");
+					request.setAttribute("q",q);
+					request.getRequestDispatcher("empsel.jsp").forward(request, response);
+					return;
+					
+				}
 			}
-			*/
+			
 			if (sum >= 90) {
 				ss.add(sum);
 				System.out.println("ss的长度为"+ss.size());
@@ -153,49 +259,114 @@ public class EmpGradeServlet extends HttpServlet {
 						System.out.println("----------------------");
 						System.out.println("lg.size()的值为"+lg.size());
 						System.out.println("t的值为"+t);
+						request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
 						if((lg.size())==t){
 						 lg.removeAll(lg);
 							ss.removeAll(ss);
 							tt.removeAll(tt);
 						e.insertEmpOnecount(1);
 						System.out.println("走到lg.size==t"+lg.size()+"=="+t);
+						n.oneEmpA(1);
+						if(e.selectOnecount()==e.selectTwocount()){
 						 request.setAttribute("l","<script>alert(\"本次您已评分完毕\")<script>");
+					
+						 }
 							}
-						request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
+					
 						session.setAttribute("r","oldone");
 						if(e.selectOnecount()==e.selectTwocount()){
 							//显示除自己以外的表二中自己未打分的的所有人全部显示
+							
 							List<Login>ll=e.empNameAndDeptOne(ename, ename,ename);
 							//显示所有老员工，对表二进行打分
-							List<Login>lw=e.empNameAndDeptOne(ename,ename,ename);
+							List<Login>lw=e.empNameAndDeptThree(ename,ename,ename);
+							if(n.selectOneEmpA()==n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else if(n.selectOneEmpA()<n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else{
+								request.setAttribute("p",n.selectOneEmpB());
+							}
 							int q=e.selectOnecount();
+							if((e.selectOneA(ename)+e.selectTwoB(ename))<3){
 							request.setAttribute("ll",ll);
 							request.setAttribute("lw",lw);
+							
+							}
+							else{
+								request.setAttribute("ll","1");
+								request.setAttribute("lw","1");	
+								request.setAttribute("m",
+										"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+							}
 							request.setAttribute("mk","老员工");
 							request.setAttribute("q",q);
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 							return;
+							
 						}
 						else if(e.selectOnecount()>e.selectTwocount()){
+							
 							//显示所有老员工，对表二进行打分
 							List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename);
+						
 							int q=e.selectTwocount();
-							request.setAttribute("q",q);
+							if(n.selectOneEmpA()==n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else if(n.selectOneEmpA()<n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else{
+								request.setAttribute("p",n.selectOneEmpB());
+							}
+							if((e.selectOne(ename)+e.selectTwoB(ename))<3){
+							
 							request.setAttribute("lw",lw);
-							request.setAttribute("mk","老员工");
+							
 							request.setAttribute("ll","1");
+							}
+							else{
+								request.setAttribute("ll","1");
+								request.setAttribute("lw","1");
+								request.setAttribute("m",
+										"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+							}
+							request.setAttribute("q",q);
+							request.setAttribute("mk","老员工");
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 							return;
 							
 						}
 						else{
+						
 							//显示除自己以外的表二中自己未打分的的所有人全部显示
-							List<Login>ll=e.empNameAndDeptF(ename, ename,ename);	
+							List<Login>ll=e.empNameAndDeptF(ename,ename,ename);
 							int q=e.selectOnecount();
+							if(n.selectOneEmpA()==n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else if(n.selectOneEmpA()<n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else{
+								request.setAttribute("p",n.selectOneEmpB());
+							}
+							if((e.selectOneA(ename)+e.selectTwo(ename))<3){
 							request.setAttribute("ll",ll);
+						
+							request.setAttribute("lw","1");
+							}
+							else{
+								request.setAttribute("ll","1");
+								request.setAttribute("lw","1");
+								request.setAttribute("m",
+										"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+							}
 							request.setAttribute("mk","老员工");
 							request.setAttribute("q",q);
-							request.setAttribute("lw","1");
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 							return;
 							
@@ -262,6 +433,7 @@ public class EmpGradeServlet extends HttpServlet {
 						request.setAttribute("dept",dept);
 						request.setAttribute("msg", "<script>alert(\"提交失败 \");</script>");
 						request.getRequestDispatcher("d.jsp").forward(request,response);
+						return;
 					}
 				}
 
@@ -288,6 +460,7 @@ public class EmpGradeServlet extends HttpServlet {
 					JDBCEmp emp = new JDBCEmp();
 					int s = emp.empInsert(empgrade);
 					System.out.println("s的值为"+s+"//////////////////////////////");
+					request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
 					if (s == 1) {
 						List<Empcontent> list = j.empcontents();
 						request.setAttribute("list", list);
@@ -300,19 +473,41 @@ public class EmpGradeServlet extends HttpServlet {
 							ss.removeAll(ss);
 							tt.removeAll(tt);
 						e.insertEmpOnecount(1);
+						n.oneEmpA(1);
 						System.out.println("走到lg.size==t"+lg.size()+"=="+t);
-						 request.setAttribute("l","<script>alert(\"本次您已评分完毕\")<script>");
+						if(e.selectOnecount()==e.selectTwocount()){
+							 request.setAttribute("l","<script>alert(\"本次您已评分完毕\")<script>");
+							 }
 							}
-						request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
+						
 						session.setAttribute("r","oldone");
 						if(e.selectOnecount()==e.selectTwocount()){
 							//显示除自己以外的表二中自己未打分的的所有人全部显示
+							
 							List<Login>ll=e.empNameAndDeptOne(ename, ename,ename);
 							//显示所有老员工，对表二进行打分
-							List<Login>lw=e.empNameAndDeptOne(ename,ename,ename);
+							List<Login>lw=e.empNameAndDeptThree(ename,ename,ename);
+							if(n.selectOneEmpA()==n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else if(n.selectOneEmpA()<n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else{
+								request.setAttribute("p",n.selectOneEmpB());
+							}
 							int q=e.selectOnecount();
+							if((e.selectOneA(ename)+e.selectTwoB(ename))<3){
 							request.setAttribute("ll",ll);
 							request.setAttribute("lw",lw);
+							
+							}
+							else{
+								request.setAttribute("ll","1");
+								request.setAttribute("lw","1");	
+								request.setAttribute("m",
+										"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+							}
 							request.setAttribute("mk","老员工");
 							request.setAttribute("q",q);
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
@@ -320,25 +515,65 @@ public class EmpGradeServlet extends HttpServlet {
 							
 						}
 						else if(e.selectOnecount()>e.selectTwocount()){
+							
 							//显示所有老员工，对表二进行打分
 							List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename);
+						
 							int q=e.selectTwocount();
-							request.setAttribute("q",q);
+							if(n.selectOneEmpA()==n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else if(n.selectOneEmpA()<n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else{
+								request.setAttribute("p",n.selectOneEmpB());
+							}
+							if((e.selectOne(ename)+e.selectTwoB(ename))<3){
+							
 							request.setAttribute("lw",lw);
+							
 							request.setAttribute("ll","1");
+							}
+							else{
+								request.setAttribute("ll","1");
+								request.setAttribute("lw","1");
+								request.setAttribute("m",
+										"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+							}
+							request.setAttribute("q",q);
 							request.setAttribute("mk","老员工");
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 							return;
 							
 						}
 						else{
+						
 							//显示除自己以外的表二中自己未打分的的所有人全部显示
-							List<Login>ll=e.empNameAndDeptF(ename, ename,ename);	
+							List<Login>ll=e.empNameAndDeptF(ename,ename,ename);
 							int q=e.selectOnecount();
+							if(n.selectOneEmpA()==n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else if(n.selectOneEmpA()<n.selectOneEmpB()){
+								request.setAttribute("p",n.selectOneEmpA());
+							}
+							else{
+								request.setAttribute("p",n.selectOneEmpB());
+							}
+							if((e.selectOneA(ename)+e.selectTwo(ename))<3){
 							request.setAttribute("ll",ll);
+						
+							request.setAttribute("lw","1");
+							}
+							else{
+								request.setAttribute("ll","1");
+								request.setAttribute("lw","1");
+								request.setAttribute("m",
+										"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+							}
 							request.setAttribute("mk","老员工");
 							request.setAttribute("q",q);
-							request.setAttribute("lw","1");
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 							return;
 							
@@ -425,25 +660,48 @@ public class EmpGradeServlet extends HttpServlet {
 					System.out.println("----------------------");
 					System.out.println("lg.size()的值为"+lg.size());
 					System.out.println("t的值为"+t);
+					request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
 					if(lg.size()==t){
 					
 					 lg.removeAll(lg);
 						ss.removeAll(ss);
 						tt.removeAll(tt);
 						e.insertEmpOnecount(1);
+						n.oneEmpA(1);
 						System.out.println("走到lg.size==t"+lg.size()+"=="+t);
-						 request.setAttribute("l","<script>alert(\"本次您已评分完毕\")<script>");
+						if(e.selectOnecount()==e.selectTwocount()){
+							 request.setAttribute("l","<script>alert(\"本次您已评分完毕\")<script>");
+							 }
 						}
-					request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
+					
 					session.setAttribute("r","oldone");
 					if(e.selectOnecount()==e.selectTwocount()){
 						//显示除自己以外的表二中自己未打分的的所有人全部显示
+						
 						List<Login>ll=e.empNameAndDeptOne(ename, ename,ename);
 						//显示所有老员工，对表二进行打分
-						List<Login>lw=e.empNameAndDeptOne(ename,ename,ename);
+						List<Login>lw=e.empNameAndDeptThree(ename,ename,ename);
+						if(n.selectOneEmpA()==n.selectOneEmpB()){
+							request.setAttribute("p",n.selectOneEmpA());
+						}
+						else if(n.selectOneEmpA()<n.selectOneEmpB()){
+							request.setAttribute("p",n.selectOneEmpA());
+						}
+						else{
+							request.setAttribute("p",n.selectOneEmpB());
+						}
 						int q=e.selectOnecount();
+						if((e.selectOneA(ename)+e.selectTwoB(ename))<3){
 						request.setAttribute("ll",ll);
 						request.setAttribute("lw",lw);
+						
+						}
+						else{
+							request.setAttribute("ll","1");
+							request.setAttribute("lw","1");	
+							request.setAttribute("m",
+									"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+						}
 						request.setAttribute("mk","老员工");
 						request.setAttribute("q",q);
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
@@ -451,25 +709,65 @@ public class EmpGradeServlet extends HttpServlet {
 						
 					}
 					else if(e.selectOnecount()>e.selectTwocount()){
+						
 						//显示所有老员工，对表二进行打分
 						List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename);
+					
 						int q=e.selectTwocount();
-						request.setAttribute("q",q);
+						if(n.selectOneEmpA()==n.selectOneEmpB()){
+							request.setAttribute("p",n.selectOneEmpA());
+						}
+						else if(n.selectOneEmpA()<n.selectOneEmpB()){
+							request.setAttribute("p",n.selectOneEmpA());
+						}
+						else{
+							request.setAttribute("p",n.selectOneEmpB());
+						}
+						if((e.selectOne(ename)+e.selectTwoB(ename))<3){
+						
 						request.setAttribute("lw",lw);
-						request.setAttribute("mk","老员工");
+						
 						request.setAttribute("ll","1");
+						}
+						else{
+							request.setAttribute("ll","1");
+							request.setAttribute("lw","1");
+							request.setAttribute("m",
+									"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+						}
+						request.setAttribute("q",q);
+						request.setAttribute("mk","老员工");
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
 						return;
 						
 					}
 					else{
+					
 						//显示除自己以外的表二中自己未打分的的所有人全部显示
-						List<Login>ll=e.empNameAndDeptF(ename, ename,ename);	
+						List<Login>ll=e.empNameAndDeptF(ename,ename,ename);
 						int q=e.selectOnecount();
+						if(n.selectOneEmpA()==n.selectOneEmpB()){
+							request.setAttribute("p",n.selectOneEmpA());
+						}
+						else if(n.selectOneEmpA()<n.selectOneEmpB()){
+							request.setAttribute("p",n.selectOneEmpA());
+						}
+						else{
+							request.setAttribute("p",n.selectOneEmpB());
+						}
+						if((e.selectOneA(ename)+e.selectTwo(ename))<3){
 						request.setAttribute("ll",ll);
+					
+						request.setAttribute("lw","1");
+						}
+						else{
+							request.setAttribute("ll","1");
+							request.setAttribute("lw","1");
+							request.setAttribute("m",
+									"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+						}
 						request.setAttribute("mk","老员工");
 						request.setAttribute("q",q);
-						request.setAttribute("lw","1");
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
 						return;
 						
@@ -945,8 +1243,8 @@ public class EmpGradeServlet extends HttpServlet {
 			}
 		}*/
 		if(session.getAttribute("r").equals("new")){
-			/* boolean f =e.selectEmpNewName(name);
-				boolean h=e.selectErrorName(name);
+			 boolean f =e.selectEmpNewName(name);
+				/*boolean h=e.selectErrorName(name);
 				if(h==false){
 					List<Empcontent> list = j.empcontents();
 					request.setAttribute("list", list);
@@ -955,16 +1253,52 @@ public class EmpGradeServlet extends HttpServlet {
 					request.getRequestDispatcher("d.jsp").forward(request,
 							response);
 					return;
-				}
+				}*/
 			 if(f==true){
-					List<Empcontent> list = j.empcontents();
-					request.setAttribute("list", list);
-					request.setAttribute("msg", "<script>alert(\"本次此员工已经提交过分数，请为其他员工打分！\");</script>");
+					request.setAttribute("m", "<script>alert(\"本次此员工已经提交过分数，请为其他员工打分！\");</script>");
 					System.out.println("重复提交分数");
-					request.getRequestDispatcher("d.jsp").forward(request,
-							response);
-					return;
-			 }*/
+					if((e.selectEmpNewCount()%e.empcount())==0){
+						List<Login>ll=e.empNameAndDept(ename);
+						
+						request.setAttribute("ll",ll);
+						//request.setAttribute("r","new");
+						session.setAttribute("r", "new");
+						int q=e.selectNewcount();
+						request.setAttribute("mk","新员工");
+						request.setAttribute("q",q);
+						request.setAttribute("p",n.selectOneEmpC());
+						request.setAttribute("lw","1");
+						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
+					}
+					else{
+						int q=e.selectNewcount();
+						if(e.selectNew(ename)<3){
+						List<Login>ll=e.empNewName(ename);
+						request.setAttribute("ll",ll);
+						//request.setAttribute("r","new");
+					
+					
+						request.setAttribute("lw","1");
+						}
+						
+					
+						else{
+							request.setAttribute("ll","1");
+							request.setAttribute("lw","1");	
+							request.setAttribute("m",
+									"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+						}
+						request.setAttribute("mk","新员工");
+						request.setAttribute("q",q);
+						request.setAttribute("p",n.selectOneEmpC());
+						session.setAttribute("r", "new");
+						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
+					}
+				
+					
+			 }
 			if (sum >= 90) {
 				sf.add(sum);
 				System.out.println("sf的数量为"+sf.size());
@@ -990,15 +1324,16 @@ public class EmpGradeServlet extends HttpServlet {
 						List<Empcontent> list = j.empcontents();
 						request.setAttribute("list", list);
 						System.out.println("----------------------");
-						
+						request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
 						if(lx.size()==t){
 						 request.setAttribute("l","<script>alert(\"本次您已评分完毕\")<script>");
 						    lx.removeAll(lx);
 							sf.removeAll(sf);
 							td.removeAll(td);
 						e.insertEmpNewcount(1);
+						n.oneEmpC(1);
 							}
-						request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
+					
 							if((e.selectEmpNewCount()%e.empcount())==0){
 								List<Login>ll=e.empNameAndDept(ename);
 								
@@ -1009,17 +1344,32 @@ public class EmpGradeServlet extends HttpServlet {
 								request.setAttribute("mk","新员工");
 								request.setAttribute("q",q);
 								request.setAttribute("lw","1");
+								request.setAttribute("p",n.selectOneEmpC());
 								request.getRequestDispatcher("empsel.jsp").forward(request, response);
+								return;
 							}
-							else{
+							else{	
+								int q=e.selectNewcount();
+								if(e.selectNew(ename)<3){
 								List<Login>ll=e.empNewName(ename);
 								request.setAttribute("ll",ll);
 								//request.setAttribute("r","new");
-								int q=e.selectNewcount();
-								request.setAttribute("mk","新员工");
+							
+								
 								request.setAttribute("lw","1");
+								
+								}
+								else{
+									request.setAttribute("ll","1");
+									request.setAttribute("lw","1");	
+									request.setAttribute("m",
+											"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+								}
+								request.setAttribute("mk","新员工");
 								request.setAttribute("q",q);
+								request.setAttribute("p",n.selectOneEmpC());
 								session.setAttribute("r", "new");
+								
 								request.getRequestDispatcher("empsel.jsp").forward(request, response);
 								return;
 							}
@@ -1041,6 +1391,8 @@ public class EmpGradeServlet extends HttpServlet {
 				if (td.size() > t * 0.3){
 					List<Empcontent> list = j.empcontents();
 					request.setAttribute("list", list);
+					request.setAttribute("pname",name);
+					request.setAttribute("dept",dept);
 					request.setAttribute("msg", "<script>alert(\"良好人数超出，不予提交！\");</script>");
 					System.out.println("良好人数过多");
 					request.getRequestDispatcher("d.jsp").forward(request,
@@ -1059,15 +1411,16 @@ public class EmpGradeServlet extends HttpServlet {
 						List<Empcontent> list = j.empcontents();
 						request.setAttribute("list", list);
 						System.out.println("----------------------");
-						
+						request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
 						if(lx.size()>=t){
 						 request.setAttribute("l","<script>alert(\"本次您已评分完毕\")<script>");
 						 lx.removeAll(lx);
 							sf.removeAll(sf);
 							td.removeAll(td);
 						e.insertEmpNewcount(1);
+						n.oneEmpC(1);
 							}
-						request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
+						
 					
 							if((e.selectEmpNewCount()%e.empcount())==0){
 								List<Login>ll=e.empNameAndDept(ename);
@@ -1078,18 +1431,32 @@ public class EmpGradeServlet extends HttpServlet {
 								request.setAttribute("q",q);
 								session.setAttribute("r","new");
 								request.setAttribute("lw","1");
+								request.setAttribute("p",n.selectOneEmpC());
 								request.getRequestDispatcher("empsel.jsp").forward(request, response);
 								return;
 							}
 							else{
+								int q=e.selectNewcount();
+								if(e.selectNew(ename)<3){
 								List<Login>ll=e.empNewName(ename);
 								request.setAttribute("ll",ll);
 								//request.setAttribute("r","new");
-								int q=e.selectNewcount();
+							
+								
+								
+								request.setAttribute("lw","1");
+								
+								}
+								else{
+									request.setAttribute("ll","1");
+									request.setAttribute("lw","1");	
+									request.setAttribute("m",
+											"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+								}
 								request.setAttribute("mk","新员工");
 								request.setAttribute("q",q);
 								session.setAttribute("r","new");
-								request.setAttribute("lw","1");
+								request.setAttribute("p",n.selectOneEmpC());
 								request.getRequestDispatcher("empsel.jsp").forward(request, response);
 								return;
 							}
@@ -1119,15 +1486,16 @@ public class EmpGradeServlet extends HttpServlet {
 					List<Empcontent> list = j.empcontents();
 					request.setAttribute("list", list);
 					System.out.println("----------------------");
-					
+					request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
 					if(lx.size()==t){
 					 request.setAttribute("l","<script>alert(\"本次您已评分完毕\")<script>");
 					 lx.removeAll(lx);
 						sf.removeAll(sf);
 						td.removeAll(td);
 						e.insertEmpNewcount(1);
+						n.oneEmpC(1);
 						}
-					request.setAttribute("msg","<script>alert(\"提交成功 \");</script>");
+				
 				
 						if((e.selectEmpNewCount()%e.empcount())==0){
 							List<Login>ll=e.empNameAndDept(ename);
@@ -1138,18 +1506,30 @@ public class EmpGradeServlet extends HttpServlet {
 							request.setAttribute("q",q);
 							session.setAttribute("r","new");
 							request.setAttribute("lw","1");
+							request.setAttribute("p",n.selectOneEmpC());
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 							return;
 						}
 						else{
+							int q=e.selectNewcount();
+							if(e.selectNew(ename)<3){
 							List<Login>ll=e.empNewName(ename);
 							request.setAttribute("ll",ll);
 							//request.setAttribute("r","new");
-							int q=e.selectNewcount();
-							request.setAttribute("mk","新员工");
-							request.setAttribute("q",q);
+						
+							
 							session.setAttribute("r","new");
 							request.setAttribute("lw","1");
+							}
+							else{
+								request.setAttribute("ll","1");
+								request.setAttribute("lw","1");	
+								request.setAttribute("m",
+										"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+							}
+							request.setAttribute("mk","新员工");
+							request.setAttribute("q",q);
+							request.setAttribute("p",n.selectOneEmpC());
 							request.getRequestDispatcher("empsel.jsp").forward(request, response);
 							return;
 						}

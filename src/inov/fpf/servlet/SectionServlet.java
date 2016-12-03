@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class TeacherRegServlet
+ * Servlet implementation class SectionServlet
  */
-public class TeacherRegServlet extends HttpServlet {
+public class SectionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TeacherRegServlet() {
+    public SectionServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,39 +40,39 @@ public class TeacherRegServlet extends HttpServlet {
 		String passw1=request.getParameter("pwd1");
 		String section=request.getParameter("dname");
 		if(!passw.equals(passw1)){
-				System.out.println("注册失败，两次密码不一致");
-				request.getRequestDispatcher("register/tearegister.jsp").forward(request, response);
-				return;
-		}
+			
+			System.out.println("注册失败，两次密码不一致");
+			request.getRequestDispatcher("register/workregister.jsp").forward(request, response);
+			return;
+	}
 		if(name==null||passw==null||section==null){
 			System.out.println("用户名或密码为空");
-			request.getRequestDispatcher("register/tearegister.jsp").forward(request, response);
+			request.getRequestDispatcher("register/workregister.jsp").forward(request, response);
 			return;
 		}
-		
 		JDBCReg reg=new JDBCReg();
 		if(reg.Section(section)==false){
 			 request.setAttribute("msg","<script>alert(\"您输入的工段名称不存在\");</script>");
 			System.out.println("工段名称不存在");
-			request.getRequestDispatcher("register/tearegister.jsp").forward(request, response);
+			request.getRequestDispatcher("register/workregister.jsp").forward(request, response);
 			return;
 		}
-		boolean t=reg.tealogin(name);
+		boolean t=reg.Sectionlogin(name);
 		if(t==false){
-		int i=reg.regTeacher(name, passw,section);
+		int i=reg.regSection(name, passw,section);
 		if(i==1){
 			 request.setAttribute("msg","<script>alert(\"注册成功\");</script>");
 			System.out.println("注册成功");
-			request.getRequestDispatcher("register/tearegister.jsp").forward(request, response);
+			request.getRequestDispatcher("register/workregister.jsp").forward(request, response);
 		}
 		else{
 			 request.setAttribute("msg","<script>alert(\"注册失败,请重新注册\");</script>");
-			request.getRequestDispatcher("register/tearegister.jsp").forward(request, response);
+			request.getRequestDispatcher("register/workregister.jsp").forward(request, response);
 		}
 		}
 		else{
 			request.setAttribute("msg","<script>alert(\"此用户名正在使用中，请勿注册\");</script>");
-			request.getRequestDispatcher("register/tearegister.jsp").forward(request, response);
+			request.getRequestDispatcher("register/workregister.jsp").forward(request, response);
 		}
 	}
 

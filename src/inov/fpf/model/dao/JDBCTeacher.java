@@ -77,4 +77,20 @@ public class JDBCTeacher {
 		JDBCUtil.closeupdate(con, psd, rs);
 		return t;
 	}
+	//≤È—Ø ¶∏µ±Ì
+	public boolean selectTeacher(String name){
+		boolean t=false;
+		try {
+			con = JDBCUtil.getConnection();
+			String sql = "select * from teacherlogin where tloginname=?";
+			psd = con.prepareStatement(sql);
+			psd.setString(1,name);
+			rs = psd.executeQuery();
+			t = rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		JDBCUtil.closeupdate(con, psd, rs);
+		return t;
+	}
 }

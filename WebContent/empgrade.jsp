@@ -22,7 +22,7 @@ function check(){
 	else{
 		fn();
 	}
-
+}
 function ch(){
 	if(check2()){
 		alert("请输入合理的分数!");
@@ -58,7 +58,7 @@ function fn(){
 	alert(sum);
       if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
     	  var a=document.myform;
-    	  a.action="EmpgradeServlet";
+    	  a.action="EmpGradeServlet";
 		  a.submit();	          
       }else{
     	  sum=0;
@@ -185,7 +185,7 @@ ${requestScope.l}
 <%--
 String x=(String)request.getAttribute("msg");
 --%>
-<input type="button" value="提交" onclick="return ch()">
+<input type="submit" value="提交" onclick="return ch()">
 </center>
 </td>
 </tr>

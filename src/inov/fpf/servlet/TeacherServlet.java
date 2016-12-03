@@ -2,6 +2,7 @@ package inov.fpf.servlet;
 
 import inov.fpf.model.dao.JDBCContent;
 import inov.fpf.model.dao.JDBCEmp;
+import inov.fpf.model.dao.JDBCNum;
 import inov.fpf.model.dao.JDBCTeacher;
 import inov.fpf.model.vo.Login;
 import inov.fpf.model.vo.TCheckPoints;
@@ -63,7 +64,7 @@ public class TeacherServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("运行Servlet");
+		//System.out.println("运行Servlet");
 		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter("name");
 		String teachername = request.getParameter("detp");
@@ -75,30 +76,7 @@ public class TeacherServlet extends HttpServlet {
 		List<Integer> l = new ArrayList<Integer>();
 		JDBCTeacher t = new JDBCTeacher();
 		JDBCEmp emp = new JDBCEmp();
-		/*boolean f=t.selectName(name);
-		boolean h=emp.selectErrorName(name);
-		if(h==false){
-			List<TCheckPoints> li = j.tCheckPoints();
-			request.setAttribute("ls", li);
-			request.setAttribute("m",
-					"<script>alert(\"查无此员工请查看员工姓名输入是否有误\");</script>");
-			System.out.println("查无此员工请查看员工姓名输入是否有误！");
-			//request.setAttribute("msg", "提交失败");
-			request.getRequestDispatcher("d.jsp")
-					.forward(request, response);	
-			return;
-		}
-		if(f==true){
-			List<TCheckPoints> li = j.tCheckPoints();
-			request.setAttribute("ls", li);
-			request.setAttribute("m",
-					"<script>alert(\"此员工在本次打分中您已提交过分数，请给其他员工打分！\");</script>");
-			System.out.println("你本次已打过此人的分数，请重新打分！");
-			//request.setAttribute("msg", "提交失败");
-			request.getRequestDispatcher("d.jsp")
-					.forward(request, response);	
-			return;
-		}*/
+		JDBCNum n=new JDBCNum();
 		int sum = 0;
 		for (int i = 0; i < list1.size(); i++) {
 			
@@ -109,27 +87,71 @@ public class TeacherServlet extends HttpServlet {
 			sum = sum + x;
 
 		}
-		System.out.println("aa");
+		if(sum>100||sum<0){
+			List<TCheckPoints> li = j.tCheckPoints();
+			request.setAttribute("ls", li);
+			request.setAttribute("pname",name);
+			request.setAttribute("detp",teachername);
+			request.setAttribute("m",
+					"<script>alert(\"分数提交有误，不予提交\");</script>");
+			System.out.println("分数提交有误");
+			//request.setAttribute("msg", "提交失败");
+			request.getRequestDispatcher("d.jsp")
+					.forward(request, response);
+			return;
+		}
+		boolean f=t.selectName(name);
 		double a = emp.empcount();
+		if(f==true){
+			request.setAttribute("m",
+					"<script>alert(\"已为此员工打过分，请勿再打分 \");</script>");
+			System.out.println("已为此员工打过分，请勿再打分");
+			//request.setAttribute("msg", "提交失败");
+			// 判断师傅的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
+			if ((emp.selectEmpTeaCount() % a) == 0) {
+				List<Login> ll = emp.teaNameAndDept(teachername);
+				request.setAttribute("ll", ll);
+				//request.setAttribute("msg", "tea");
+				request.setAttribute("mk","师傅");
+				request.setAttribute("p",n.selectOneT());
+				request.setAttribute("q",emp.selectcount());
+				request.getRequestDispatcher("empsel.jsp").forward(
+						request, response);
+				return;
+			} else {
+				List<Login> ll = emp.empTeaName(teachername);
+				request.setAttribute("ll", ll);
+				//request.setAttribute("msg", "tea");
+				request.setAttribute("mk","师傅");
+				request.setAttribute("p",n.selectOneT());
+				request.setAttribute("q",emp.selectcount());
+				request.getRequestDispatcher("empsel.jsp").forward(
+						request, response);
+				return;
+			}
+		
+		}
+		System.out.println("aa");
+		
 		System.out.println("a的值为："+a);
 		int q = emp.selectcount();
 		if (sum >= 90) {
 			ss.add(sum);
 			System.out.println("ss的数量为" + ss.size() + "    a的数量为" + a);
 
-			if (ss.size() > (a * 0.3)) {
+			if (ss.size() > (a * 0.3)){
 				System.out.println("判断优秀数量超出");
 				List<TCheckPoints> li = j.tCheckPoints();
 				request.setAttribute("ls", li);
 				request.setAttribute("pname",name);
 				request.setAttribute("detp",teachername);
-			
 				request.setAttribute("m",
 						"<script>alert(\"优秀人数超出不予提交，请重新打分 \");</script>");
 				System.out.println("优秀人数过多");
 				//request.setAttribute("msg", "提交失败");
 				request.getRequestDispatcher("d.jsp")
 						.forward(request, response);
+				return;
 			} else {
 				Teacher teacher = new Teacher(q, name, teachername, l.get(0),
 						l.get(1), l.get(2), l.get(3), l.get(4), l.get(5),
@@ -141,37 +163,43 @@ public class TeacherServlet extends HttpServlet {
 				if (s == 1) {
 					List<TCheckPoints> li = j.tCheckPoints();
 					request.setAttribute("ls", li);
+					request.setAttribute("msg",
+							"<script>alert(\"提交成功 \");</script>");
 					if (lg.size() == a) {
 						System.out.println(lg.size() + "=" + a);
-						request.setAttribute("l",
-								"<script>alert(\"本次打分完毕！\");</script>");
+					
 						lg.removeAll(lg);
 						System.out.println(lg.size() + "removeAll()");
 						ss.removeAll(ss);
 						tt.removeAll(tt);
-						
 						emp.insertcount(1);
-						request.setAttribute("msg",
-								"<script>alert(\"提交成功 \");</script>");
+						n.oneT(1);
+						
+						request.setAttribute("l",
+								"<script>alert(\"本次打分完毕！\");</script>");
 						}
 
 						// 判断师傅的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
-						if ((emp.selectEmpTeaCount() % a) == 0) {
-							List<Login> ll = emp.empNameAndDept();
+						if ((emp.selectEmpTeaCount() % emp.empcount()) == 0) {
+							List<Login> ll = emp.teaNameAndDept(teachername);
 							request.setAttribute("ll", ll);
 							//request.setAttribute("msg", "tea");
 							request.setAttribute("mk","师傅");
+							request.setAttribute("p",n.selectOneT());
 							request.setAttribute("q",emp.selectcount());
 							request.getRequestDispatcher("empsel.jsp").forward(
 									request, response);
+							return;
 						} else {
-							List<Login> ll = emp.empTeaName();
+							List<Login> ll = emp.empTeaName(teachername);
 							request.setAttribute("ll", ll);
 							//request.setAttribute("msg", "tea");
 							request.setAttribute("mk","师傅");
+							request.setAttribute("p",n.selectOneT());
 							request.setAttribute("q",emp.selectcount());
 							request.getRequestDispatcher("empsel.jsp").forward(
 									request, response);
+							return;
 						}
 					} 
 
@@ -184,13 +212,12 @@ public class TeacherServlet extends HttpServlet {
 							"<script>alert(\"提交失败 \");</script>");
 					request.getRequestDispatcher("d.jsp").forward(request,
 							response);
+					return;
 				}
 			}
 
 		} else if (sum < 90 && sum >= 80) {
-
 			tt.add(sum);
-
 			System.out.println("tt的数量为" + tt.size());
 			if (tt.size() > (a * 0.3)) {
 				System.out.println("判断等级");
@@ -200,12 +227,12 @@ public class TeacherServlet extends HttpServlet {
 				request.setAttribute("detp",teachername);
 				request.setAttribute("l",
 						"<script>alert(\"良好人数超出，不予提交，请重新打分！ \");</script>");
-				System.out.println("良好人数过多,不予提交此成绩，请重新打分");
+				//System.out.println("良好人数过多,不予提交此成绩，请重新打分");
 				//request.setAttribute("msg", "提交失败");
 				request.getRequestDispatcher("d.jsp")
 						.forward(request, response);
 			} else {
-				Teacher teacher = new Teacher(q, name, teachername, l.get(0),
+				Teacher teacher = new Teacher(q, name,teachername, l.get(0),
 						l.get(1), l.get(2), l.get(3), l.get(4), l.get(5),
 						l.get(6), l.get(7), l.get(8), l.get(9), sum, comm);
 				
@@ -214,6 +241,8 @@ public class TeacherServlet extends HttpServlet {
 				if (s == 1) {
 					List<TCheckPoints> li = j.tCheckPoints();
 					request.setAttribute("ls", li);
+					request.setAttribute("msg",
+							"<script>alert(\"提交成功 \");</script>");
 					if (lg.size() == a) {
 						System.out.println(lg.size() + "=" + a);
 						request.setAttribute("l",
@@ -223,27 +252,31 @@ public class TeacherServlet extends HttpServlet {
 						ss.removeAll(ss);
 						tt.removeAll(tt);
 						emp.insertcount(1);
+						n.oneT(1);
 
 					}
-					request.setAttribute("msg",
-							"<script>alert(\"提交成功 \");</script>");
+					
 					// 判断师傅的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
-					if ((emp.selectEmpTeaCount() % a) == 0) {
-						List<Login> ll = emp.empNameAndDept();
+					if ((emp.selectEmpTeaCount() % emp.empcount()) == 0) {
+						List<Login> ll = emp.teaNameAndDept(teachername);
 						request.setAttribute("ll", ll);
 						//request.setAttribute("msg", "tea");
 						request.setAttribute("mk","师傅");
 						request.setAttribute("q",emp.selectcount());
+						request.setAttribute("p",n.selectOneT());
 						request.getRequestDispatcher("empsel.jsp").forward(
 								request, response);
+						return;
 					} else {
-						List<Login> ll = emp.empTeaName();
+						List<Login> ll = emp.empTeaName(teachername);
 						request.setAttribute("ll", ll);
 						//request.setAttribute("msg", "tea");
 						request.setAttribute("mk","师傅");
 						request.setAttribute("q",emp.selectcount());
+						request.setAttribute("p",n.selectOneT());
 						request.getRequestDispatcher("empsel.jsp").forward(
 								request, response);
+						return;
 					}
 				}
 
@@ -270,7 +303,7 @@ public class TeacherServlet extends HttpServlet {
 			if (s == 1) {
 				List<TCheckPoints> li = j.tCheckPoints();
 				request.setAttribute("ls", li);
-				if (lg.size() == a) {
+				if (lg.size() == emp.empcount()) {
 					System.out.println(lg.size() + "=" + a);
 					request.setAttribute("l",
 							"<script>alert(\"本次打分完毕！\");</script>");
@@ -279,25 +312,30 @@ public class TeacherServlet extends HttpServlet {
 					ss.removeAll(ss);
 					tt.removeAll(tt);
 					emp.insertcount(1);
+					n.oneT(1);
 				}
 
 				// 判断师傅的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 				if ((emp.selectEmpTeaCount() %a) == 0) {
-					List<Login> ll = emp.empNameAndDept();
+					List<Login> ll = emp.teaNameAndDept(teachername);
 					request.setAttribute("ll", ll);
 					//request.setAttribute("msg", "tea");
 					request.setAttribute("mk","师傅");
 					request.setAttribute("q",emp.selectcount());
+					request.setAttribute("p",n.selectOneT());
 					request.getRequestDispatcher("empsel.jsp").forward(request,
 							response);
+					return;
 				} else {
-					List<Login> ll = emp.empTeaName();
+					List<Login> ll = emp.empTeaName(teachername);
 					request.setAttribute("ll", ll);
 					//request.setAttribute("msg", "tea");
 					request.setAttribute("mk","师傅");
 					request.setAttribute("q",emp.selectcount());
+					request.setAttribute("p",n.selectOneT());
 					request.getRequestDispatcher("empsel.jsp").forward(request,
 							response);
+					return;
 				}
 			}
 
@@ -310,6 +348,7 @@ public class TeacherServlet extends HttpServlet {
 						"<script>alert(\"提交失败 \");</script>");
 				request.getRequestDispatcher("d.jsp")
 						.forward(request, response);
+				return;
 			}
 		}
 }

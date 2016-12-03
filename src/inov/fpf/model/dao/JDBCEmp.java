@@ -513,13 +513,14 @@ public class JDBCEmp {
 			
 		}
 		//显示师傅表中未打过分的人
-		public List<Login>empTeaName(){
+		public List<Login>empTeaName(String name){
 			List<Login>list=new ArrayList<Login>();
 
 			try {
 				con=JDBCUtil.getConnection();
-				String sql=" select distinct e.emploginname,e.department from emplogin e,teacher emp where e.emploginname not in(select empname from teacher where empid=(select max(empid)from teacher))";
+				String sql=" select distinct e.emploginname,e.department from emplogin e,teacher emp where e.emploginname not in(select empname from teacher where empid=(select max(empid)from teacher)) and teachername=?";
 				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
 				rs=psd.executeQuery();
 				while(rs.next()){
 					Login login=new Login();
@@ -570,7 +571,7 @@ public class JDBCEmp {
 			}
 			return i;
 		}
-		//显示师傅表中未打过分的人
+		//显示经理表中未打过分的人
 		public List<Login>empMnName(){
 			List<Login>list=new ArrayList<Login>();
 
@@ -722,7 +723,6 @@ public class JDBCEmp {
 				String sql = "select empname from empgradetwo where empname=? and empcod=(select count(empid)from empnumtwo)";
 				psd = con.prepareStatement(sql);
 				psd.setString(1, name);
-			
 				rs = psd.executeQuery();
 				t = rs.next();
 			} catch (SQLException e) {
@@ -768,4 +768,141 @@ public class JDBCEmp {
 			return t;
 		}
 		
+		//师傅查询打分人员
+		public List<Login>teaNameAndDept(String name){
+			List<Login>list=new ArrayList<Login>();
+
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select emploginname,department from emplogin where teachername=? ";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					Login login=new Login();
+					login.setName(rs.getString("emploginname"));
+					login.setDept(rs.getString("department"));
+					list.add(login);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return list;
+			
+		}
+		//查询老员工表一个人打分的人数不要超过3个人
+		public int selectOne(String name){
+			int i=0;
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select count(assessname)from empgrade where assessname=? and empcod=(select max(empcod) from empgrade)";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					i=rs.getInt("count(assessname)");
+					System.out.println(i+"------------------数量");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return i;
+		}
+		//查询老员工表二个人打分不要超过三人
+		public int selectTwo(String name){
+			int i=0;
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select count(assessname)from empgradetwo where assessname=? and empcod=(select max(empcod) from empgradetwo)";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					i=rs.getInt("count(assessname)");
+					System.out.println(i+"------------------数量");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return i;
+		}
+		//查询新员工个人打分不要超过三人
+		public int selectNew(String name){
+			int i=0;
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select count(assessname)from newemp where assessname=? and empcod=(select max(empcod) from newemp)";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					i=rs.getInt("count(assessname)");
+					System.out.println(i+"------------------数量");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return i;
+		}
+		//查询老员工表一个人打分的人数不要超过3个人
+		public int selectOneA(String name){
+			int i=0;
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select count(assessname)from empgrade where assessname=? and empcod=(select count(empid) from empnum)";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					i=rs.getInt("count(assessname)");
+					System.out.println(i+"------------------数量");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return i;
+		}
+		//查询老员工表二个人打分不要超过三人
+		public int selectTwoB(String name){
+			int i=0;
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select count(assessname)from empgradetwo where assessname=? and empcod=(select count(empid) from empnumtwo)";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					i=rs.getInt("count(assessname)");
+					System.out.println(i+"------------------数量");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return i;
+		}
+		//查询新员工个人打分不要超过三人
+		public int selectNewC(String name){
+			int i=0;
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select count(assessname)from newemp where assessname=? and empcod=(select count(empid) from empnumnew)";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					i=rs.getInt("count(assessname)");
+					System.out.println(i+"------------------数量");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return i;
+		}
 }

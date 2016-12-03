@@ -9,6 +9,15 @@ private String passw;
 private String entry;
 private String edu;
 private String dept;
+private String teachername;
+public String getTeachername() {
+	return teachername;
+}
+
+public void setTeachername(String teachername) {
+	this.teachername = teachername;
+}
+
 public String getEdu() {
 	return edu;
 }

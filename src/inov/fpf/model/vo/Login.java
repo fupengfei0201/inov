@@ -6,7 +6,13 @@ private String name;
 private String passw;
 private String title;
 private String dept;
-
+private String session;
+public String getSession() {
+	return session;
+}
+public void setSession(String session) {
+	this.session = session;
+}
 public String getDept() {
 	return dept;
 }

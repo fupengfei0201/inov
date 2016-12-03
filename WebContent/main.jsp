@@ -15,7 +15,7 @@
 <div id="center">
 <div id="left">
 	<%@ include file="login.jsp"%>
-	<%@  include file="bgide.jsp"%>
+	<%@  include file="gide/bgide.jsp"%>
 	</div>
 	<div id="right">
 	<%@  include file="mainright.jsp"%>

@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="bg" style="margin-top: 2%;height: 6%">
 	<div id="line" style="background: gray"></div>
 	<div>
-	<div style="padding-left: 3%;font-size: 20px;padding-top: 12px;float: left;">用户注册</div>
+    <div style="width:97%;height:30px;padding-left: 3%;font-size: 20px;padding-top: 12px;float: left; background: #F1F1F1">用户注册</div>
 	</div>
 	</div>
 	<div id="left">

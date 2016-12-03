@@ -105,6 +105,20 @@
 	}
 	}
 	%>
+	<%
+	if(session.getAttribute("title").equals("cheif")){
+	%>
+	<form action="GradeServlet" method="post"></form>
+	<%
+	}
+	%>
+	<% 
+	if(session.getAttribute("title").equals("leader")){
+	%>
+	<form action="GradeServlet" method="post"></form>
+	<%
+	}
+	%>
 </table>
 
 </div>

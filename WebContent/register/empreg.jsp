@@ -73,7 +73,7 @@ function check(){
 </script>
 </head>
 <body>
-${requestScope.msg}
+${requestScope.m}
 <div id="reg">
 <form action="" method="post" name = "myform" >
 <div style="width: 80%;height:80%;margin: auto;">

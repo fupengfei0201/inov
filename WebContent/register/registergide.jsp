@@ -44,7 +44,7 @@ background: lightgrey;
 <body>
 	<div id="registergide">
 		<form action="" method="post">
-		<table width="100%" height="94%" border="1" cellpadding="-2" cellspacing="-2" bordercolor="lightgrey" bordercolordark="lightgrey" bordercolorlight="#F5F5F5" bgcolor="lightgrey" style="filter:wave(add=false,freq=1,lightstrength=50,phase=50,strngth=10)">
+		<table width="100%" height="94%" border="1" cellpadding="-2" cellspacing="-2" bordercolor="lightgrey" bordercolordark="lightgrey" bordercolorlight="#F5F5F5" bgcolor="white" style="filter:wave(add=false,freq=1,lightstrength=50,phase=50,strngth=10)">
 			<tr>
 			<td valign="bottom"><input type="button" id="btn1" value="经&nbsp;&nbsp;理&nbsp;&nbsp;注&nbsp;&nbsp;册" class="pg" onClick="window.location.href='register/mngregister.jsp'" ></td>
 			</tr>

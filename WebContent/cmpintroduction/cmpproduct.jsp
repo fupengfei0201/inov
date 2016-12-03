@@ -25,7 +25,7 @@ list-style-type:none;
 <div id="center">
 	<div id="left">
 		<%@ include file="/login.jsp"%>
-		<%@  include file="/bgide.jsp"%>
+		<%@  include file="/gide/bgide.jsp"%>
 	</div>
 	<div id="right">
 		<div  style="width:90%;height: 95%; margin: auto;margin-top: 2%;" >

@@ -22,11 +22,15 @@ ${requestScope.msg }
 	<%
 	if(session.getAttribute("title").equals("hrm")){
 	%>
-	<%@  include file="selectgide.jsp"%><%} %>
+	<%@  include file="gide/selectgide.jsp"%><%} %>
 	<%
-	if(!session.getAttribute("title").equals("hrm")){
+	if(session.getAttribute("title").equals("manag")){
 	%>
-	<%@  include file="agide.jsp"%><%} %>
+	<%@  include file="/gide/mnggide.jsp"%><%} %>
+	<%
+	if(!session.getAttribute("title").equals("hrm") &&(!session.getAttribute("title").equals("manag") )){
+	%>
+	<%@  include file="/gide/agide.jsp"%><%} %>
 	</div>
 	<div id="right">
   	<%@  include file="sel.jsp"%>

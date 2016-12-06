@@ -86,7 +86,7 @@ if(sum>100||sum<0){
 	request.setAttribute("msg",
 			"<script>alert(\"分数提交有误，不予提交！\");</script>");
 	System.out.println("分数提交有误");
-	request.getRequestDispatcher("d.jsp")
+	request.getRequestDispatcher("grade/d.jsp")
 			.forward(request, response);
 	return;
 }
@@ -105,7 +105,7 @@ if(sum>100||sum<0){
 			request.setAttribute("msg",
 					"<script>alert(\"查无此员工，请查看输入的姓名是否有误！\");</script>");
 			System.out.println("查无此员工，请查看输入的姓名是否有误！");
-			request.getRequestDispatcher("d.jsp").forward(request, response);
+			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
 			return;
 		}*/
 		if (f == true) {
@@ -221,7 +221,7 @@ if(sum>100||sum<0){
 				request.setAttribute("msg",
 						"<script>alert(\"优秀人数超出，不予提交！\");</script>");
 				System.out.println("优秀人数过多");
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 				return;
 			} else {
@@ -416,7 +416,7 @@ if(sum>100||sum<0){
 					request.setAttribute("dept",dept);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
-					request.getRequestDispatcher("d.jsp").forward(request,
+					request.getRequestDispatcher("grade/d.jsp").forward(request,
 							response);
 					return;
 				}
@@ -432,7 +432,7 @@ if(sum>100||sum<0){
 				System.out.println("良好人数过多");
 				request.setAttribute("pname",name);
 				request.setAttribute("dept",dept);
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 				return;
 			} else {
@@ -627,7 +627,7 @@ if(sum>100||sum<0){
 					request.setAttribute("dept",dept);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
-					request.getRequestDispatcher("d.jsp").forward(request,
+					request.getRequestDispatcher("grade/d.jsp").forward(request,
 							response);
 					return;
 				}
@@ -823,7 +823,7 @@ if(sum>100||sum<0){
 				request.setAttribute("dept",dept);
 				request.setAttribute("msg",
 						"<script>alert(\"提交失败 \");</script>");
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 				return;
 			}

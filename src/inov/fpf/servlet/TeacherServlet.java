@@ -96,7 +96,7 @@ public class TeacherServlet extends HttpServlet {
 					"<script>alert(\"分数提交有误，不予提交\");</script>");
 			System.out.println("分数提交有误");
 			//request.setAttribute("msg", "提交失败");
-			request.getRequestDispatcher("d.jsp")
+			request.getRequestDispatcher("grade/d.jsp")
 					.forward(request, response);
 			return;
 		}
@@ -149,7 +149,7 @@ public class TeacherServlet extends HttpServlet {
 						"<script>alert(\"优秀人数超出不予提交，请重新打分 \");</script>");
 				System.out.println("优秀人数过多");
 				//request.setAttribute("msg", "提交失败");
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 				return;
 			} else {
@@ -210,7 +210,7 @@ public class TeacherServlet extends HttpServlet {
 					request.setAttribute("detp",teachername);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
-					request.getRequestDispatcher("d.jsp").forward(request,
+					request.getRequestDispatcher("grade/d.jsp").forward(request,
 							response);
 					return;
 				}
@@ -229,7 +229,7 @@ public class TeacherServlet extends HttpServlet {
 						"<script>alert(\"良好人数超出，不予提交，请重新打分！ \");</script>");
 				//System.out.println("良好人数过多,不予提交此成绩，请重新打分");
 				//request.setAttribute("msg", "提交失败");
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 			} else {
 				Teacher teacher = new Teacher(q, name,teachername, l.get(0),
@@ -287,7 +287,7 @@ public class TeacherServlet extends HttpServlet {
 					request.setAttribute("detp",teachername);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
-					request.getRequestDispatcher("d.jsp").forward(request,
+					request.getRequestDispatcher("grade/d.jsp").forward(request,
 							response);
 				}
 			}
@@ -346,7 +346,7 @@ public class TeacherServlet extends HttpServlet {
 				request.setAttribute("detp",teachername);
 				request.setAttribute("msg",
 						"<script>alert(\"提交失败 \");</script>");
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 				return;
 			}

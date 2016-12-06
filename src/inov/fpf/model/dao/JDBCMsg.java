@@ -1,5 +1,6 @@
 package inov.fpf.model.dao;
 
+import inov.fpf.model.vo.HRGrade;
 import inov.fpf.model.vo.Msggrade;
 import inov.fpf.util.JDBCUtil;
 
@@ -7,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JDBCMsg {
 	private Connection con = null;
@@ -115,4 +118,5 @@ public class JDBCMsg {
 			JDBCUtil.closeupdate(con, psd, rs);
 			return t;
 		}
+	
 }

@@ -20,7 +20,7 @@
 <input type="text" name="time" value="<%=new SimpleDateFormat("yyyy-MM").format(new Date()) %>" style="border: none;font-size: 18px" readonly/>
 </div>
 <div style="float: left;margin-top: 5px;">
-【<%=request.getAttribute("mk") %>】对以下员工的第【<%=request.getAttribute("q") %>】次打分
+【<%=request.getAttribute("mk") %>】对以下员工的第【<%=request.getAttribute("q") %>】次打分,本月第【<%=request.getAttribute("p") %>】次打分
 </div>
 <table width="100%" height="100%" border="1" cellpadding="0" cellspacing="0" align="center" style="text-align: center;margin-top: 15px">
 <tr style="height: 30px">
@@ -48,8 +48,7 @@
 	%>
 		<%
 	if(session.getAttribute("title").equals("tea")){
-	%>
-	<%
+	
 	ArrayList<Login>list=(ArrayList)request.getAttribute("ll"); 
 	for(int i=0;i<list.size();i++){%>
 	<form action="GradeServlet" method="post">
@@ -61,9 +60,7 @@
 	</td>
 	</tr>
 	</form>
-	<%}%>
-	
-	<%
+	<%}
 	}
 	%>
 	
@@ -107,22 +104,46 @@
 	%>
 	<%
 	if(session.getAttribute("title").equals("cheif")){
+		ArrayList<Login>list=(ArrayList)request.getAttribute("ll"); 
+		for(int i=0;i<list.size();i++){
 	%>
-	<form action="GradeServlet" method="post"></form>
+	<form action="GradeServlet" method="post">
+		<tr>
+	<td><input type="text" name="name" value="<%=list.get(i).getName() %>" style="border: none;text-align: center" readonly/></td>
+	<td><input type="text" name="dept" value="<%=list.get(i).getDept() %>" style="border: none;text-align: center" readonly /></td>
+	<td>
+	<input type="submit" value="打分">
+	</td>
+	</tr>
+	</form>
 	<%
-	}
+		}
+		}
 	%>
 	<% 
+	if(!request.getAttribute("ll").equals("1")){
 	if(session.getAttribute("title").equals("leader")){
+		ArrayList<Login>list=(ArrayList)request.getAttribute("ll");
+		for(int i=0;i<list.size();i++){
 	%>
-	<form action="GradeServlet" method="post"></form>
+	<form action="GradeServlet" method="post">
+	<tr>
+	<td><input type="text" name="name" value="<%=list.get(i).getName()%>" style="border: none;text-align: center" readonly/></td>
+	<td><input type="text" name="dept" value="<%=list.get(i).getDept() %>" style="border: none;text-align: center" readonly/></td>
+	<td>
+	<input type="submit" value="打分">
+	</td>
+	</tr>
+	</form>
 	<%
+	}
+	}
 	}
 	%>
 </table>
 
 </div>
-
+${requestScope.m}
 </div>
 
 </body>

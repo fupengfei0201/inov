@@ -30,6 +30,22 @@ public class JDBCNum {
 		
 		return i;
 	}
+	public int oneF(int x){
+		int i=0;
+		
+		try {
+			con=JDBCUtil.getConnection();
+			String sql="insert into Fornum values(?)";
+			psd=con.prepareStatement(sql);
+			psd.setInt(1, x);
+			i=psd.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return i;
+	}
 	public int oneT(int x){
 		int i=0;
 		
@@ -129,6 +145,23 @@ public class JDBCNum {
 		JDBCUtil.closeupdate(con, psd, rs);
 		return i;
 	}
+	public int selectF() {
+		int i=0;
+
+		try {
+			con = JDBCUtil.getConnection();
+			String sql = "select count(idf) from Fornum";
+			psd = con.prepareStatement(sql);
+			rs = psd.executeQuery();
+		while(rs.next()){
+			i=rs.getInt("count(idf)");
+		}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		JDBCUtil.closeupdate(con, psd, rs);
+		return i;
+	}
 	public int selectOneEmpA() {
 		int i=0;
 
@@ -194,6 +227,19 @@ public class JDBCNum {
 		JDBCUtil.closeupdate(con, psd, rs);
 		return i;
 	}
+	public int deleteF(){
+		int i=0;
+		try {
+			con = JDBCUtil.getConnection();
+			String sql = "delete from Fornum";
+			psd = con.prepareStatement(sql);
+			i=psd.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		JDBCUtil.closeupdate(con, psd, rs);
+		return i;
+	}
 	public int deleteOneT(){
 		int i=0;
 		try {
@@ -244,6 +290,53 @@ public class JDBCNum {
 			e.printStackTrace();
 		}
 		JDBCUtil.closeupdate(con, psd, rs);
+		return i;
+	}
+	//本月班组长的打分记录情况
+	public int selectOneMon() {
+		int i=0;
+
+		try {
+			con = JDBCUtil.getConnection();
+			String sql = "select count(idmon) from Mon";
+			psd = con.prepareStatement(sql);
+			rs = psd.executeQuery();
+		while(rs.next()){
+			i=rs.getInt("count(idmon)");
+		}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		JDBCUtil.closeupdate(con, psd, rs);
+		return i;
+	}
+	public int deleteOneMon(){
+		int i=0;
+		try {
+			con = JDBCUtil.getConnection();
+			String sql = "delete from Mon";
+			psd = con.prepareStatement(sql);
+			i=psd.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		JDBCUtil.closeupdate(con, psd, rs);
+		return i;
+	}
+	public int oneMon(int x){
+		int i=0;
+		
+		try {
+			con=JDBCUtil.getConnection();
+			String sql="insert into Mon values(?)";
+			psd=con.prepareStatement(sql);
+			psd.setInt(1, x);
+			i=psd.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return i;
 	}
 }

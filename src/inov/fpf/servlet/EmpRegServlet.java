@@ -78,7 +78,7 @@ public class EmpRegServlet extends HttpServlet {
 			
 			request.setAttribute("msg", "<script>alert(\"×¢²á³É¹¦£¡\");</script>");
 			System.out.println("×¢²á³É¹¦");
-			request.getRequestDispatcher("register/empregister.jsp").forward(request, response);
+			request.getRequestDispatcher("c.jsp").forward(request, response);
 		}
 		else{
 			 request.setAttribute("msg","<script>alert(\"×¢²áÊ§°Ü,ÇëÖØÐÂ×¢²á\");</script>");

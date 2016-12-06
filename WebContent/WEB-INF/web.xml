@@ -176,16 +176,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>SelServlet</display-name>
-    <servlet-name>SelServlet</servlet-name>
-    <servlet-class>inov.fpf.servlet.SelServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SelServlet</servlet-name>
-    <url-pattern>/SelServlet</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
     <display-name>HRMServlet</display-name>
     <servlet-name>HRMServlet</servlet-name>
     <servlet-class>inov.fpf.servlet.HRMServlet</servlet-class>
@@ -233,5 +223,45 @@
   <servlet-mapping>
     <servlet-name>MonitorRegServlet</servlet-name>
     <url-pattern>/MonitorRegServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SelServlet</display-name>
+    <servlet-name>SelServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.SelServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SelServlet</servlet-name>
+    <url-pattern>/SelServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ForemenRegServlet</display-name>
+    <servlet-name>ForemenRegServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.ForemenRegServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ForemenRegServlet</servlet-name>
+    <url-pattern>/ForemenRegServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ForemenGradeServlet</display-name>
+    <servlet-name>ForemenGradeServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.ForemenGradeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ForemenGradeServlet</servlet-name>
+    <url-pattern>/ForemenGradeServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MonitorGradeServlet</display-name>
+    <servlet-name>MonitorGradeServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.MonitorGradeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MonitorGradeServlet</servlet-name>
+    <url-pattern>/MonitorGradeServlet</url-pattern>
   </servlet-mapping>
 </web-app>

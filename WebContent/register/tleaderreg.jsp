@@ -44,21 +44,16 @@ function check(){
 		document.myform.dname.focus();
 		return;
 	}
-	else if(document.myform.tleader.value==""){
-		alert("请输入工段长姓名!");
-		document.myform.tleader.focus();
-		return;
-	}
 	else{
 		var a=document.myform;
-		a.action="";
+		a.action="MonitorRegServlet";
 		a.submit();
 	}
 }
 </script>
 </head>
 <body>
-${requestScope.m}
+${requestScope.msg}
 <div id="reg">
 <form action="" method="post" name = "myform" >
 <div style="width: 80%;height:100%;margin: auto;">
@@ -68,7 +63,6 @@ ${requestScope.m}
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 12px">密码由5~20个字母、数字、“_”或“.”组成（以字母开头）</span><br><br>
 确认密码：<input type="password" name="pwd1" class="register" value=""><br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;工段：<input type="text" name="dname" value="" class="register" ><br><br>
-&nbsp;&nbsp;工段长：<input type="text" name="tleader" value="" class="register" ><br><br>
 <input type="button" value="注册" class="regbtn" onclick="return check()">
 <input type="reset" value="重置" class="regbtn" >
 </div></form>

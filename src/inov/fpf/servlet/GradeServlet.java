@@ -55,7 +55,7 @@ public class GradeServlet extends HttpServlet {
 		request.setAttribute("list",m);
 		request.setAttribute("pname",name);
 		request.setAttribute("dept",dept);
-		request.getRequestDispatcher("d.jsp").forward(request, response);
+		request.getRequestDispatcher("grade/d.jsp").forward(request, response);
 	
 		}
 		//跳转到师傅打分页面
@@ -65,7 +65,7 @@ public class GradeServlet extends HttpServlet {
 			request.setAttribute("ls",ls);
 			request.setAttribute("pname",name);
 			request.setAttribute("dept",dept);
-			request.getRequestDispatcher("d.jsp").forward(request, response);
+			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
 		}
 		if(tilte.equals("emp")){
 			String x="0";
@@ -74,7 +74,22 @@ public class GradeServlet extends HttpServlet {
 			request.setAttribute("pname",name);
 			request.setAttribute("dept",dept);
 			session.setAttribute("x",x);
-			request.getRequestDispatcher("d.jsp").forward(request, response);
+			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
+		}
+		if(tilte.equals("cheif")){
+			List<TCheckPoints>ls=j.tCheckPoints();
+			System.out.println(ls.size());
+			request.setAttribute("ls",ls);
+			request.setAttribute("pname",name);
+			request.setAttribute("dept",dept);
+			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
+		}
+		if(tilte.equals("leader")){
+			List<Empcontent>list=j.empcontents();
+			request.setAttribute("list",list);
+			request.setAttribute("pname",name);
+			request.setAttribute("dept",dept);
+			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
 		}
 	}
 

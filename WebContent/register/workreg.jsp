@@ -46,14 +46,14 @@ function check(){
 	}
 	else{
 		var a=document.myform;
-		a.action="";
+		a.action="ForemenRegServlet";
 		a.submit();
 	}
 }
 </script>
 </head>
 <body>
-${requestScope.m}
+${requestScope.msg}
 <div id="reg">
 <form action="" method="post" name = "myform" >
 <div style="width: 80%;height:100%;margin: auto;">

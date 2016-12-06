@@ -56,11 +56,11 @@ var sum=0;
 		alert(sum);
 	      if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
 	    	  var a=document.myform;
-	    	  a.action="TeacherServlet";
+	    	  a.action="ForemenGradeServlet";
 			  a.submit();	          
 	      }else{
 	    	  sum=0;
-	    	  a.action="teachergrade.jsp";
+	    	  a.action="cheifgrade.jsp";
 	    	
 	      }
 	}

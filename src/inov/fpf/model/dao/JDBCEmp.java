@@ -553,6 +553,47 @@ public class JDBCEmp {
 			}
 			return i;
 		}
+		//查询工段长打过分人数的总数
+		public int selectEmpForCount(){
+			int i=0;
+			try {
+				con=JDBCUtil.getConnection();
+				String sql=" select count(nvl(empid,0))from foremengrade";
+				psd=con.prepareStatement(sql);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					i=rs.getInt("count(nvl(empid,0))");
+					System.out.println(i+"------------------数量");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return i;
+		}
+		//查询工段长在本次中未打分的人
+		public List<Login>empForName(String name){
+			List<Login>list=new ArrayList<Login>();
+
+			try {
+				con=JDBCUtil.getConnection();
+				String sql=" select distinct e.emploginname,e.department from emplogin e,foremengrade emp where e.emploginname not in(select empname from foremengrade where empid=(select max(empid)from foremengrade)) and sectionname=?";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					Login login=new Login();
+					login.setName(rs.getString("emploginname"));
+					login.setDept(rs.getString("department"));
+					list.add(login);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return list;
+			
+		}
 		//查询经理打过分人数的总数
 		public int selectEmpMnCount(){
 			int i=0;
@@ -775,6 +816,29 @@ public class JDBCEmp {
 			try {
 				con=JDBCUtil.getConnection();
 				String sql="select emploginname,department from emplogin where teachername=? ";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					Login login=new Login();
+					login.setName(rs.getString("emploginname"));
+					login.setDept(rs.getString("department"));
+					list.add(login);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return list;
+			
+		}
+		//工段长查询打分人员,通过工段号过滤出同一工段的人员，进行打分
+		public List<Login>forNameAndDept(String name){
+			List<Login>list=new ArrayList<Login>();
+
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select emploginname,department from emplogin where sectionname=? ";
 				psd=con.prepareStatement(sql);
 				psd.setString(1,name);
 				rs=psd.executeQuery();

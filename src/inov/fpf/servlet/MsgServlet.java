@@ -83,7 +83,7 @@ public class MsgServlet extends HttpServlet {
 					"<script>alert(\"查无此员工，请查看员工姓名输入是否有误！\");</script>");
 			System.out.println("查无此员工，请查看员工姓名输入是否有误！");
 			// request.setAttribute("msg","提交失败");
-			request.getRequestDispatcher("d.jsp")
+			request.getRequestDispatcher("grade/d.jsp")
 					.forward(request, response);
 			return;
 		}
@@ -94,7 +94,7 @@ public class MsgServlet extends HttpServlet {
 					"<script>alert(\"本次您已为此员工打过分，请为其他员工打分！\");</script>");
 			System.out.println("打过此人的分数，请重新打分");
 			// request.setAttribute("msg","提交失败");
-			request.getRequestDispatcher("d.jsp")
+			request.getRequestDispatcher("grade/d.jsp")
 					.forward(request, response);
 			return;
 		}*/
@@ -127,7 +127,7 @@ public class MsgServlet extends HttpServlet {
 				System.out.println("优秀人数过的");
 				
 				// request.setAttribute("msg","提交失败");
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 			} else {
 				Msggrade ms = new Msggrade(q, name, mag, dept, station,
@@ -178,7 +178,7 @@ public class MsgServlet extends HttpServlet {
 					request.setAttribute("name",mag);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
-					request.getRequestDispatcher("d.jsp").forward(request,
+					request.getRequestDispatcher("grade/d.jsp").forward(request,
 							response);
 				}
 			}
@@ -196,7 +196,7 @@ public class MsgServlet extends HttpServlet {
 						"<script>alert(\"良好人数过多，不予提交此成绩！ \");</script>");
 				System.out.println("良好人数过多，不予提交此成绩！");
 				//request.setAttribute("msg", "提交失败");
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 			} else {
 				Msggrade ms = new Msggrade(q, name, mag, dept, station,
@@ -246,7 +246,7 @@ public class MsgServlet extends HttpServlet {
 					request.setAttribute("list", li);
 					request.setAttribute("msg",
 							"<script>alert(\"提交失败 \");</script>");
-					request.getRequestDispatcher("d.jsp").forward(request,
+					request.getRequestDispatcher("grade/d.jsp").forward(request,
 							response);
 				}
 			}
@@ -301,7 +301,7 @@ public class MsgServlet extends HttpServlet {
 				request.setAttribute("name",mag);
 				request.setAttribute("msg",
 						"<script>alert(\"提交失败 \");</script>");
-				request.getRequestDispatcher("d.jsp")
+				request.getRequestDispatcher("grade/d.jsp")
 						.forward(request, response);
 			}
 		}

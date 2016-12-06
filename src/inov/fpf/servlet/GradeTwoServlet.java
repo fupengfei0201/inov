@@ -51,7 +51,7 @@ public class GradeTwoServlet extends HttpServlet {
 			request.setAttribute("pname",name);
 			request.setAttribute("dept",dept);
 			session.setAttribute("x",x);
-			request.getRequestDispatcher("d.jsp").forward(request, response);
+			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
 		}
 	}
 

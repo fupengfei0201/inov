@@ -3,6 +3,7 @@ package inov.fpf.servlet;
 import inov.fpf.model.dao.JDBCContent;
 import inov.fpf.model.dao.JDBCEmp;
 import inov.fpf.model.dao.JDBCForemen;
+import inov.fpf.model.dao.JDBCMonitor;
 import inov.fpf.model.dao.JDBCMsg;
 import inov.fpf.model.dao.JDBCNum;
 import inov.fpf.model.dao.JDBCTeacher;
@@ -56,17 +57,79 @@ public class LoginServlet extends HttpServlet {
 		System.out.println(levle);
 		//boolean t;
 		JDBCEmp p=new JDBCEmp();
+	
 		int r=p.empcount();
 		JDBCNum n=new JDBCNum();
 		//Login l=new Login();
 		if(levle.equals("hrm")){
 			request.setAttribute("list","0");
-			request.getRequestDispatcher("d.jsp").forward(request, response);		
+			request.getRequestDispatcher("grade/d.jsp").forward(request, response);		
 		}
 		if(levle.equals("cheif")){
 			JDBCForemen foremen=new JDBCForemen();
+			String section=foremen.selForSection(name);
+			System.out.println(section);
 			int q=foremen.selectForcount();
+			//判断工段长的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
+			if(p.selectEmpForCount()%r==0){
+				List<Login>ll=p.forNameAndDept(section);
+				request.setAttribute("ll",ll);
+				//request.setAttribute("msg",levle);
+				request.setAttribute("mk","工段长");
+				request.setAttribute("q",q);
+				request.setAttribute("p",n.selectF());
+				request.getRequestDispatcher("empsel.jsp").forward(request, response);
+				return;
+			}
+			else{
+				List<Login>ll=p.empForName(section);
+				request.setAttribute("ll",ll);
+				//request.setAttribute("msg",levle);
+				request.setAttribute("mk","工段长");
+				request.setAttribute("q",q);
+				request.setAttribute("p",n.selectF());
+				request.getRequestDispatcher("empsel.jsp").forward(request, response);
+				return;
+			}
 			
+		}
+		if(levle.equals("leader")){
+			JDBCMonitor mon=new JDBCMonitor();
+			String section=mon.selMonSection(name);
+			if((mon.selectMonCount()%r)==0){
+				List<Login>ll=mon.monNameAndDept(section);
+				int q=mon.selecMoncount();
+				request.setAttribute("ll",ll);
+				//request.setAttribute("r","new");
+				request.setAttribute("mk","班组长");
+				request.setAttribute("q",q);
+				request.setAttribute("p",n.selectOneMon());
+				request.getRequestDispatcher("empsel.jsp").forward(request, response);
+			}
+			else{
+				if(mon.selectMon(name)<((p.empcount()/mon.selectMonCount(section))+1)){
+					
+				
+				List<Login>ll=mon.empMonName(section);
+				int q=mon.selecMoncount();
+				request.setAttribute("ll",ll);
+				//request.setAttribute("r","new");
+				request.setAttribute("mk","班组长");
+				request.setAttribute("q",q);
+				request.setAttribute("p",n.selectOneMon());
+			
+				}else{
+					int q=mon.selecMoncount();
+					request.setAttribute("ll","1");
+					request.setAttribute("m",
+							"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+					request.setAttribute("mk","班组长");
+					request.setAttribute("q",q);
+					request.setAttribute("p",n.selectOneMon());
+				}
+				request.getRequestDispatcher("empsel.jsp").forward(request, response);	
+				return;
+			}
 		}
 		if(levle.equals("manag")){
 			JDBCMsg msg=new JDBCMsg();

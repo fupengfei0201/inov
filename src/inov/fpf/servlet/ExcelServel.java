@@ -95,16 +95,16 @@ public class ExcelServel extends HttpServlet {
 		        Label label6 = new Label(5, 0, "得分");  
 		        sheet1.addCell(label6); 
 		        //第七列第一行  
-		        Label label7 = new Label(6, 0, "员工互评得分1");  
+		        Label label7 = new Label(6, 0, "工段长");  
 		        sheet1.addCell(label7); 
 		        //第八列第一行  
-		        Label label8 = new Label(7, 0, "员工互评得分2");  
+		        Label label8 = new Label(7, 0, "得分");  
 		        sheet1.addCell(label8); 
 		        //第九列第一行  
-		        Label label9 = new Label(8, 0, "员工互评得分3");  
+		        Label label9 = new Label(8, 0, "班组长");  
 		        sheet1.addCell(label9); 
 		        //第十列第一行  
-		        Label label10 = new Label(9, 0, "员工互评平均得分");  
+		        Label label10 = new Label(9, 0, "得分");  
 		        sheet1.addCell(label10); 
 		        //第十一列第一行  
 		        Label label11 = new Label(10, 0, "总分");  
@@ -140,19 +140,19 @@ public class ExcelServel extends HttpServlet {
 			                        sheet1.addCell(label);  
 		                    }
 		                    if(j==6){
-		                    	  Label label = new Label(j, i, list.get(i-1).getOnegrade()+"");  
+		                    	  Label label = new Label(j, i, list.get(i-1).getForemenname());  
 			                        sheet1.addCell(label);  
 		                    }
 		                    if(j==7){
-		                    	  Label label = new Label(j, i, list.get(i-1).getTwograde()+"");  
+		                    	  Label label = new Label(j, i, list.get(i-1).getForemengrade()+"");  
 			                        sheet1.addCell(label);  
 		                    }
 		                    if(j==8){
-		                    	  Label label = new Label(j, i, list.get(i-1).getThreegrade()+"");  
+		                    	  Label label = new Label(j, i, list.get(i-1).getMonname());  
 			                        sheet1.addCell(label);  
 		                    }
 		                    if(j==9){
-		                    	  Label label = new Label(j, i, list.get(i-1).getEmpavg()+"");  
+		                    	  Label label = new Label(j, i, list.get(i-1).getMongrade()+"");  
 			                        sheet1.addCell(label);  
 		                    }
 		                    if(j==10){

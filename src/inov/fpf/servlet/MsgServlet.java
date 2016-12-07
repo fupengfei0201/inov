@@ -63,6 +63,7 @@ public class MsgServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session=request.getSession();
+		session.setAttribute("T","a");
 		String tilte=(String)session.getAttribute("title");
 		String name = request.getParameter("name");
 		// System.out.println("------------------------"+name);

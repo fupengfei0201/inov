@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
 		JDBCNum n=new JDBCNum();
 		//Login l=new Login();
 		if(levle.equals("hrm")){
-			request.setAttribute("list","0");
+			session.setAttribute("list","0");
 			request.getRequestDispatcher("grade/d.jsp").forward(request, response);		
 		}
 		if(levle.equals("cheif")){
@@ -143,7 +143,10 @@ public class LoginServlet extends HttpServlet {
 					request.setAttribute("mk","经理");
 					request.setAttribute("q",q);
 					request.setAttribute("p",n.selectOneM());
-					request.getRequestDispatcher("empsel.jsp").forward(request, response);	
+					session.setAttribute("list","0");
+					//session.setAttribute("T","a");
+					request.getRequestDispatcher("empsel.jsp").forward(request, response);
+					return;
 				}
 				else{
 					List<Login>ll=p.empMnName();
@@ -152,7 +155,9 @@ public class LoginServlet extends HttpServlet {
 					request.setAttribute("mk","经理");
 					request.setAttribute("q",q);
 					request.setAttribute("p",n.selectOneM());
+					session .setAttribute("list","0");
 					request.getRequestDispatcher("empsel.jsp").forward(request, response);
+					return;
 				}
 		}
 		if(levle.equals("tea")){

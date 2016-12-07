@@ -1,6 +1,6 @@
 package inov.fpf.model.dao;
 
-import inov.fpf.model.vo.HRGrade;
+import inov.fpf.model.vo.MsgSelect;
 import inov.fpf.model.vo.Msggrade;
 import inov.fpf.util.JDBCUtil;
 
@@ -117,6 +117,38 @@ public class JDBCMsg {
 			}
 			JDBCUtil.closeupdate(con, psd, rs);
 			return t;
+		}
+		//经理查询打分情况
+		public List<MsgSelect> allMsgemp(String time){
+			List list =new ArrayList<MsgSelect>();
+			try {
+				con = JDBCUtil.getConnection();
+				String sql="select rownum, t.empname,t.tname,t.tsum,f.tname,f.tsum,n.assessname,n.empsum,round((t.tsum+f.tsum+n.empsum)/3,2),t.comments from teacher t,foremengrade f,monitorgrade n where  t.empid=f.empid and f.empid=n.empcod and t.empname=f.empname and f.empname=n.empname and to_char(t.scoredate,'yyyy-mm')=? and to_char(f.scoredate,'yyyy-mm')=? and to_char(n.scoretime,'yyyy-mm')=?";
+				psd=con.prepareStatement(sql);
+				psd.setString(1, time);
+				psd.setString(2, time);
+				psd.setString(3,time);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					MsgSelect msg=new MsgSelect();
+				msg.setCod(rs.getInt(1));
+				msg.setName(rs.getString(2));
+				msg.setDeptname(rs.getString(3));
+				msg.setDeptgrade(rs.getDouble(4));
+				msg.setTeachername(rs.getString(5));
+				msg.setTeachergrade(rs.getDouble(6));
+				msg.setMonname(rs.getString(7));
+				msg.setMongrade(rs.getDouble(8));
+				msg.setSum(rs.getDouble(9));
+				msg.setComment(rs.getString(10));
+				list.add(msg);	
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			JDBCUtil.closeupdate(con, psd, rs);
+			return list;
 		}
 	
 }

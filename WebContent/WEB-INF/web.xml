@@ -264,4 +264,24 @@
     <servlet-name>MonitorGradeServlet</servlet-name>
     <url-pattern>/MonitorGradeServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MsgSelectServlet</display-name>
+    <servlet-name>MsgSelectServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.MsgSelectServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MsgSelectServlet</servlet-name>
+    <url-pattern>/MsgSelectServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HRMSelectNotGrade</display-name>
+    <servlet-name>HRMSelectNotGrade</servlet-name>
+    <servlet-class>inov.fpf.servlet.HRMSelectNotGrade</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HRMSelectNotGrade</servlet-name>
+    <url-pattern>/HRMSelectNotGrade</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -73,7 +73,7 @@ ${requestScope.x}
 <td width="120px">部门负责人评语</td>
 </tr>
 <%
-if(!request.getAttribute("list").equals("0")){
+if(!session.getAttribute("list").equals("0")){
 List<HRGrade>list=(ArrayList)request.getAttribute("list");
 for(int i=0;i<list.size();i++){%>
 	<tr>
@@ -83,10 +83,10 @@ for(int i=0;i<list.size();i++){%>
 	<td><%=list.get(i).getDeptgrade() %></td>
 	<td><%=list.get(i).getTeachername() %></td>
 	<td><%=list.get(i).getTeachergrade() %></td>
-	<td><%=list.get(i).getOnegrade() %></td>
-	<td><%=list.get(i).getTwograde() %></td>
-	<td><%=list.get(i).getThreegrade() %></td>
-	<td><%=list.get(i).getEmpavg() %></td>
+	<td><%=list.get(i).getForemenname() %></td>
+	<td><%=list.get(i).getForemengrade() %></td>
+	<td><%=list.get(i).getMonname() %></td>
+	<td><%=list.get(i).getMongrade() %></td>
 	<td><%=list.get(i).getSum() %></td>
 	<td><%=list.get(i).getComment()%></td>
 	</tr>
@@ -96,7 +96,9 @@ for(int i=0;i<list.size();i++){%>
 <tr>
 <td colspan="12"><center><input type="submit" value="生成excel表格"/></center></td>
 </tr>
-<%} %>
+<%} 
+session.setAttribute("list", "0");
+%>
 </table>
 </div>
 </div>

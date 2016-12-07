@@ -1,7 +1,8 @@
 package inov.fpf.servlet;
 
 import inov.fpf.model.dao.JDBCHR;
-import inov.fpf.model.vo.HRGrade;
+import inov.fpf.model.dao.JDBCMsg;
+import inov.fpf.model.vo.MsgSelect;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,15 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class HRMServlet
+ * Servlet implementation class MsgSelectServlet
  */
-public class HRMServlet extends HttpServlet {
+public class MsgSelectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HRMServlet() {
+    public MsgSelectServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,10 +43,10 @@ public class HRMServlet extends HttpServlet {
 		String months=request.getParameter("months");
 //		request.setAttribute("yy",years);
 //		request.setAttribute("mm",months);
-				String time=years+"-"+months;
-				System.out.println(time+"时间");
-		JDBCHR jr=new JDBCHR();
-		List<HRGrade>list=jr.allemp(time);
+		String time=years+"-"+months;
+		System.out.println(time+"时间");
+		JDBCMsg ms=new JDBCMsg();
+		List<MsgSelect>list=ms.allMsgemp(time);
 		HttpSession session=request.getSession();
 		String name=(String)session.getAttribute("name");
 		String levle=(String)session.getAttribute("title");
@@ -53,19 +54,19 @@ public class HRMServlet extends HttpServlet {
 		request.setAttribute("detp",levle);
 		session.setAttribute("name",name);
 		session.setAttribute("title",levle);
+		session.setAttribute("T", "b");
 		if(list.isEmpty()){
-			session.setAttribute("list", "0");
+			session.setAttribute("list","0");
 			request.setAttribute("x",
 					"<script>alert(\"暂无员工得分\");</script>");
-		
-			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
+			request.getRequestDispatcher("grade/mngselgrade.jsp").forward(request, response);
 			return;
 		}
 		else{
-			session.setAttribute("list", "1");
-		request.setAttribute("list", list);
+		session.setAttribute("list","1");
+		request.setAttribute("list",list);
 		request.setAttribute("time",time);
-		request.getRequestDispatcher("grade/d.jsp").forward(request, response);
+		request.getRequestDispatcher("grade/mngselgrade.jsp").forward(request, response);
 		return;
 		}
 	}

@@ -21,7 +21,7 @@
   
     function check(){
     	a=document.myform;
-    	a.action="";
+    	a.action="HRMSelectNotGrade";
 		a.submit();
     }
   </script>  
@@ -61,10 +61,34 @@ ${requestScope.x}
 <td height="20px" width="60px">序号</td>
 <td width="70px">姓名</td>
 <td width="70px">部门负责人</td>
+<td width="70px">得分</td>
 <td width="70px">指导老师（师傅）</td>
+<td width="70px">得分</td>
 <td width="70px">工段长</td>
+<td width="70px">得分</td>
 <td width="70px">班组长</td>
+<td width="70px">得分</td>
 </tr>
+<%
+if(!session.getAttribute("list").equals("0")){
+List<HRGrade>list=(ArrayList)request.getAttribute("list");
+for(int i=0;i<list.size();i++){%>
+	<tr>
+	<td><%=list.get(i).getCod() %></td>
+	<td><%=list.get(i).getName() %></td>
+	<td><%=list.get(i).getDeptname() %></td>
+	<td><%=list.get(i).getDeptgrade() %></td>
+	<td><%=list.get(i).getTeachername() %></td>
+	<td><%=list.get(i).getTeachergrade() %></td>
+	<td><%=list.get(i).getForemenname() %></td>
+	<td><%=list.get(i).getForemengrade() %></td>
+	<td><%=list.get(i).getMonname() %></td>
+	<td><%=list.get(i).getMongrade() %></td>
+	</tr>
+<%}
+session.setAttribute("list","0");
+}
+%>
 </table>
 </div>
 </div>

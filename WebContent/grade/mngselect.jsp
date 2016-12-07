@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  <%@ page import="java.util.*,inov.fpf.model.vo.HRGrade" %>
+  <%@ page import="java.util.*,inov.fpf.model.vo.MsgSelect" %>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,7 +21,7 @@
   
     function check(){
     	a=document.myform;
-    	a.action="";
+    	a.action="MsgSelectServlet";
 		a.submit();
     }
   </script>  
@@ -53,24 +53,42 @@ ${requestScope.x}
 </table>
 </div>
 </form>
-<form action="ExcelServel" method="post">
+<form action="" method="post">
 <div style="width: 100%;height:90%;overflow: auto" onload="document.body.scrollTop=document.body.scrollHeight">
 <div style="width: 90%;height:90%;margin: auto;margin-top: 20px">
 <table style="width:100%;height:100%;text-align: center;margin-top: 20px" border="1" cellpadding="0" cellspacing="0">
 <tr style="height: 30px">
 <td height="20px" width="60px">序号</td>
 <td width="70px">姓名</td>
-<td width="70px">指导老师（师傅）</td>
-<td width="60px">得分</td>
 <td width="70px">工段长</td>
 <td width="70px">得分</td>
+<td width="70px">指导老师（师傅）</td>
+<td width="60px">得分</td>
 <td width="70px">班组长</td>
 <td width="70px">得分</td>
-<td width="70px">平均得分</td>
 <td width="60px">总分</td>
 <td width="120px">指导老师（师傅）评语</td>
 </tr>
-
+<%
+if(!session.getAttribute("list").equals("0")){
+List<MsgSelect>list=(ArrayList)request.getAttribute("list");
+for(int i=0;i<list.size();i++){%>
+	<tr>
+	<td><%=list.get(i).getCod() %></td>
+	<td><%=list.get(i).getName() %></td>
+	<td><%=list.get(i).getDeptname() %></td>
+	<td><%=list.get(i).getDeptgrade() %></td>
+	<td><%=list.get(i).getTeachername() %></td>
+	<td><%=list.get(i).getTeachergrade()%></td>
+	<td><%=list.get(i).getMonname() %></td>
+	<td><%=list.get(i).getMongrade() %></td>
+	<td><%=list.get(i).getSum() %></td>
+	<td><%=list.get(i).getComment()%></td>
+	</tr>
+<%}
+session.setAttribute("list", "0");
+}
+%>
 </table>
 </div>
 </div>

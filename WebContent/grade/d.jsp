@@ -24,6 +24,7 @@
 	<%@  include file="/gide/selectgide.jsp"%><%} %>
 	<%
 	if(session.getAttribute("title").equals("manag")){
+		
 	%>
 	<%@  include file="/gide/mnggide.jsp"%><%} %>
 	<%
@@ -51,7 +52,7 @@
 	<%
 	if(session.getAttribute("title").equals("leader")){
 	%>
-	<%@  include file="leadergrade.jsp"%><%} %>
+	<%@  include file="leadergrade.jsp"%><%}%>
 	<%
 	if(session.getAttribute("title").equals("hrm")){
 	%>

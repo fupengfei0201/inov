@@ -13,15 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class HRMServlet
+ * Servlet implementation class HRMSelectNotGrade
  */
-public class HRMServlet extends HttpServlet {
+public class HRMSelectNotGrade extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HRMServlet() {
+    public HRMSelectNotGrade() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,7 +45,7 @@ public class HRMServlet extends HttpServlet {
 				String time=years+"-"+months;
 				System.out.println(time+"时间");
 		JDBCHR jr=new JDBCHR();
-		List<HRGrade>list=jr.allemp(time);
+		List<HRGrade>list=jr.allempnot(time);
 		HttpSession session=request.getSession();
 		String name=(String)session.getAttribute("name");
 		String levle=(String)session.getAttribute("title");
@@ -57,15 +57,14 @@ public class HRMServlet extends HttpServlet {
 			session.setAttribute("list", "0");
 			request.setAttribute("x",
 					"<script>alert(\"暂无员工得分\");</script>");
-		
-			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
+			request.getRequestDispatcher("grade/hrselgrade.jsp").forward(request, response);
 			return;
 		}
 		else{
-			session.setAttribute("list", "1");
+			session.setAttribute("list","1");
 		request.setAttribute("list", list);
 		request.setAttribute("time",time);
-		request.getRequestDispatcher("grade/d.jsp").forward(request, response);
+		request.getRequestDispatcher("grade/hrselgrade.jsp").forward(request, response);
 		return;
 		}
 	}

@@ -3,6 +3,7 @@ package inov.fpf.servlet;
 import inov.fpf.model.dao.JDBCContent;
 import inov.fpf.model.dao.JDBCEmp;
 import inov.fpf.model.dao.JDBCMsg;
+import inov.fpf.model.dao.JDBCNum;
 import inov.fpf.model.vo.Login;
 import inov.fpf.model.vo.MsgCheckContent;
 import inov.fpf.model.vo.Msggrade;
@@ -75,8 +76,14 @@ public class MsgServlet extends HttpServlet {
 		JDBCContent com = new JDBCContent();
 		JDBCMsg m = new JDBCMsg();
 		JDBCEmp e = new JDBCEmp();
-/*		boolean f =m.selectMnName(name);
-		boolean h=e.selectErrorName(name);
+		JDBCNum n=new JDBCNum();
+		double t = e.empcount();
+
+		// 通过查询员工的数量对优秀人数进行控制
+	
+		int q = m.selectcount();
+	boolean f =m.selectMnName(name);
+	/*	boolean h=e.selectErrorName(name);
 		if(h==false){
 			List<MsgCheckContent> li = com.msgcontent();
 			request.setAttribute("list", li);
@@ -87,7 +94,7 @@ public class MsgServlet extends HttpServlet {
 			request.getRequestDispatcher("grade/d.jsp")
 					.forward(request, response);
 			return;
-		}
+		}*/
 		if(f==true){
 			List<MsgCheckContent> li = com.msgcontent();
 			request.setAttribute("list", li);
@@ -95,10 +102,32 @@ public class MsgServlet extends HttpServlet {
 					"<script>alert(\"本次您已为此员工打过分，请为其他员工打分！\");</script>");
 			System.out.println("打过此人的分数，请重新打分");
 			// request.setAttribute("msg","提交失败");
-			request.getRequestDispatcher("grade/d.jsp")
-					.forward(request, response);
-			return;
-		}*/
+			//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
+			if(e.selectEmpMnCount()%t==0){
+				List<Login>ll=e.empNameAndDept();
+				//request.setAttribute("msg",name);
+				request.setAttribute("ll",ll);
+				request.setAttribute("mk","经理");
+				request.setAttribute("q",q);
+				request.setAttribute("p",n.selectOneM());
+				session.setAttribute("list","0");
+				//session.setAttribute("T","a");
+				request.getRequestDispatcher("empsel.jsp").forward(request, response);
+				return;
+			}
+			else{
+				List<Login>ll=e.empMnName();
+				request.setAttribute("ll",ll);
+				//request.setAttribute("msg",name);
+				request.setAttribute("mk","经理");
+				request.setAttribute("q",q);
+				request.setAttribute("p",n.selectOneM());
+				session .setAttribute("list","0");
+				request.getRequestDispatcher("empsel.jsp").forward(request, response);
+				return;
+			}
+		
+		}
 		List<MsgCheckContent> list1 = com.msgcontent();
 		List<Integer> l = new ArrayList<Integer>();
 		int sum = 0;
@@ -109,11 +138,7 @@ public class MsgServlet extends HttpServlet {
 			sum = sum + x;
 		}
 		
-		double t = e.empcount();
-
-		// 通过查询员工的数量对优秀人数进行控制
-	
-		int q = m.selectcount();
+		
 		if (sum >= 90) {
 			ss.add(sum);
 			if (ss.size() > t * 0.3) {
@@ -157,19 +182,26 @@ public class MsgServlet extends HttpServlet {
 					//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 					if(e.selectEmpMnCount()%t==0){
 						List<Login>ll=e.empNameAndDept();
-						//request.setAttribute("msg",tilte);
+						//request.setAttribute("msg",name);
 						request.setAttribute("ll",ll);
 						request.setAttribute("mk","经理");
-						request.setAttribute("q",m.selectcount());
-						request.getRequestDispatcher("empsel.jsp").forward(request, response);	
+						request.setAttribute("q",q);
+						request.setAttribute("p",n.selectOneM());
+						session.setAttribute("list","0");
+						//session.setAttribute("T","a");
+						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
 					}
 					else{
 						List<Login>ll=e.empMnName();
 						request.setAttribute("ll",ll);
-						//request.setAttribute("msg",tilte);
+						//request.setAttribute("msg",name);
 						request.setAttribute("mk","经理");
-						request.setAttribute("q",m.selectcount());
+						request.setAttribute("q",q);
+						request.setAttribute("p",n.selectOneM());
+						session .setAttribute("list","0");
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
 					}
 				} else {
 					List<MsgCheckContent> li = com.msgcontent();
@@ -225,23 +257,30 @@ public class MsgServlet extends HttpServlet {
 						System.out.println("remove tt的数量为："+tt.size());
 						m.insertcount(1);
 					}
-					//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 					if(e.selectEmpMnCount()%t==0){
 						List<Login>ll=e.empNameAndDept();
-						//request.setAttribute("msg",tilte);
+						//request.setAttribute("msg",name);
 						request.setAttribute("ll",ll);
 						request.setAttribute("mk","经理");
-						request.setAttribute("q",m.selectcount());
-						request.getRequestDispatcher("empsel.jsp").forward(request, response);	
+						request.setAttribute("q",q);
+						request.setAttribute("p",n.selectOneM());
+						session.setAttribute("list","0");
+						//session.setAttribute("T","a");
+						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
 					}
 					else{
 						List<Login>ll=e.empMnName();
 						request.setAttribute("ll",ll);
-						//request.setAttribute("msg",tilte);
+						//request.setAttribute("msg",name);
 						request.setAttribute("mk","经理");
-						request.setAttribute("q",m.selectcount());
+						request.setAttribute("q",q);
+						request.setAttribute("p",n.selectOneM());
+						session .setAttribute("list","0");
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
 					}
+				
 				} else {
 					List<MsgCheckContent> li = com.msgcontent();
 					request.setAttribute("list", li);
@@ -277,23 +316,30 @@ public class MsgServlet extends HttpServlet {
 					System.out.println("tt移除后数量为"+tt.size());
 					m.insertcount(1);
 				}
-				//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 				if(e.selectEmpMnCount()%t==0){
 					List<Login>ll=e.empNameAndDept();
-					//request.setAttribute("msg","manag");
+					//request.setAttribute("msg",name);
 					request.setAttribute("ll",ll);
 					request.setAttribute("mk","经理");
-					request.setAttribute("q",m.selectcount());
-					request.getRequestDispatcher("empsel.jsp").forward(request, response);	
+					request.setAttribute("q",q);
+					request.setAttribute("p",n.selectOneM());
+					session.setAttribute("list","0");
+					//session.setAttribute("T","a");
+					request.getRequestDispatcher("empsel.jsp").forward(request, response);
+					return;
 				}
 				else{
 					List<Login>ll=e.empMnName();
 					request.setAttribute("ll",ll);
-					//request.setAttribute("msg","manag");
+					//request.setAttribute("msg",name);
 					request.setAttribute("mk","经理");
-					request.setAttribute("q",m.selectcount());
+					request.setAttribute("q",q);
+					request.setAttribute("p",n.selectOneM());
+					session .setAttribute("list","0");
 					request.getRequestDispatcher("empsel.jsp").forward(request, response);
+					return;
 				}
+			
 			} else {
 				List<MsgCheckContent> li = com.msgcontent();
 				request.setAttribute("list", li);

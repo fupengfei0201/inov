@@ -86,7 +86,7 @@ public class JDBCMonitor {
 
 		try {
 			con=JDBCUtil.getConnection();
-			String sql="select emploginname,department from emplogin where sectionname=? ";
+			String sql="select emploginname,department from emplogin where sectionname=? and empdate>(select ADD_MONTHS(sysdate, -12)from dual)";
 			psd=con.prepareStatement(sql);
 			psd.setString(1,name);
 			rs=psd.executeQuery();
@@ -109,7 +109,7 @@ public class JDBCMonitor {
 
 		try {
 			con=JDBCUtil.getConnection();
-			String sql=" select distinct e.emploginname,e.department from emplogin e,monitorgrade emp where e.emploginname not in(select empname from monitorgrade where empcod=(select max(empcod)from monitorgrade)) and e.sectionname=?";
+			String sql=" select distinct e.emploginname,e.department from emplogin e,monitorgrade emp where e.emploginname not in(select empname from monitorgrade where empcod=(select max(empcod)from monitorgrade)) and e.sectionname=? and e.empdate>(select ADD_MONTHS(sysdate, -12)from dual)";
 			psd=con.prepareStatement(sql);
 			psd.setString(1,name);
 			rs=psd.executeQuery();

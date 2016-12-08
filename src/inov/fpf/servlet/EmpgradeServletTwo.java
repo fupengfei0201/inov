@@ -69,6 +69,8 @@ public class EmpgradeServletTwo extends HttpServlet {
 		String name = request.getParameter("name");
 		String dept = request.getParameter("dept");
 		System.out.println(list1.size());
+		JDBCEmp emp = new JDBCEmp();
+		String section=emp.selectSection(ename);
 		int sum = 0;
 		for (int x = 0; x < list1.size(); x++) {
 			int i;
@@ -115,9 +117,9 @@ if(sum>100||sum<0){
 			if(e.selectOnecount()==e.selectTwocount()){
 				//显示除自己以外的表二中自己未打分的的所有人全部显示
 				
-				List<Login>ll=e.empNameAndDeptOne(ename, ename,ename);
+				List<Login>ll=e.empNameAndDeptOne(ename, ename,ename,section);
 				//显示所有老员工，对表二进行打分
-				List<Login>lw=e.empNameAndDeptThree(ename,ename,ename);
+				List<Login>lw=e.empNameAndDeptThree(ename,ename,ename,section);
 				if(n.selectOneEmpA()==n.selectOneEmpB()){
 					request.setAttribute("p",n.selectOneEmpA());
 				}
@@ -148,7 +150,7 @@ if(sum>100||sum<0){
 			else if(e.selectOnecount()>e.selectTwocount()){
 				
 				//显示所有老员工，对表二进行打分
-				List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename);
+				List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename,section);
 			
 				int q=e.selectTwocount();
 				if(n.selectOneEmpA()==n.selectOneEmpB()){
@@ -181,7 +183,7 @@ if(sum>100||sum<0){
 			else{
 			
 				//显示除自己以外的表二中自己未打分的的所有人全部显示
-				List<Login>ll=e.empNameAndDeptF(ename,ename,ename);
+				List<Login>ll=e.empNameAndDeptF(ename,ename,ename,section);
 				int q=e.selectOnecount();
 				if(n.selectOneEmpA()==n.selectOneEmpB()){
 					request.setAttribute("p",n.selectOneEmpA());
@@ -229,7 +231,7 @@ if(sum>100||sum<0){
 						l.get(0), l.get(1), l.get(2), l.get(3), l.get(4),
 						l.get(5), l.get(6), l.get(7), l.get(8), sum);
 				ls.add(sum);
-				JDBCEmp emp = new JDBCEmp();
+				
 				int s = emp.empTwoInsert(empgrade);
 				if (s == 1) {
 					List<Empcontent> list = j.empcontents();
@@ -253,9 +255,9 @@ if(sum>100||sum<0){
 					if(e.selectOnecount()==e.selectTwocount()){
 						//显示除自己以外的表二中自己未打分的的所有人全部显示
 						
-						List<Login>ll=e.empNameAndDeptOne(ename, ename,ename);
+						List<Login>ll=e.empNameAndDeptOne(ename, ename,ename,section);
 						//显示所有老员工，对表二进行打分
-						List<Login>lw=e.empNameAndDeptThree(ename,ename,ename);
+						List<Login>lw=e.empNameAndDeptThree(ename,ename,ename,section);
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
 							request.setAttribute("p",n.selectOneEmpA());
 						}
@@ -286,7 +288,7 @@ if(sum>100||sum<0){
 					else if(e.selectOnecount()>e.selectTwocount()){
 						
 						//显示所有老员工，对表二进行打分
-						List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename);
+						List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename,section);
 					
 						int q=e.selectTwocount();
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
@@ -319,7 +321,7 @@ if(sum>100||sum<0){
 					else{
 					
 						//显示除自己以外的表二中自己未打分的的所有人全部显示
-						List<Login>ll=e.empNameAndDeptF(ename,ename,ename);
+						List<Login>ll=e.empNameAndDeptF(ename,ename,ename,section);
 						int q=e.selectOnecount();
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
 							request.setAttribute("p",n.selectOneEmpA());
@@ -441,7 +443,7 @@ if(sum>100||sum<0){
 						l.get(0), l.get(1), l.get(2), l.get(3), l.get(4),
 						l.get(5), l.get(6), l.get(7), l.get(8), sum);
 				ls.add(sum);
-				JDBCEmp emp = new JDBCEmp();
+			
 				int s = emp.empTwoInsert(empgrade);
 				if (s == 1) {
 					List<Empcontent> list = j.empcontents();
@@ -465,9 +467,9 @@ if(sum>100||sum<0){
 					if(e.selectOnecount()==e.selectTwocount()){
 						//显示除自己以外的表二中自己未打分的的所有人全部显示
 						
-						List<Login>ll=e.empNameAndDeptOne(ename, ename,ename);
+						List<Login>ll=e.empNameAndDeptOne(ename, ename,ename,section);
 						//显示所有老员工，对表二进行打分
-						List<Login>lw=e.empNameAndDeptThree(ename,ename,ename);
+						List<Login>lw=e.empNameAndDeptThree(ename,ename,ename,section);
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
 							request.setAttribute("p",n.selectOneEmpA());
 						}
@@ -496,9 +498,8 @@ if(sum>100||sum<0){
 						
 					}
 					else if(e.selectOnecount()>e.selectTwocount()){
-						
 						//显示所有老员工，对表二进行打分
-						List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename);
+						List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename,section);
 					
 						int q=e.selectTwocount();
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
@@ -525,13 +526,12 @@ if(sum>100||sum<0){
 						request.setAttribute("q",q);
 						request.setAttribute("mk","老员工");
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
-						return;
-						
+						return;	
 					}
 					else{
 					
 						//显示除自己以外的表二中自己未打分的的所有人全部显示
-						List<Login>ll=e.empNameAndDeptF(ename,ename,ename);
+						List<Login>ll=e.empNameAndDeptF(ename,ename,ename,section);
 						int q=e.selectOnecount();
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
 							request.setAttribute("p",n.selectOneEmpA());
@@ -544,7 +544,6 @@ if(sum>100||sum<0){
 						}
 						if((e.selectOneA(ename)+e.selectTwo(ename))<3){
 						request.setAttribute("ll",ll);
-					
 						request.setAttribute("lw","1");
 						}
 						else{
@@ -559,67 +558,6 @@ if(sum>100||sum<0){
 						return;
 						
 					}
-				/*	// 如果老员工评分一表中打分数量是总员工的倍数，说明两种情况：1.从未打过份，2，给所有员工打过成倍的分
-					if ((e.selectEmpOnecount() % e.empcount()) == 0) {
-						// 再查询老员工打分表二，如果老员工评分表二是总员工的倍数，说明两种情况：1.从未打过份，2，给所有员工打过成倍的分
-						if ((e.selectEmpTwocount() % e.empcount()) == 0
-								&& e.selectEmpOnecount() == e
-										.selectEmpTwocount()) {
-							// 先显示老员工表一，对老员工表一进行打分
-							List<Login> ll = e.empNameAndDept(ename);
-							int q = e.selectOnecount();
-							request.setAttribute("ll", ll);
-							// request.setAttribute("r","oldone");
-							session.setAttribute("r", "oldone");
-							request.setAttribute("mk", "老员工一");
-							request.setAttribute("q", q);
-							request.getRequestDispatcher("empsel.jsp").forward(
-									request, response);
-							return;
-						} else if ((e.selectEmpTwocount() % e.empcount()) == 0
-								&& e.selectEmpOnecount() != e
-										.selectEmpTwocount()) {
-							// 显示所有老员工，对表二进行打分
-							List<Login> ll = e.empNameAndDeptTwo(ename, ename);
-							int q = e.selectTwocount();
-							request.setAttribute("ll", ll);
-							// request.setAttribute("r","oldtwo");
-							session.setAttribute("r", "oldtwo");
-							request.setAttribute("mk", "老员工二");
-							request.setAttribute("q", q);
-							request.getRequestDispatcher("empsel.jsp").forward(
-									request, response);
-							return;
-						}
-						// 否则对剩余未打分的老员工二表进行打分
-						else {
-							List<Login> ll = e.empNameTwo(ename, ename);
-							int q = e.selectTwocount();
-							request.setAttribute("ll", ll);
-							// request.setAttribute("r","oldtwo");
-							session.setAttribute("r", "oldtwo");
-							request.setAttribute("mk", "老员工二");
-							request.setAttribute("q", q);
-							request.getRequestDispatcher("empsel.jsp").forward(
-									request, response);
-							return;
-						}
-					}
-
-					// 否则对老员工表一未打分人员进行打分
-					else {
-						List<Login> ll = e.empName(ename);
-						int q = e.selectOnecount();
-						request.setAttribute("ll", ll);
-						// request.setAttribute("r","oldone");
-						session.setAttribute("r", "oldone");
-						request.setAttribute("mk", "老员工一");
-						request.setAttribute("q", q);
-						request.getRequestDispatcher("empsel.jsp").forward(
-								request, response);
-						return;
-					}*/
-
 				} else {
 					List<Empcontent> list = j.empcontents();
 					request.setAttribute("list", list);
@@ -638,7 +576,7 @@ if(sum>100||sum<0){
 			Empgrade empgrade = new Empgrade(two, name, dept, ename, l.get(0),
 					l.get(1), l.get(2), l.get(3), l.get(4), l.get(5), l.get(6),
 					l.get(7), l.get(8), sum);
-			JDBCEmp emp = new JDBCEmp();
+	
 			int s = emp.empTwoInsert(empgrade);
 			ls.add(sum);
 			if (s == 1) {
@@ -663,9 +601,9 @@ if(sum>100||sum<0){
 				if(e.selectOnecount()==e.selectTwocount()){
 					//显示除自己以外的表二中自己未打分的的所有人全部显示
 					
-					List<Login>ll=e.empNameAndDeptOne(ename, ename,ename);
+					List<Login>ll=e.empNameAndDeptOne(ename, ename,ename,section);
 					//显示所有老员工，对表二进行打分
-					List<Login>lw=e.empNameAndDeptThree(ename,ename,ename);
+					List<Login>lw=e.empNameAndDeptThree(ename,ename,ename,section);
 					if(n.selectOneEmpA()==n.selectOneEmpB()){
 						request.setAttribute("p",n.selectOneEmpA());
 					}
@@ -696,7 +634,7 @@ if(sum>100||sum<0){
 				else if(e.selectOnecount()>e.selectTwocount()){
 					
 					//显示所有老员工，对表二进行打分
-					List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename);
+					List<Login>lw=e.empNameAndDeptTwo(ename,ename,ename,section);
 				
 					int q=e.selectTwocount();
 					if(n.selectOneEmpA()==n.selectOneEmpB()){
@@ -727,9 +665,8 @@ if(sum>100||sum<0){
 					
 				}
 				else{
-				
 					//显示除自己以外的表二中自己未打分的的所有人全部显示
-					List<Login>ll=e.empNameAndDeptF(ename,ename,ename);
+					List<Login>ll=e.empNameAndDeptF(ename,ename,ename,section);
 					int q=e.selectOnecount();
 					if(n.selectOneEmpA()==n.selectOneEmpB()){
 						request.setAttribute("p",n.selectOneEmpA());

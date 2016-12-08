@@ -88,6 +88,8 @@ public class EmpGradeServlet extends HttpServlet {
 		// System.out.println(ename);
 		String name = request.getParameter("name");
 		String dept = request.getParameter("dept");
+		JDBCEmp emp = new JDBCEmp();
+		String section=emp.selectSection(ename);
 		System.out.println(list1.size());
 		int sum = 0;
 		for (int x = 0; x < list1.size(); x++) {
@@ -137,9 +139,9 @@ public class EmpGradeServlet extends HttpServlet {
 				if (e.selectOnecount() == e.selectTwocount()) {
 					// 显示除自己以外的表二中自己未打分的的所有人全部显示
 
-					List<Login> ll = e.empNameAndDeptOne(ename, ename, ename);
+					List<Login> ll = e.empNameAndDeptOne(ename, ename, ename,section);
 					// 显示所有老员工，对表二进行打分
-					List<Login> lw = e.empNameAndDeptThree(ename, ename, ename);
+					List<Login> lw = e.empNameAndDeptThree(ename, ename, ename,section);
 					if (n.selectOneEmpA() == n.selectOneEmpB()) {
 						request.setAttribute("p", n.selectOneEmpA());
 					} else if (n.selectOneEmpA() < n.selectOneEmpB()) {
@@ -167,7 +169,7 @@ public class EmpGradeServlet extends HttpServlet {
 				} else if (e.selectOnecount() > e.selectTwocount()) {
 
 					// 显示所有老员工，对表二进行打分
-					List<Login> lw = e.empNameAndDeptTwo(ename, ename, ename);
+					List<Login> lw = e.empNameAndDeptTwo(ename, ename, ename,section);
 
 					int q = e.selectTwocount();
 					if (n.selectOneEmpA() == n.selectOneEmpB()) {
@@ -197,7 +199,7 @@ public class EmpGradeServlet extends HttpServlet {
 				} else {
 
 					// 显示除自己以外的表二中自己未打分的的所有人全部显示
-					List<Login> ll = e.empNameAndDeptF(ename, ename, ename);
+					List<Login> ll = e.empNameAndDeptF(ename, ename, ename,section);
 					int q = e.selectOnecount();
 					if (n.selectOneEmpA() == n.selectOneEmpB()) {
 						request.setAttribute("p", n.selectOneEmpA());
@@ -244,7 +246,7 @@ public class EmpGradeServlet extends HttpServlet {
 							l.get(0), l.get(1), l.get(2), l.get(3), l.get(4),
 							l.get(5), l.get(6), l.get(7), l.get(8), sum);
 					lg.add(sum);
-					JDBCEmp emp = new JDBCEmp();
+			
 					int s = emp.empInsert(empgrade);
 					System.out.println("s的值为" + s
 							+ "//////////////////////////////");
@@ -276,10 +278,10 @@ public class EmpGradeServlet extends HttpServlet {
 							// 显示除自己以外的表二中自己未打分的的所有人全部显示
 
 							List<Login> ll = e.empNameAndDeptOne(ename, ename,
-									ename);
+									ename,section);
 							// 显示所有老员工，对表二进行打分
 							List<Login> lw = e.empNameAndDeptThree(ename,
-									ename, ename);
+									ename, ename,section);
 							if (n.selectOneEmpA() == n.selectOneEmpB()) {
 								request.setAttribute("p", n.selectOneEmpA());
 							} else if (n.selectOneEmpA() < n.selectOneEmpB()) {
@@ -308,7 +310,7 @@ public class EmpGradeServlet extends HttpServlet {
 
 							// 显示所有老员工，对表二进行打分
 							List<Login> lw = e.empNameAndDeptTwo(ename, ename,
-									ename);
+									ename,section);
 
 							int q = e.selectTwocount();
 							if (n.selectOneEmpA() == n.selectOneEmpB()) {
@@ -339,7 +341,7 @@ public class EmpGradeServlet extends HttpServlet {
 
 							// 显示除自己以外的表二中自己未打分的的所有人全部显示
 							List<Login> ll = e.empNameAndDeptF(ename, ename,
-									ename);
+									ename,section);
 							int q = e.selectOnecount();
 							if (n.selectOneEmpA() == n.selectOneEmpB()) {
 								request.setAttribute("p", n.selectOneEmpA());
@@ -448,7 +450,6 @@ public class EmpGradeServlet extends HttpServlet {
 							l.get(0), l.get(1), l.get(2), l.get(3), l.get(4),
 							l.get(5), l.get(6), l.get(7), l.get(8), sum);
 					lg.add(sum);
-					JDBCEmp emp = new JDBCEmp();
 					int s = emp.empInsert(empgrade);
 					System.out.println("s的值为" + s
 							+ "//////////////////////////////");
@@ -480,10 +481,10 @@ public class EmpGradeServlet extends HttpServlet {
 							// 显示除自己以外的表二中自己未打分的的所有人全部显示
 
 							List<Login> ll = e.empNameAndDeptOne(ename, ename,
-									ename);
+									ename,section);
 							// 显示所有老员工，对表二进行打分
 							List<Login> lw = e.empNameAndDeptThree(ename,
-									ename, ename);
+									ename, ename,section);
 							if (n.selectOneEmpA() == n.selectOneEmpB()) {
 								request.setAttribute("p", n.selectOneEmpA());
 							} else if (n.selectOneEmpA() < n.selectOneEmpB()) {
@@ -512,7 +513,7 @@ public class EmpGradeServlet extends HttpServlet {
 
 							// 显示所有老员工，对表二进行打分
 							List<Login> lw = e.empNameAndDeptTwo(ename, ename,
-									ename);
+									ename,section);
 
 							int q = e.selectTwocount();
 							if (n.selectOneEmpA() == n.selectOneEmpB()) {
@@ -543,7 +544,7 @@ public class EmpGradeServlet extends HttpServlet {
 
 							// 显示除自己以外的表二中自己未打分的的所有人全部显示
 							List<Login> ll = e.empNameAndDeptF(ename, ename,
-									ename);
+									ename,section);
 							int q = e.selectOnecount();
 							if (n.selectOneEmpA() == n.selectOneEmpB()) {
 								request.setAttribute("p", n.selectOneEmpA());
@@ -635,7 +636,7 @@ public class EmpGradeServlet extends HttpServlet {
 				Empgrade empgrade = new Empgrade(sx, name, dept, ename,
 						l.get(0), l.get(1), l.get(2), l.get(3), l.get(4),
 						l.get(5), l.get(6), l.get(7), l.get(8), sum);
-				JDBCEmp emp = new JDBCEmp();
+			
 				int s = emp.empInsert(empgrade);
 				lg.add(sum);
 				System.out.println("s的值为" + s
@@ -668,10 +669,10 @@ public class EmpGradeServlet extends HttpServlet {
 						// 显示除自己以外的表二中自己未打分的的所有人全部显示
 
 						List<Login> ll = e.empNameAndDeptOne(ename, ename,
-								ename);
+								ename,section);
 						// 显示所有老员工，对表二进行打分
 						List<Login> lw = e.empNameAndDeptThree(ename, ename,
-								ename);
+								ename,section);
 						if (n.selectOneEmpA() == n.selectOneEmpB()) {
 							request.setAttribute("p", n.selectOneEmpA());
 						} else if (n.selectOneEmpA() < n.selectOneEmpB()) {
@@ -700,7 +701,7 @@ public class EmpGradeServlet extends HttpServlet {
 
 						// 显示所有老员工，对表二进行打分
 						List<Login> lw = e.empNameAndDeptTwo(ename, ename,
-								ename);
+								ename,section);
 
 						int q = e.selectTwocount();
 						if (n.selectOneEmpA() == n.selectOneEmpB()) {
@@ -730,7 +731,7 @@ public class EmpGradeServlet extends HttpServlet {
 					} else {
 
 						// 显示除自己以外的表二中自己未打分的的所有人全部显示
-						List<Login> ll = e.empNameAndDeptF(ename, ename, ename);
+						List<Login> ll = e.empNameAndDeptF(ename, ename, ename,section);
 						int q = e.selectOnecount();
 						if (n.selectOneEmpA() == n.selectOneEmpB()) {
 							request.setAttribute("p", n.selectOneEmpA());
@@ -1102,7 +1103,7 @@ public class EmpGradeServlet extends HttpServlet {
 						"<script>alert(\"本次此员工已经提交过分数，请为其他员工打分！\");</script>");
 				System.out.println("重复提交分数");
 				if ((e.selectEmpNewCount() % e.empcount()) == 0) {
-					List<Login> ll = e.empNameAndDept(ename);
+					List<Login> ll = e.empNameAndDept(ename,section);
 
 					request.setAttribute("ll", ll);
 					// request.setAttribute("r","new");
@@ -1118,7 +1119,7 @@ public class EmpGradeServlet extends HttpServlet {
 				} else {
 					int q = e.selectNewcount();
 					if (e.selectNew(ename) < 3) {
-						List<Login> ll = e.empNewName(ename);
+						List<Login> ll = e.empNewName(ename,section);
 						request.setAttribute("ll", ll);
 						// request.setAttribute("r","new");
 
@@ -1160,7 +1161,6 @@ public class EmpGradeServlet extends HttpServlet {
 							l.get(0), l.get(1), l.get(2), l.get(3), l.get(4),
 							l.get(5), l.get(6), l.get(7), l.get(8), sum);
 					lx.add(sum);
-					JDBCEmp emp = new JDBCEmp();
 					int s = emp.empNewInsert(empgrade);
 					if (s == 1) {
 						List<Empcontent> list = j.empcontents();
@@ -1179,7 +1179,7 @@ public class EmpGradeServlet extends HttpServlet {
 						}
 
 						if ((e.selectEmpNewCount() % e.empcount()) == 0) {
-							List<Login> ll = e.empNameAndDept(ename);
+							List<Login> ll = e.empNameAndDept(ename,section);
 
 							request.setAttribute("ll", ll);
 							// request.setAttribute("r","new");
@@ -1195,7 +1195,7 @@ public class EmpGradeServlet extends HttpServlet {
 						} else {
 							int q = e.selectNewcount();
 							if (e.selectNew(ename) < 3) {
-								List<Login> ll = e.empNewName(ename);
+								List<Login> ll = e.empNewName(ename,section);
 								request.setAttribute("ll", ll);
 								// request.setAttribute("r","new");
 
@@ -1249,7 +1249,6 @@ public class EmpGradeServlet extends HttpServlet {
 							l.get(0), l.get(1), l.get(2), l.get(3), l.get(4),
 							l.get(5), l.get(6), l.get(7), l.get(8), sum);
 					lx.add(sum);
-					JDBCEmp emp = new JDBCEmp();
 					int s = emp.empNewInsert(empgrade);
 					if (s == 1) {
 						List<Empcontent> list = j.empcontents();
@@ -1268,7 +1267,7 @@ public class EmpGradeServlet extends HttpServlet {
 						}
 
 						if ((e.selectEmpNewCount() % e.empcount()) == 0) {
-							List<Login> ll = e.empNameAndDept(ename);
+							List<Login> ll = e.empNameAndDept(ename,section);
 							request.setAttribute("ll", ll);
 							// request.setAttribute("r","new");
 							int q = e.selectNewcount();
@@ -1283,7 +1282,7 @@ public class EmpGradeServlet extends HttpServlet {
 						} else {
 							int q = e.selectNewcount();
 							if (e.selectNew(ename) < 3) {
-								List<Login> ll = e.empNewName(ename);
+								List<Login> ll = e.empNewName(ename,section);
 								request.setAttribute("ll", ll);
 								// request.setAttribute("r","new");
 
@@ -1322,7 +1321,6 @@ public class EmpGradeServlet extends HttpServlet {
 				Empgrade empgrade = new Empgrade(news, name, dept, ename,
 						l.get(0), l.get(1), l.get(2), l.get(3), l.get(4),
 						l.get(5), l.get(6), l.get(7), l.get(8), sum);
-				JDBCEmp emp = new JDBCEmp();
 				int s = emp.empNewInsert(empgrade);
 
 				if (s == 1) {
@@ -1343,7 +1341,7 @@ public class EmpGradeServlet extends HttpServlet {
 					}
 
 					if ((e.selectEmpNewCount() % e.empcount()) == 0) {
-						List<Login> ll = e.empNameAndDept(ename);
+						List<Login> ll = e.empNameAndDept(ename,section);
 						request.setAttribute("ll", ll);
 						// request.setAttribute("r","new");
 						int q = e.selectNewcount();
@@ -1358,7 +1356,7 @@ public class EmpGradeServlet extends HttpServlet {
 					} else {
 						int q = e.selectNewcount();
 						if (e.selectNew(ename) < 3) {
-							List<Login> ll = e.empNewName(ename);
+							List<Login> ll = e.empNewName(ename,section);
 							request.setAttribute("ll", ll);
 							// request.setAttribute("r","new");
 

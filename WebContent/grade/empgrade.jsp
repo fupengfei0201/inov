@@ -65,7 +65,7 @@ function fn(){
 	alert(sum);
       if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
     	  var a=document.myform;
-    	  a.action="/EmpgradeServlet";
+    	  a.action="EmpGradeServlet";
 		  a.submit();	          
       }else{
     	  sum=0;
@@ -79,7 +79,7 @@ function fn2(){
 	alert(sum);
       if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
     	  var a=document.myform2;
-    	  a.action="/EmpgradeServletTwo";
+    	  a.action="EmpgradeServletTwo";
 		  a.submit();	          
       }else{
     	  sum=0;

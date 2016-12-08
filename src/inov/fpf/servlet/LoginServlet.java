@@ -108,8 +108,6 @@ public class LoginServlet extends HttpServlet {
 			}
 			else{
 				if(mon.selectMon(name)<((p.empcount()/mon.selectMonCount(section))+1)){
-					
-				
 				List<Login>ll=mon.empMonName(section);
 				int q=mon.selecMoncount();
 				request.setAttribute("ll",ll);
@@ -137,7 +135,7 @@ public class LoginServlet extends HttpServlet {
 			
 				//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 				if(p.selectEmpMnCount()%r==0){
-					List<Login>ll=p.empNameAndDept(name);
+					List<Login>ll=p.empNameAndDept();
 					//request.setAttribute("msg",name);
 					request.setAttribute("ll",ll);
 					request.setAttribute("mk","经理");
@@ -187,12 +185,12 @@ public class LoginServlet extends HttpServlet {
 				//老员工评分
 				if(p.empentry(name)){
 					session.setAttribute("r","oldone");
+					String section=p.selectSection(name);
 					if(p.selectOnecount()==p.selectTwocount()){
 						//显示除自己以外的表二中自己未打分的的所有人全部显示
-						
-						List<Login>ll=p.empNameAndDeptOne(name, name,name);
+						List<Login>ll=p.empNameAndDeptOne(name, name,name,section);
 						//显示所有老员工，对表二进行打分
-						List<Login>lw=p.empNameAndDeptThree(name,name,name);
+						List<Login>lw=p.empNameAndDeptThree(name,name,name,section);
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
 							request.setAttribute("p",n.selectOneEmpA());
 						}
@@ -221,10 +219,8 @@ public class LoginServlet extends HttpServlet {
 						
 					}
 					else if(p.selectOnecount()>p.selectTwocount()){
-						
 						//显示所有老员工，对表二进行打分
-						List<Login>lw=p.empNameAndDeptTwo(name,name,name);
-					
+						List<Login>lw=p.empNameAndDeptTwo(name,name,name,section);
 						int q=p.selectTwocount();
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
 							request.setAttribute("p",n.selectOneEmpA());
@@ -256,7 +252,7 @@ public class LoginServlet extends HttpServlet {
 					else{
 					
 						//显示除自己以外的表二中自己未打分的的所有人全部显示
-						List<Login>ll=p.empNameAndDeptF(name,name,name);
+						List<Login>ll=p.empNameAndDeptF(name,name,name,section);
 						int q=p.selectOnecount();
 						if(n.selectOneEmpA()==n.selectOneEmpB()){
 							request.setAttribute("p",n.selectOneEmpA());
@@ -339,8 +335,9 @@ public class LoginServlet extends HttpServlet {
 			}
 				//新员工评分，写入新员工评分表
 				else{
+					String section=p.selectSection(name);
 					if((p.selectEmpNewCount()%r)==0){
-						List<Login>ll=p.empNameAndDept(name);
+						List<Login>ll=p.empNameAndDept(name,section);
 						int q=p.selectNewcount();
 						request.setAttribute("ll",ll);
 						//request.setAttribute("r","new");
@@ -353,9 +350,7 @@ public class LoginServlet extends HttpServlet {
 					}
 					else{
 						if(p.selectNew(name)<3){
-							
-						
-						List<Login>ll=p.empNewName(name);
+						List<Login>ll=p.empNewName(name,section);
 						int q=p.selectNewcount();
 						request.setAttribute("ll",ll);
 						//request.setAttribute("r","new");

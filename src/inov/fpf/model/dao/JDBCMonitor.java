@@ -63,12 +63,13 @@ public class JDBCMonitor {
 		
 	}
 	//查询打过分的数量
-	public int selectMonCount(){
+	public int selectMonC(String section){
 		int i=0;
 		try {
 			con=JDBCUtil.getConnection();
-			String sql=" select count(nvl(empcod,0))from monitorgrade";
+			String sql=" select count(nvl(empcod,0))from monitorgrade where sectionname=?";
 			psd=con.prepareStatement(sql);
+			psd.setString(1,section);
 			rs=psd.executeQuery();
 			while(rs.next()){
 				i=rs.getInt("count(nvl(empcod,0))");

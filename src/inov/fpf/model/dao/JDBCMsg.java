@@ -123,14 +123,14 @@ public class JDBCMsg {
 			List list =new ArrayList<MsgSelect>();
 			try {
 				con = JDBCUtil.getConnection();
-				String sql="select rownum, t.empname,t.tname,t.tsum,f.tname,f.tsum,n.assessname,n.empsum,round((t.tsum+f.tsum+n.empsum)/3,2),t.comments from teacher t,foremengrade f,monitorgrade n where  t.empid=f.empid and f.empid=n.empcod and t.empname=f.empname and f.empname=n.empname and to_char(t.scoredate,'yyyy-mm')=? and to_char(f.scoredate,'yyyy-mm')=? and to_char(n.scoretime,'yyyy-mm')=?";
+				String sql="select rownum, t.empname,f.tname,f.tsum,t.tname,t.tsum,n.assessname,n.empsum,round((t.tsum+f.tsum+n.empsum)/3,2),t.comments from teacher t,foremengrade f,monitorgrade n where  t.empid=f.empid and f.empid=n.empcod and t.empname=f.empname and f.empname=n.empname and to_char(t.scoredate,'yyyy-mm')=? and to_char(f.scoredate,'yyyy-mm')=? and to_char(n.scoretime,'yyyy-mm')=?";
 				psd=con.prepareStatement(sql);
 				psd.setString(1, time);
 				psd.setString(2, time);
 				psd.setString(3,time);
 				rs=psd.executeQuery();
 				while(rs.next()){
-					MsgSelect msg=new MsgSelect();
+				MsgSelect msg=new MsgSelect();
 				msg.setCod(rs.getInt(1));
 				msg.setName(rs.getString(2));
 				msg.setDeptname(rs.getString(3));

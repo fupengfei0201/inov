@@ -53,7 +53,7 @@ ${requestScope.x}
 </table>
 </div>
 </form>
-<form action="ExcelServel" method="post">
+<form action="ExcelNotServel" method="post">
 <div style="width: 100%;height:90%;overflow: auto" onload="document.body.scrollTop=document.body.scrollHeight">
 <div style="width: 90%;height:90%;margin: auto;margin-top: 20px">
 <table style="width:100%;height:100%;text-align: center;margin-top: 20px" border="1" cellpadding="0" cellspacing="0">
@@ -85,7 +85,13 @@ for(int i=0;i<list.size();i++){%>
 	<td><%=list.get(i).getMonname() %></td>
 	<td><%=list.get(i).getMongrade() %></td>
 	</tr>
-<%}
+	<%}%>
+	<input type="hidden" name="exe" value="<%=request.getAttribute("time") %>"/>
+<tr>
+<td colspan="12"><center><input type="submit" value="生成excel表格"/></center></td>
+</tr>
+
+<%
 session.setAttribute("list","0");
 }
 %>

@@ -137,8 +137,27 @@ public class JDBCEmp {
 			return i;
 			
 		}
+	//查询某一工段员工数量
+	public int empcount(String section){
+		int i=0;		
+		try {
+			con=JDBCUtil.getConnection();
+			String sql="select count(empid)from emplogin where empdate>(select ADD_MONTHS(sysdate, -12)from dual) and sectionname=?";
+			psd=con.prepareStatement(sql);
+			psd.setString(1,section);
+			rs=psd.executeQuery();
+			while(rs.next()){
+				i=rs.getInt("count(empid)");
+				System.out.println(i+"---------------------");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return i;
+	}
 	//查询员工数量
-	public int empcount(){
+	public int empsum(){
 		int i=0;		
 		try {
 			con=JDBCUtil.getConnection();
@@ -212,7 +231,7 @@ public class JDBCEmp {
 		List<Login>list=new ArrayList<Login>();
 		try {
 			con=JDBCUtil.getConnection();
-			String sql="select emploginname,department from emplogin and empdate>(select ADD_MONTHS(sysdate, -12)from dual)";
+			String sql="select emploginname,department from emplogin where empdate>(select ADD_MONTHS(sysdate, -12)from dual)";
 			psd=con.prepareStatement(sql);
 			rs=psd.executeQuery();
 			while(rs.next()){
@@ -555,12 +574,13 @@ public class JDBCEmp {
 			
 		}
 		//查询师傅打过分人数的总数
-		public int selectEmpTeaCount(){
+		public int selectEmpTeaCount(String section){
 			int i=0;
 			try {
 				con=JDBCUtil.getConnection();
-				String sql=" select count(nvl(empid,0))from teacher";
+				String sql=" select count(nvl(empid,0))from teacher where sectionname=?";
 				psd=con.prepareStatement(sql);
+				psd.setString(1, section);
 				rs=psd.executeQuery();
 				while(rs.next()){
 					i=rs.getInt("count(nvl(empid,0))");
@@ -573,12 +593,13 @@ public class JDBCEmp {
 			return i;
 		}
 		//查询工段长打过分人数的总数
-		public int selectEmpForCount(){
+		public int selectEmpForCount(String section){
 			int i=0;
 			try {
 				con=JDBCUtil.getConnection();
-				String sql=" select count(nvl(empid,0))from foremengrade";
+				String sql=" select count(nvl(empid,0))from foremengrade where sectionname=?";
 				psd=con.prepareStatement(sql);
+				psd.setString(1, section);
 				rs=psd.executeQuery();
 				while(rs.next()){
 					i=rs.getInt("count(nvl(empid,0))");
@@ -994,6 +1015,24 @@ public class JDBCEmp {
 			try {
 				con=JDBCUtil.getConnection();
 				String sql="select sectionname from emplogin where emploginname=?";
+				psd=con.prepareStatement(sql);
+				psd.setString(1,name);
+				rs=psd.executeQuery();
+				while(rs.next()){
+					str=rs.getString("sectionname");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return str;
+		}
+		//查询员工的工段号
+		public String selectTeaSection(String name){
+			String str=null;
+			try {
+				con=JDBCUtil.getConnection();
+				String sql="select sectionname from teacherlogin where tloginname=?";
 				psd=con.prepareStatement(sql);
 				psd.setString(1,name);
 				rs=psd.executeQuery();

@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>Insert title here</title>
 <script type="text/javascript">
-alert("start");
+//alert("start");
 var sum=0;
 function check(){
 	if(check2()){
@@ -31,7 +31,7 @@ function check(){
 }
 
 function ch(){
-	if(check2()){
+	if(check3()){
 		alert("请输入合理的分数!");
 		//document.all.gra.focus();
 	 }
@@ -60,9 +60,28 @@ function check2(){
 }
 }
 
+function check3(){
+	var lh=document.getElementsByName("Tgrade");
+	for(var i=0;i<lh.length;i++){
+		var score=document.getElementById("score"+i).value;
+		sum=sum+parseInt(score);
+		var ful=document.getElementById("full"+i).innerHTML;
+	if(score=="" ){
+		document.getElementById("score"+i).focus();
+		return true;
+		break;
+	}
+	else if(score!="" && (parseInt(score)>parseInt(ful) || parseInt(score)<0)){
+		document.getElementById("score"+i).focus();
+		return true;
+		break;
+	}
+}
+}
+
 function fn(){
-	alert("进入啦！");
-	alert(sum);
+	//alert("进入啦！");
+	//alert(sum);
       if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
     	  var a=document.myform;
     	  a.action="EmpGradeServlet";
@@ -75,8 +94,8 @@ function fn(){
 }
 
 function fn2(){
-	alert("进入啦！");
-	alert(sum);
+	//alert("进入啦！");
+	//alert(sum);
       if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
     	  var a=document.myform2;
     	  a.action="EmpgradeServletTwo";
@@ -84,7 +103,6 @@ function fn2(){
       }else{
     	  sum=0;
     	  a.action="empgrade.jsp";
-    	
       }
 }
 </script>
@@ -100,13 +118,11 @@ if(session.getAttribute("x").equals("0")){
 %>
 <form action="" method="post" name = "myform" >
 <div id="select">
-
 <table width="100%" height="30px" border="1" cellpadding="0" cellspacing="0" align="center" style="text-align: center;">
 <tr>
 <td width="100px">员工姓名</td>
 <td width="100px">
 <input type="text" name="name" value="<%=request.getAttribute("pname") %>" style="border:none;text-align: center" readonly>
-
 </td>
 <td width="100px">所属部门</td>
 <td width="100px"><input type="text" name="dept" value="<%=request.getAttribute("dept") %>" style="border:none;text-align: center" readonly></td>
@@ -158,7 +174,6 @@ if(session.getAttribute("x").equals("1")){
 <td width="100px">员工姓名</td>
 <td width="100px">
 <input type="text" name="name" value="<%=request.getAttribute("pname") %>" style="border:none;text-align: center" readonly/>
-
 </td>
 <td width="100px">所属部门</td>
 <td width="100px"><input type="text" name="dept" value="<%=request.getAttribute("dept") %>" style="border:none;text-align: center" readonly/></td>
@@ -182,16 +197,13 @@ ${requestScope.l}
 <tr style="height: 60px">
 <td><%=list.get(i).getAssessment() %></td>
 <td colspan="3"><%=list.get(i).getEmpcontent() %></td>
-<td id="ful<%=i %>"><%=list.get(i).getMarks()%></td>
+<td id="full<%=i %>"><%=list.get(i).getMarks()%></td>
 <td><input type="text" value="" id="score<%=i %>"  name="grade<%=i%>" style="width: 100%;height: 100%;text-align: center"/><input type="hidden" name="Tgrade" /></td>
 </tr>
 <%}%>
 <tr>
 <td colspan="6" height="50px">
 <center>
-<%--
-String x=(String)request.getAttribute("msg");
---%>
 <input type="button" value="提交" onclick="return ch()">
 </center>
 </td>
@@ -201,8 +213,7 @@ String x=(String)request.getAttribute("msg");
 </form>
 <%} %>
 ${requestScope.msg}
-<script type="text/javascript" src="javascript/script.js">
-    
+<script type="text/javascript" src="javascript/script.js">  
 </script>
 </div>
 </body>

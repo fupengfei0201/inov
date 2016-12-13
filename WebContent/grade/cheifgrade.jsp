@@ -33,7 +33,7 @@ var sum=0;
 		for(var i=0;i<lh.length;i++){
 			var score=document.getElementById("score"+i).value;
 			sum=sum+parseInt(score);
-			alert(sum);
+			//alert(sum);
 			var ful=document.getElementById("ful"+i).innerHTML;
 		if(score=="" ){
 			document.getElementById("score"+i).focus();
@@ -46,14 +46,14 @@ var sum=0;
 			break;
 		}
 	}
-		alert(sum);
+		//alert(sum);
 		
 }
 	
 
 	function fn(){
-		alert("进入啦！");
-		alert(sum);
+		//alert("进入啦！");
+		//alert(sum);
 	      if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
 	    	  var a=document.myform;
 	    	  a.action="ForemenGradeServlet";

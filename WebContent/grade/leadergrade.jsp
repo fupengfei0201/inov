@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>Insert title here</title>
 <script type="text/javascript">
-alert("start");
+//alert("start");
 var sum=0;
 function check(){
 	if(check2()){
@@ -49,8 +49,8 @@ function check2(){
 }
 
 function fn(){
-	alert("进入啦！");
-	alert(sum);
+	//alert("进入啦！");
+	//alert(sum);
       if(confirm("该员工得分为："+sum+"分\n\n确认提交？")){
     	  var a=document.myform;
     	  a.action="MonitorGradeServlet";

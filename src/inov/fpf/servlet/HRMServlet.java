@@ -40,10 +40,8 @@ public class HRMServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String years=request.getParameter("years");
 		String months=request.getParameter("months");
-//		request.setAttribute("yy",years);
-//		request.setAttribute("mm",months);
-				String time=years+"-"+months;
-				System.out.println(time+"时间");
+		String time=years+"-"+months;
+		System.out.println(time+"时间");
 		JDBCHR jr=new JDBCHR();
 		List<HRGrade>list=jr.allemp(time);
 		HttpSession session=request.getSession();
@@ -56,18 +54,16 @@ public class HRMServlet extends HttpServlet {
 		if(list.isEmpty()){
 			session.setAttribute("list", "0");
 			request.setAttribute("x",
-					"<script>alert(\"暂无员工得分\");</script>");
-		
+					"<script>alert(\"暂无员工得分\");</script>");	
 			request.getRequestDispatcher("grade/d.jsp").forward(request, response);
 			return;
 		}
 		else{
-			session.setAttribute("list", "1");
+		session.setAttribute("list", "1");
 		request.setAttribute("list", list);
 		request.setAttribute("time",time);
 		request.getRequestDispatcher("grade/d.jsp").forward(request, response);
 		return;
 		}
 	}
-
 }

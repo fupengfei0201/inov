@@ -2,7 +2,6 @@ package inov.fpf.servlet;
 
 import inov.fpf.model.dao.JDBCReg;
 import inov.fpf.model.dao.JDBCTeacher;
-import inov.fpf.model.vo.Teacher;
 
 import java.io.IOException;
 

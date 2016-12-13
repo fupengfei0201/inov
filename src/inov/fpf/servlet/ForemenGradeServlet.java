@@ -3,6 +3,7 @@ package inov.fpf.servlet;
 import inov.fpf.model.dao.JDBCContent;
 import inov.fpf.model.dao.JDBCEmp;
 import inov.fpf.model.dao.JDBCForemen;
+import inov.fpf.model.dao.JDBCGradeNum;
 import inov.fpf.model.dao.JDBCNum;
 import inov.fpf.model.vo.ForemenGrade;
 import inov.fpf.model.vo.Login;
@@ -22,11 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ForemenGradeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// 判断某一次提交的次数，与所有员工数量进行比较，大于员工数量时重新置0；
-		private List<Integer> lg;
-		private List<Integer> ss;
-		// 对良好的人数进行控制
-		private List<Integer> tt;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -34,18 +31,6 @@ public class ForemenGradeServlet extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	@Override
-	public void init() throws ServletException {
-		// TODO Auto-generated method stub
-		super.init();
-		lg = new ArrayList<Integer>();
-		ss = new ArrayList<Integer>();
-
-		tt = new ArrayList<Integer>();
-
-		System.out.println("init()运行");
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,6 +56,7 @@ public class ForemenGradeServlet extends HttpServlet {
 		JDBCForemen foremen=new JDBCForemen();
 		JDBCEmp emp = new JDBCEmp();
 		JDBCNum n=new JDBCNum();
+		JDBCGradeNum fmnum = new JDBCGradeNum();
 		String section=foremen.selForSection(foremenname);
 		int sum = 0;
 		for (int i = 0; i < list1.size(); i++) {
@@ -96,7 +82,7 @@ public class ForemenGradeServlet extends HttpServlet {
 			return;
 		}
 		boolean f=foremen.selectName(name);
-		double a = emp.empcount();
+		double a = emp.empsum();
 		int q = emp.selectcount();
 		if(f==true){
 			request.setAttribute("m",
@@ -105,7 +91,7 @@ public class ForemenGradeServlet extends HttpServlet {
 			//request.setAttribute("msg", "提交失败");
 			
 			//判断工段长的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
-			if(emp.selectEmpForCount()%emp.empcount()==0){
+			if(emp.selectEmpForCount(section)%emp.empcount(section)==0){
 				List<Login>ll=emp.forNameAndDept(section);
 				request.setAttribute("ll",ll);
 				//request.setAttribute("msg",levle);
@@ -132,10 +118,11 @@ public class ForemenGradeServlet extends HttpServlet {
 		System.out.println("a的值为："+a);
 	
 		if (sum >= 90) {
-			ss.add(sum);
-			System.out.println("ss的数量为" + ss.size() + "    a的数量为" + a);
+//			ss.add(sum);
+			fmnum.ForemenInsert(1);
+//			System.out.println("ss的数量为" + ss.size() + "    a的数量为" + a);
 
-			if (ss.size() > (a * 0.3)){
+			if (fmnum.selectForemenGrate() > (a * 0.3)){
 				System.out.println("判断优秀数量超出");
 				List<TCheckPoints> li = j.tCheckPoints();
 				request.setAttribute("ls", li);
@@ -155,19 +142,21 @@ public class ForemenGradeServlet extends HttpServlet {
 				
 				
 				int s = foremen.forinsert(fore);
-				lg.add(sum);
+//				lg.add(sum);
+				fmnum.ForemenInsert(3);
 				if (s == 1) {
 					List<TCheckPoints> li = j.tCheckPoints();
 					request.setAttribute("ls", li);
 					request.setAttribute("msg",
 							"<script>alert(\"提交成功 \");</script>");
-					if (lg.size() == a) {
-						System.out.println(lg.size() + "=" + a);
-					
-						lg.removeAll(lg);
-						System.out.println(lg.size() + "removeAll()");
-						ss.removeAll(ss);
-						tt.removeAll(tt);
+					if (fmnum.selectForemenCount() == emp.empsum()) {
+//						System.out.println(lg.size() + "=" + a);
+//					
+//						lg.removeAll(lg);
+//						System.out.println(lg.size() + "removeAll()");
+//						ss.removeAll(ss);
+//						tt.removeAll(tt);
+						fmnum.deleteForemenGrade();
 						foremen.insertForcount(1);
 						n.oneF(1);
 						
@@ -176,7 +165,7 @@ public class ForemenGradeServlet extends HttpServlet {
 						}
 				
 					//判断工段长的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
-					if(emp.selectEmpForCount()%emp.empcount()==0){
+					if(emp.selectEmpForCount(section)%emp.empcount(section)==0){
 						List<Login>ll=emp.forNameAndDept(section);
 						request.setAttribute("ll",ll);
 						//request.setAttribute("msg",levle);
@@ -212,9 +201,10 @@ public class ForemenGradeServlet extends HttpServlet {
 			}
 
 		} else if (sum < 90 && sum >= 80) {
-			tt.add(sum);
-			System.out.println("tt的数量为" + tt.size());
-			if (tt.size() > (a * 0.3)) {
+//			tt.add(sum);
+			fmnum.ForemenInsert(2);
+//			System.out.println("tt的数量为" + tt.size());
+			if (fmnum.selectForemenGood() > (a * 0.3)) {
 				System.out.println("判断等级");
 				List<TCheckPoints> li = j.tCheckPoints();
 				request.setAttribute("ls", li);
@@ -231,21 +221,23 @@ public class ForemenGradeServlet extends HttpServlet {
 						l.get(1), l.get(2), l.get(3), l.get(4), l.get(5),
 						l.get(6), l.get(7), l.get(8), l.get(9), sum, comm);
 				
-				lg.add(sum);
+//				lg.add(sum);
+				fmnum.ForemenInsert(3);
 				int s = foremen.forinsert(fore);
 				if (s == 1) {
 					List<TCheckPoints> li = j.tCheckPoints();
 					request.setAttribute("ls", li);
 					request.setAttribute("msg",
 							"<script>alert(\"提交成功 \");</script>");
-					if (lg.size() == a) {
-						System.out.println(lg.size() + "=" + a);
+					if (fmnum.selectForemenCount() == emp.empsum()) {
+//						System.out.println(lg.size() + "=" + a);
 						request.setAttribute("l",
 								"<script>alert(\"本次打分完毕！\");</script>");
-						lg.removeAll(lg);
-						System.out.println(lg.size() + "removeAll()");
-						ss.removeAll(ss);
-						tt.removeAll(tt);
+//						lg.removeAll(lg);
+//						System.out.println(lg.size() + "removeAll()");
+//						ss.removeAll(ss);
+//						tt.removeAll(tt);
+						fmnum.deleteForemenGrade();
 						foremen.insertForcount(1);
 						n.oneF(1);
 
@@ -253,7 +245,7 @@ public class ForemenGradeServlet extends HttpServlet {
 					
 					
 					//判断工段长的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
-					if(emp.selectEmpForCount()%emp.empcount()==0){
+					if(emp.selectEmpForCount(section)%emp.empcount(section)==0){
 						List<Login>ll=emp.forNameAndDept(section);
 						request.setAttribute("ll",ll);
 						//request.setAttribute("msg",levle);
@@ -293,27 +285,29 @@ public class ForemenGradeServlet extends HttpServlet {
 					l.get(1), l.get(2), l.get(3), l.get(4), l.get(5), l.get(6),
 					l.get(7), l.get(8), l.get(9), sum, comm);
 			
-			lg.add(sum);
+//			lg.add(sum);
+			fmnum.ForemenInsert(3);
 			int s = foremen.forinsert(fore);
 			request.setAttribute("msg", "<script>alert(\"提交成功 \");</script>");
 			if (s == 1) {
 				List<TCheckPoints> li = j.tCheckPoints();
 				request.setAttribute("ls", li);
-				if (lg.size() == emp.empcount()) {
-					System.out.println(lg.size() + "=" + a);
+				if (fmnum.selectForemenCount() == emp.empsum()) {
+//					System.out.println(lg.size() + "=" + a);
 					request.setAttribute("l",
 							"<script>alert(\"本次打分完毕！\");</script>");
-					lg.removeAll(lg);
-					System.out.println(lg.size() + "removeAll()");
-					ss.removeAll(ss);
-					tt.removeAll(tt);
+//					lg.removeAll(lg);
+//					System.out.println(lg.size() + "removeAll()");
+//					ss.removeAll(ss);
+//					tt.removeAll(tt);
+					fmnum.deleteForemenGrade();
 					foremen.insertForcount(1);
 					n.oneF(1);
 				}
 
 			
 				//判断工段长的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
-				if(emp.selectEmpForCount()%emp.empcount()==0){
+				if(emp.selectEmpForCount(section)%emp.empcount(section)==0){
 					List<Login>ll=emp.forNameAndDept(section);
 					request.setAttribute("ll",ll);
 					//request.setAttribute("msg",levle);

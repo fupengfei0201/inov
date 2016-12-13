@@ -1,19 +1,14 @@
 package inov.fpf.servlet;
 
-import inov.fpf.model.dao.JDBCContent;
+
 import inov.fpf.model.dao.JDBCEmp;
 import inov.fpf.model.dao.JDBCForemen;
 import inov.fpf.model.dao.JDBCMonitor;
 import inov.fpf.model.dao.JDBCMsg;
 import inov.fpf.model.dao.JDBCNum;
-import inov.fpf.model.dao.JDBCTeacher;
-import inov.fpf.model.vo.Empcontent;
 import inov.fpf.model.vo.Login;
-import inov.fpf.model.vo.MsgCheckContent;
-import inov.fpf.model.vo.TCheckPoints;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -51,14 +46,14 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		HttpSession session=request.getSession();
 		String name=(String)session.getAttribute("name");
-		String password=request.getParameter("upassw");
+		//String password=request.getParameter("upassw");
 		String levle=(String)session.getAttribute("title");
 		System.out.println(name);
 		System.out.println(levle);
 		//boolean t;
 		JDBCEmp p=new JDBCEmp();
-	
-		int r=p.empcount();
+
+		
 		JDBCNum n=new JDBCNum();
 		//Login l=new Login();
 		if(levle.equals("hrm")){
@@ -70,8 +65,9 @@ public class LoginServlet extends HttpServlet {
 			String section=foremen.selForSection(name);
 			System.out.println(section);
 			int q=foremen.selectForcount();
+			int r=p.empcount(section);
 			//判断工段长的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
-			if(p.selectEmpForCount()%r==0){
+			if(p.selectEmpForCount(section)%r==0){
 				List<Login>ll=p.forNameAndDept(section);
 				request.setAttribute("ll",ll);
 				//request.setAttribute("msg",levle);
@@ -96,7 +92,8 @@ public class LoginServlet extends HttpServlet {
 		if(levle.equals("leader")){
 			JDBCMonitor mon=new JDBCMonitor();
 			String section=mon.selMonSection(name);
-			if((mon.selectMonCount()%r)==0){
+			int r=p.empcount(section);
+			if((mon.selectMonC(section)%r)==0){
 				List<Login>ll=mon.monNameAndDept(section);
 				int q=mon.selecMoncount();
 				request.setAttribute("ll",ll);
@@ -107,7 +104,7 @@ public class LoginServlet extends HttpServlet {
 				request.getRequestDispatcher("empsel.jsp").forward(request, response);
 			}
 			else{
-				if(mon.selectMon(name)<((p.empcount()/mon.selectMonCount(section))+1)){
+				if(mon.selectMon(name)<((p.empcount(section)/mon.selectMonCount(section))+1)){
 				List<Login>ll=mon.empMonName(section);
 				int q=mon.selecMoncount();
 				request.setAttribute("ll",ll);
@@ -132,7 +129,7 @@ public class LoginServlet extends HttpServlet {
 		if(levle.equals("manag")){
 			JDBCMsg msg=new JDBCMsg();
 			int q=msg.selectcount();
-			
+			int r=p.empsum();
 				//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
 				if(p.selectEmpMnCount()%r==0){
 					List<Login>ll=p.empNameAndDept();
@@ -159,10 +156,12 @@ public class LoginServlet extends HttpServlet {
 				}
 		}
 		if(levle.equals("tea")){
-			JDBCTeacher teacher=new JDBCTeacher();
+			//JDBCTeacher teacher=new JDBCTeacher();
 			int q=p.selectcount();
+			String section=p.selectTeaSection(name);
+			int r=p.empcount(section);
 				//判断师傅的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
-				if(p.selectEmpTeaCount()%r==0){
+				if(p.selectEmpTeaCount(section)%r==0){
 					List<Login>ll=p.teaNameAndDept(name);
 					request.setAttribute("ll",ll);
 					//request.setAttribute("msg",levle);
@@ -277,65 +276,13 @@ public class LoginServlet extends HttpServlet {
 						request.setAttribute("mk","老员工");
 						request.setAttribute("q",q);
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
-						return;
-						
+						return;						
 					}
-					/*//如果老员工评分一表中打分数量是总员工的倍数，说明两种情况：1.从未打过份，2，给所有员工打过成倍的分
-					if(p.selectEmpOnecount()%r==0){
-						//再查询老员工打分表二，如果老员工评分表二是总员工的倍数，说明两种情况：1.从未打过份，2，给所有员工打过成倍的分
-						if(p.selectEmpTwocount()%r==0&&p.selectEmpOnecount()==p.selectEmpTwocount()){
-							//先显示老员工表一，对老员工表一进行打分
-						List<Login>ll=p.empNameAndDept(name);
-						int q=p.selectOnecount();
-						request.setAttribute("ll",ll);
-						//request.setAttribute("r","oldone");
-						session.setAttribute("r","oldone");
-						request.setAttribute("mk","老员工一");
-						request.setAttribute("q",q);
-						request.getRequestDispatcher("empsel.jsp").forward(request, response);
-						}
-						else if(p.selectEmpTwocount()%r==0&&p.selectEmpOnecount()!=p.selectEmpTwocount()){
-							
-							//显示所有老员工，对表二进行打分
-							List<Login>ll=p.empNameAndDeptTwo(name,name);
-							int q=p.selectTwocount();
-							request.setAttribute("ll",ll);
-							//request.setAttribute("r","oldtwo");
-							session.setAttribute("r","oldtwo");
-							request.setAttribute("mk","老员工二");
-							request.setAttribute("q",q);
-							request.getRequestDispatcher("empsel.jsp").forward(request, response);
-						}
-				
-						//否则对剩余未打分的老员工二表进行打分
-						else{
-							List<Login>ll=p.empNameTwo(name,name);
-							int q=p.selectTwocount();
-							request.setAttribute("ll",ll);
-							//request.setAttribute("r","oldtwo");
-							session.setAttribute("r","oldtwo");
-							request.setAttribute("mk","老员工二");
-							request.setAttribute("q",q);
-							request.getRequestDispatcher("empsel.jsp").forward(request, response);
-						}
-					}
-	
-					//否则对老员工表一未打分人员进行打分
-				else{
-						List<Login>ll=p.empName(name);
-						int q=p.selectOnecount();
-						request.setAttribute("ll",ll);
-						//request.setAttribute("r","oldtwo");
-						session.setAttribute("r","oldone");
-						request.setAttribute("mk","老员工一");
-						request.setAttribute("q",q);
-						request.getRequestDispatcher("empsel.jsp").forward(request, response);
-					}*/
-				
 			}
 				//新员工评分，写入新员工评分表
 				else{
 					String section=p.selectSection(name);
+					int r=p.empcount(section);
 					if((p.selectEmpNewCount()%r)==0){
 						List<Login>ll=p.empNameAndDept(name,section);
 						int q=p.selectNewcount();
@@ -362,10 +309,10 @@ public class LoginServlet extends HttpServlet {
 						}else{
 							request.setAttribute("ll","1");
 							request.setAttribute("lw","1");	
-							request.setAttribute("m",
-									"<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
+							request.setAttribute("m","<script>alert(\"您本月已打分完毕，请下次再打\");</script>");
 						}
 						request.getRequestDispatcher("empsel.jsp").forward(request, response);
+						return;
 					}
 				}
 		}

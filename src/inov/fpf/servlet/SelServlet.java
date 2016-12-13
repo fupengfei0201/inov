@@ -77,7 +77,7 @@ public class SelServlet extends HttpServlet {
 		String password = request.getParameter("upassw");
 		HttpSession session = request.getSession();
 		JDBCEmp p = new JDBCEmp();
-		int r = p.empcount();
+		//int r = p.empcount();
 		JDBCMsg msg = new JDBCMsg();
 		JDBCTeacher teacher = new JDBCTeacher();
 		JDBCForemen foremen = new JDBCForemen();

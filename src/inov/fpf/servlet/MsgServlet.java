@@ -2,6 +2,7 @@ package inov.fpf.servlet;
 
 import inov.fpf.model.dao.JDBCContent;
 import inov.fpf.model.dao.JDBCEmp;
+import inov.fpf.model.dao.JDBCGradeNum;
 import inov.fpf.model.dao.JDBCMsg;
 import inov.fpf.model.dao.JDBCNum;
 import inov.fpf.model.vo.Login;
@@ -23,11 +24,6 @@ import javax.servlet.http.HttpSession;
  */
 public class MsgServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	// 判断某一次提交的次数，与所有员工数量进行比较，大于员工数量时重新置0；
-	private List<Integer> lg;
-	private List<Integer> ss;
-	// 对良好的人数进行记录，控制良好的人数
-	private List<Integer> tt;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -37,15 +33,6 @@ public class MsgServlet extends HttpServlet {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void init() throws ServletException {
-		// TODO Auto-generated method stub
-		super.init();
-		lg = new ArrayList<Integer>();
-		ss = new ArrayList<Integer>();
-		tt = new ArrayList<Integer>();
-		System.out.println("init()运行");
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -77,7 +64,8 @@ public class MsgServlet extends HttpServlet {
 		JDBCMsg m = new JDBCMsg();
 		JDBCEmp e = new JDBCEmp();
 		JDBCNum n=new JDBCNum();
-		double t = e.empcount();
+		JDBCGradeNum mngnum = new JDBCGradeNum();
+		double t = e.empsum();
 
 		// 通过查询员工的数量对优秀人数进行控制
 	
@@ -140,9 +128,9 @@ public class MsgServlet extends HttpServlet {
 		
 		
 		if (sum >= 90) {
-			ss.add(sum);
-			if (ss.size() > t * 0.3) {
-				System.out.println("优秀的人数为："+ss.size());
+			//ss.add(sum);
+			mngnum.MngInsert(1);
+			if (mngnum.selectMngGrate()  > t * 0.3) {
 				List<MsgCheckContent> li = com.msgcontent();
 				request.setAttribute("list", li);
 				request.setAttribute("pname",name);
@@ -161,22 +149,25 @@ public class MsgServlet extends HttpServlet {
 						l.get(5), l.get(6), l.get(7), sum, comm);
 
 				int s = m.msgInsert(ms);
-				lg.add(sum);
+				//lg.add(sum);
+				mngnum.MngInsert(3);
+
 				if (s == 1) {
 					List<MsgCheckContent> li = com.msgcontent();
 					request.setAttribute("list", li);
 					request.setAttribute("msg",
 							"<script>alert(\"提交成功 \");</script>");
 					System.out.println("提交成功");
-					if (lg.size() == t) {
-						System.out.println("lg的数量为："+lg.size());
+					if (mngnum.selectMngCount()  == e.empsum()) {
+						//System.out.println("lg的数量为："+lg.size());
 						request.setAttribute("l",
 								"<script>alert(\"本次您已评分完毕 \");</script>");
-						lg.removeAll(lg);
-						System.out.println("remove lg的数量为："+lg.size());
-						ss.removeAll(ss);
-						System.out.println("remove ss的数量为："+ss.size());
-						tt.removeAll(tt);
+//						lg.removeAll(lg);
+//						System.out.println("remove lg的数量为："+lg.size());
+//						ss.removeAll(ss);
+//						System.out.println("remove ss的数量为："+ss.size());
+//						tt.removeAll(tt);
+						mngnum.deleteMngGrade();
 						m.insertcount(1);
 					}
 					//判断经理的打分人数如果打分人数与总的员工人数是成比例的，则说明未打过份或打过成倍数的分，需显示所有的员工
@@ -217,9 +208,11 @@ public class MsgServlet extends HttpServlet {
 			}
 
 		} else if (sum < 90 && sum >= 80) {
-			tt.add(sum);
-			if (tt.size() > t * 0.3) {
-				System.out.println("tt的数量："+tt.size());
+			//tt.add(sum);
+			mngnum.MngInsert(2);
+
+			if (mngnum.selectMngGood()  > t * 0.3) {
+				//System.out.println("tt的数量："+tt.size());
 				List<MsgCheckContent> li = com.msgcontent();
 				request.setAttribute("list", li);
 				request.setAttribute("pname",name);
@@ -237,24 +230,26 @@ public class MsgServlet extends HttpServlet {
 						l.get(5), l.get(6), l.get(7), sum, comm);
 
 				int s = m.msgInsert(ms);
-				lg.add(sum);
+				//lg.add(sum);
+				mngnum.MngInsert(3);
 				if (s == 1) {
 					List<MsgCheckContent> li = com.msgcontent();
 					request.setAttribute("list", li);
 					request.setAttribute("msg",
 							"<script>alert(\"提交成功 \");</script>");
 					System.out.println("提交成功");
-					if (lg.size() == t) {
-						System.out.println("lg的数量为："+lg.size());
+					if (mngnum.selectMngCount()  == e.empsum()) {
+						//System.out.println("lg的数量为："+lg.size());
 						request.setAttribute("l",
 								"<script>alert(\"本次您已评分完毕 \");</script>");
 						System.out.println("本次您已评分完毕");
-						lg.removeAll(lg);
-						System.out.println("remove lg的数量为："+lg.size());
-						ss.removeAll(ss);
-						System.out.println("remove ss的数量为："+ss.size());
-						tt.removeAll(tt);
-						System.out.println("remove tt的数量为："+tt.size());
+//						lg.removeAll(lg);
+//						System.out.println("remove lg的数量为："+lg.size());
+//						ss.removeAll(ss);
+//						System.out.println("remove ss的数量为："+ss.size());
+//						tt.removeAll(tt);
+//						System.out.println("remove tt的数量为："+tt.size());
+						mngnum.deleteMngGrade();
 						m.insertcount(1);
 					}
 					if(e.selectEmpMnCount()%t==0){
@@ -295,25 +290,26 @@ public class MsgServlet extends HttpServlet {
 					l.get(1), l.get(2), l.get(3), l.get(4), l.get(5), l.get(6),
 					l.get(7), sum, comm);
 			int s = m.msgInsert(ms);
-			lg.add(sum);
+			mngnum.MngInsert(3);
 			if (s == 1) {
 				List<MsgCheckContent> li = com.msgcontent();
 				request.setAttribute("list", li);
 				request.setAttribute("msg",
 						"<script>alert(\"提交成功 \");</script>");
 				System.out.println("提交成功");
-				if (lg.size() == t) {
-					System.out.println("lg数量为"+lg.size());
+				if (mngnum.selectMngCount()== t) {
+					//System.out.println("lg数量为"+lg.size());
 					request.setAttribute("l",
 							"<script>alert(\"本次您已评分完毕 \");</script>");
 					System.out.println("本次您已评分完毕");
 					
-					lg.removeAll(lg);
-					System.out.println("lg移除后数量为"+lg.size());
-					ss.removeAll(ss);
-					System.out.println("ss移除后数量为"+ss.size());
-					tt.removeAll(tt);
-					System.out.println("tt移除后数量为"+tt.size());
+//					lg.removeAll(lg);
+//					System.out.println("lg移除后数量为"+lg.size());
+//					ss.removeAll(ss);
+//					System.out.println("ss移除后数量为"+ss.size());
+//					tt.removeAll(tt);
+//					System.out.println("tt移除后数量为"+tt.size());
+					mngnum.deleteMngGrade();
 					m.insertcount(1);
 				}
 				if(e.selectEmpMnCount()%t==0){

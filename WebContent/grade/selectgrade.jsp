@@ -68,7 +68,6 @@ ${requestScope.x}
 <td width="70px">得分</td>
 <td width="70px">班组长</td>
 <td width="70px">得分</td>
-<td width="70px">平均得分</td>
 <td width="60px">总分</td>
 <td width="120px">部门负责人评语</td>
 </tr>

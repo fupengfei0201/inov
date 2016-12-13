@@ -32,10 +32,10 @@
    } 
    //延迟加载图片，演示的时候，使用本地图片
    //上线后请改为二级域名提供的图片地址 
-   document.getElementById("second").src = "pic/c2.jpg";
+   document.getElementById("second").src = "pic/pic2.jpg";
    //使用图片宽800，高300
-   document.getElementById("third").src = "pic/c2.png"; 
-   document.getElementById("four").src = "pic/a5.png"; 
+   document.getElementById("third").src = "pic/pic3.jpg"; 
+   document.getElementById("four").src = "pic/pic4.jpg"; 
   } 
   function turn(value) { 
    if (value != null) { 
@@ -66,7 +66,7 @@
 <div id="carousel">
 <div id="wrap"> 
   <div id="slider"> 
-   <a target="_blank" href="#"><img src="pic/c1.png" /></a> 
+   <a target="_blank" href="#"><img src="pic/pic1.png" /></a> 
    <a target="_blank" href="#"><img id="second" /></a> 
    <a target="_blank" href="#"><img id="third" /></a> 
    <a target="_blank" href="#"><img id="four" /></a> 
@@ -90,26 +90,26 @@
 <tr>
 	<td>
 	<div style="float: left;">公司简介</div>
-	<div style="padding-left: 60%;float: left;"><a href="cmpintroduction/cmpmsg.jsp" target="_blank">更多&gt;&gt;</a>
+	<div style="padding-left: 60%;float: left;"><a href="cmpintroduction/cmpmsg.jsp" >更多&gt;&gt;</a>
 	</div></td>
 </tr>
 <tr>
 	<td>
 	<div style="float: left;">企业文化</div>
-	<div style="padding-left: 60%;float: left;"><a href="cmpintroduction/cmpcultrue.jsp" target="_blank">更多&gt;&gt;</a>
+	<div style="padding-left: 60%;float: left;"><a href="cmpintroduction/cmpcultrue.jsp" >更多&gt;&gt;</a>
 	</div></td>
 </tr>
 <tr>
 	<td>
 	<div style="float: left;">产品经营</div>
-	<div style="padding-left: 60%;float: left;"><a href="cmpintroduction/cmpproduct.jsp" target="_blank">更多&gt;&gt;</a>
+	<div style="padding-left: 60%;float: left;"><a href="cmpintroduction/cmpproduct.jsp" >更多&gt;&gt;</a>
 	</div>
 	</td>
 </tr>
 <tr>
 	<td>
 	<div style="float: left;">人才培养</div>
-	<div style="padding-left: 60%;float: left;"><a href="cmpintroduction/cmptcultivate.jsp" target="_blank">更多&gt;&gt;</a>
+	<div style="padding-left: 60%;float: left;"><a href="cmpintroduction/cmptcultivate.jsp" >更多&gt;&gt;</a>
 	</div>
 	</td>
 </tr>
@@ -126,7 +126,7 @@
 <div id="componymsg">
 <table width="100%" height="100%" border="0.5px dashed" cellpadding="0px" cellspacing="0px" bordercolor="lightgray"  rules="rows">
 <tr>
-	<td><div style="float: left;"><a href="information/news.jsp" target="_blank">艰苦奋斗 勇争第一一诺威股..</a></div>
+	<td><div style="float: left;"><a href="information/news.jsp" >艰苦奋斗 勇争第一一诺威股..</a></div>
 	<div style="float: right;padding-right: 5%">2014-10-24</div></td>
 </tr>
 <tr>

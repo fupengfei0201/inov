@@ -40,10 +40,8 @@ public class HRMSelectNotGrade extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String years=request.getParameter("years");
 		String months=request.getParameter("months");
-//		request.setAttribute("yy",years);
-//		request.setAttribute("mm",months);
-				String time=years+"-"+months;
-				System.out.println(time+"时间");
+		String time=years+"-"+months;
+		System.out.println(time+"时间");
 		JDBCHR jr=new JDBCHR();
 		List<HRGrade>list=jr.allempnot(time);
 		HttpSession session=request.getSession();

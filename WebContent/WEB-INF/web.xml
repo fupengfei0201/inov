@@ -284,4 +284,34 @@
     <servlet-name>HRMSelectNotGrade</servlet-name>
     <url-pattern>/HRMSelectNotGrade</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ExcelNotServel</display-name>
+    <servlet-name>ExcelNotServel</servlet-name>
+    <servlet-class>inov.fpf.servlet.ExcelNotServel</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExcelNotServel</servlet-name>
+    <url-pattern>/ExcelNotServel</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>FindPwdServlet</display-name>
+    <servlet-name>FindPwdServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.FindPwdServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FindPwdServlet</servlet-name>
+    <url-pattern>/FindPwdServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NewPwdServlet</display-name>
+    <servlet-name>NewPwdServlet</servlet-name>
+    <servlet-class>inov.fpf.servlet.NewPwdServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewPwdServlet</servlet-name>
+    <url-pattern>/NewPwdServlet</url-pattern>
+</servlet-mapping>
 </web-app>

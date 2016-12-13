@@ -15,6 +15,7 @@
       <form action="SelServlet" method="post">
 <span style="font-weight:bold">用户名：</span><input type="text" name="uname" id="uname" class="log" style="border-color:lightblue;"><br><br>
 <span style="font-weight:bold">密&nbsp;&nbsp;码：</span><input type="password" name="upassw" id="upassw" class="log" style="border-color:lightblue;"><br><br>
+<span style="color: #1B539D;margin-left: 50%"><a href="findpwd.jsp">忘记密码？</a></span><br><br>
 &nbsp;&nbsp;<input type="submit" value="登录" class="butt" style="background:  #1B539D;border: none;color: white; border-radius:4px;">&nbsp;&nbsp;&nbsp;&nbsp;
 <input type="button" value="注册" class="butt" style="background:  #1B539D;border: none;color: white; border-radius:4px;" onClick="window.location.href='register/mngregister.jsp'">
 </form>

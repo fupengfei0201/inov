@@ -67,12 +67,12 @@ public class JDBCMonitor {
 		int i=0;
 		try {
 			con=JDBCUtil.getConnection();
-			String sql=" select count(nvl(empcod,0))from monitorgrade where sectionname=?";
+			String sql=" select count(nvl(m.empcod,0))from monitorgrade m,emplogin emp where emp.sectionname=? and emp.emploginname=m.empname";
 			psd=con.prepareStatement(sql);
 			psd.setString(1,section);
 			rs=psd.executeQuery();
 			while(rs.next()){
-				i=rs.getInt("count(nvl(empcod,0))");
+				i=rs.getInt("count(nvl(m.empcod,0))");
 				System.out.println(i+"------------------ÊýÁ¿");
 			}
 		} catch (SQLException e) {

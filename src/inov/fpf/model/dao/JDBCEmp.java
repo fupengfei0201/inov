@@ -462,15 +462,16 @@ public class JDBCEmp {
 		return i;
 	}
 	//查询新员工中打分的数量
-	public int selectEmpNewCount(){
+	public int selectEmpNewCount(String section){
 		int i=0;
 		try {
 			con=JDBCUtil.getConnection();
-			String sql=" select count(nvl(empcod,0))from newemp";
+			String sql=" select count(nvl(n.empcod,0))from newemp n,emplogin emp where emp.sectionname=? and n.empname=emp.emploginname";
 			psd=con.prepareStatement(sql);
+			psd.setString(1,section);
 			rs=psd.executeQuery();
 			while(rs.next()){
-				i=rs.getInt("count(nvl(empcod,0))");
+				i=rs.getInt("count(nvl(n.empcod,0))");
 				System.out.println(i+"------------------数量");
 			}
 		} catch (SQLException e) {
@@ -578,12 +579,12 @@ public class JDBCEmp {
 			int i=0;
 			try {
 				con=JDBCUtil.getConnection();
-				String sql=" select count(nvl(empid,0))from teacher where sectionname=?";
+				String sql=" select count(nvl(t.empid,0))from teacher t,emplogin emp where emp.sectionname=? and t.empname=emp.emploginname";
 				psd=con.prepareStatement(sql);
 				psd.setString(1, section);
 				rs=psd.executeQuery();
 				while(rs.next()){
-					i=rs.getInt("count(nvl(empid,0))");
+					i=rs.getInt("count(nvl(t.empid,0))");
 					System.out.println(i+"------------------数量");
 				}
 			} catch (SQLException e) {
@@ -597,12 +598,12 @@ public class JDBCEmp {
 			int i=0;
 			try {
 				con=JDBCUtil.getConnection();
-				String sql=" select count(nvl(empid,0))from foremengrade where sectionname=?";
+				String sql=" select count(nvl(f.empid,0))from foremengrade f,emplogin emp where emp.sectionname=? and emp.emploginname=f.empname";
 				psd=con.prepareStatement(sql);
 				psd.setString(1, section);
 				rs=psd.executeQuery();
 				while(rs.next()){
-					i=rs.getInt("count(nvl(empid,0))");
+					i=rs.getInt("count(nvl(f.empid,0))");
 					System.out.println(i+"------------------数量");
 				}
 			} catch (SQLException e) {

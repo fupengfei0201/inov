@@ -283,7 +283,7 @@ public class LoginServlet extends HttpServlet {
 				else{
 					String section=p.selectSection(name);
 					int r=p.empcount(section);
-					if((p.selectEmpNewCount()%r)==0){
+					if((p.selectEmpNewCount(section)%r)==0){
 						List<Login>ll=p.empNameAndDept(name,section);
 						int q=p.selectNewcount();
 						request.setAttribute("ll",ll);

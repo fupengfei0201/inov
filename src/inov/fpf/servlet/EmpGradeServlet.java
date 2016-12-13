@@ -687,7 +687,7 @@ public class EmpGradeServlet extends HttpServlet {
 				request.setAttribute("m",
 						"<script>alert(\"本次此员工已经提交过分数，请为其他员工打分！\");</script>");
 				System.out.println("重复提交分数");
-				if ((e.selectEmpNewCount() % e.empcount(section)) == 0) {
+				if ((e.selectEmpNewCount(section) % e.empcount(section)) == 0) {
 					List<Login> ll = e.empNameAndDept(ename,section);
 
 					request.setAttribute("ll", ll);
@@ -766,7 +766,7 @@ public class EmpGradeServlet extends HttpServlet {
 							n.oneEmpC(1);
 						}
 
-						if ((e.selectEmpNewCount() % e.empcount(section)) == 0) {
+						if ((e.selectEmpNewCount(section) % e.empcount(section)) == 0) {
 							List<Login> ll = e.empNameAndDept(ename,section);
 
 							request.setAttribute("ll", ll);
@@ -857,7 +857,7 @@ public class EmpGradeServlet extends HttpServlet {
 							n.oneEmpC(1);
 						}
 
-						if ((e.selectEmpNewCount() % e.empcount(section)) == 0) {
+						if ((e.selectEmpNewCount(section) % e.empcount(section)) == 0) {
 							List<Login> ll = e.empNameAndDept(ename,section);
 							request.setAttribute("ll", ll);
 							// request.setAttribute("r","new");
@@ -933,7 +933,7 @@ public class EmpGradeServlet extends HttpServlet {
 						n.oneEmpC(1);
 					}
 
-					if ((e.selectEmpNewCount() % e.empcount(section)) == 0) {
+					if ((e.selectEmpNewCount(section) % e.empcount(section)) == 0) {
 						List<Login> ll = e.empNameAndDept(ename,section);
 						request.setAttribute("ll", ll);
 						// request.setAttribute("r","new");
